@@ -1,0 +1,123 @@
+<?php $__env->startSection('content'); ?>
+    <?php foreach($devices as $device): ?>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <div class="report-bars"></div>
+                <?php echo e(rtl(trans('front.report_type'), $data)); ?>: <?php echo e(rtl($types[$data['type']], $data)); ?> (<?php echo e($data['date_from']); ?> - <?php echo e($data['date_to']); ?>)
+            </div>
+            <div class="panel-body">
+                <table style="margin-bottom: 0;" class="table">
+                    <tr>
+                        <td>
+                        <table class="table">
+                            <tbody>
+                            <tr>
+                                <th><?php echo e(rtl(trans('validation.attributes.device_id'), $data)); ?>:</th>
+                                <td><?php echo e(rtl($device['name'], $data)); ?></td>
+                            </tr>
+                            <?php if(!isset($items[$device['id']])): ?>
+                                <tr>
+                                    <td colspan="2"><?php echo e(rtl(trans('front.nothing_found_request'), $data)); ?></td>
+                                </tr>
+                            <?php else: ?>
+                                <tr>
+                                    <th><?php echo e(rtl(trans('front.route_start'), $data)); ?>:</th>
+                                    <td><?php echo e($items[$device['id']]->route_start); ?></td>
+                                </tr>
+                                <tr>
+                                    <th><?php echo e(rtl(trans('front.route_end'), $data)); ?>:</th>
+                                    <td><?php echo e($items[$device['id']]->route_end); ?></td>
+                                </tr>
+                                <tr>
+                                    <th><?php echo e(rtl(trans('front.route_length'), $data)); ?>:</th>
+                                    <td><?php echo e($items[$device['id']]->unit_of_distance == 'mi' ? kilometersToMiles($items[$device['id']]->distance_sum) : $items[$device['id']]->distance_sum); ?> <?php echo e(rtl(trans('front.'.$items[$device['id']]->unit_of_distance), $data)); ?></td>
+                                </tr>
+                                <tr>
+                                    <th><?php echo e(rtl(trans('front.move_duration'), $data)); ?>:</th>
+                                    <td><?php echo e($items[$device['id']]->move_duration); ?></td>
+                                </tr>
+                                <tr>
+                                    <th><?php echo e(rtl(trans('front.stop_duration'), $data)); ?>:</th>
+                                    <td><?php echo e($items[$device['id']]->stop_duration); ?></td>
+                                </tr>
+                                <tr>
+                                    <th><?php echo e(rtl(trans('front.top_speed'), $data)); ?>:</th>
+                                    <td><?php echo e($items[$device['id']]->top_speed); ?> <?php echo e(rtl(trans("front.dis_h_{$items[$device['id']]->unit_of_distance}"), $data)); ?></td>
+                                </tr>
+                                <tr>
+                                    <th><?php echo e(rtl(trans('front.average_speed'), $data)); ?>:</th>
+                                    <td><?php echo e($items[$device['id']]->average_speed); ?> <?php echo e(rtl(trans("front.dis_h_{$items[$device['id']]->unit_of_distance}"), $data)); ?></td>
+                                </tr>
+                                <tr>
+                                    <th><?php echo e(rtl(trans('front.overspeed_count'), $data)); ?>:</th>
+                                    <td><?php echo e($items[$device['id']]->overspeed_count); ?></td>
+                                </tr>
+                            <?php endif; ?>
+                            </tbody>
+                        </table>
+                    </td>
+                    <td>
+                        <?php if(isset($items[$device['id']])): ?>
+                        <table class="table">
+                            <tbody>
+                            <?php if($device['fuel_per_km'] > 0): ?>
+                                <tr>
+                                    <th><?php echo e(rtl(trans('front.fuel_consumption'), $data)); ?> (<?php echo e(rtl(trans('front.gps'), $data)); ?>):</th>
+                                    <td><?php echo e($device['fuel_measurement_id'] == 1 ? float($items[$device['id']]->distance_sum * $device['fuel_per_km']).' '.rtl(trans('front.liters'), $data) : float(litersToGallons($items[$device['id']]->distance_sum * $device['fuel_per_km'])).' '.rtl(trans('front.gallons'), $data)); ?></td>
+                                </tr>
+                            <?php endif; ?>
+                            <?php foreach($items[$device['id']]->fuel_consumption as $id => $value): ?>
+                                <tr>
+                                    <th><?php echo e(rtl(trans('front.fuel_consumption'), $data)); ?> (<?php echo e($items[$device['id']]->sensors_arr[$id]['name']); ?>):</th>
+                                    <td><?php echo e(float($value).' '.$items[$device['id']]->sensors_arr[$id]['sufix']); ?></td>
+                                </tr>
+                            <?php endforeach; ?>
+                            <?php if($device['fuel_price'] > 0): ?>
+                                <?php if($device['fuel_per_km'] > 0): ?>
+                                    <tr>
+                                        <?php $fuel_consumption = $device['fuel_measurement_id'] == 1 ? $items[$device['id']]->distance_sum * $device['fuel_per_km'] : litersToGallons($items[$device['id']]->distance_sum * $device['fuel_per_km']); ?>
+                                        <th><?php echo e(rtl(trans('front.fuel_cost'), $data)); ?> (<?php echo e(rtl(trans('front.gps'), $data)); ?>):</th>
+                                        <td><?php echo e(float($fuel_consumption * $device['fuel_price'])); ?></td>
+                                    </tr>
+                                <?php endif; ?>
+                                <?php foreach($items[$device['id']]->fuel_consumption as $id => $value): ?>
+                                    <tr>
+                                        <th><?php echo e(rtl(trans('front.fuel_cost'), $data)); ?> (<?php echo e($items[$device['id']]->sensors_arr[$id]['name']); ?>):</th>
+                                        <td><?php echo e(float($value * $device['fuel_price'])); ?></td>
+                                    </tr>
+                                <?php endforeach; ?>
+                            <?php endif; ?>
+                            <tr>
+                                <th><?php echo e(rtl(trans('front.engine_work'), $data)); ?>:</th>
+                                <td><?php echo e($items[$device['id']]->engine_work); ?></td>
+                            </tr>
+                            <tr>
+                                <th><?php echo e(rtl(trans('front.engine_idle'), $data)); ?>:</th>
+                                <td><?php echo e($items[$device['id']]->engine_idle); ?></td>
+                            </tr>
+                            <?php if(!is_null($items[$device['id']]->odometer)): ?>
+                                <tr>
+                                    <th><?php echo e(rtl(trans('front.odometer'), $data)); ?>:</th>
+                                    <td><?php echo e($items[$device['id']]->odometer); ?></td>
+                                </tr>
+                            <?php endif; ?>
+                            <tr>
+                                <th><?php echo e(rtl(trans('validation.attributes.engine_hours'), $data)); ?>:</th>
+                                <td><?php echo e($items[$device['id']]->engine_hours); ?></td>
+                            </tr>
+                            <?php if(!is_null($items[$device['id']]->getDrivers())): ?>
+                                <tr>
+                                    <th><?php echo e(rtl(trans('front.drivers'), $data)); ?>:</th>
+                                    <td><?php echo e($items[$device['id']]->getDrivers()); ?></td>
+                                </tr>
+                            <?php endif; ?>
+                            </tbody>
+                        </table>
+                        <?php endif; ?>
+                    </td></tr>
+                </table>
+            </div>
+        </div>
+    <?php endforeach; ?>
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('Frontend.Reports.parse.layout', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

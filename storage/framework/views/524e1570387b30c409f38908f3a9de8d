@@ -1,0 +1,32 @@
+<?php $__env->startSection('title'); ?>
+    <i class="icon geofence-import"></i> <?php echo e(trans('front.import')); ?>
+
+<?php $__env->stopSection(); ?>
+
+<?php $__env->startSection('body'); ?>
+    <?php echo Form::open(['route' => 'admin.clients.import_geofences_set', 'method' => 'POST']); ?>
+
+        <?php echo Form::hidden('id'); ?>
+
+        <div class="form-group">
+            <?php echo Form::label('user_id', trans('validation.attributes.user').'*:'); ?>
+
+            <?php echo Form::select('user_id[]', $users->lists('email', 'id'), null, ['class' => 'form-control', 'multiple' => 'multiple', 'data-live-search' => true]); ?>
+
+        </div>
+
+        <div class="form-group">
+            <?php echo Form::label('file', trans('validation.attributes.file').'*:'); ?>
+
+            <?php echo Form::file('file', ['class' => 'form-control']); ?>
+
+        </div>
+    <?php echo Form::close(); ?>
+
+<?php $__env->stopSection(); ?>
+
+<?php $__env->startSection('footer'); ?>
+    <button type="button" class="btn btn-action update_with_files"><?php echo e(trans('global.save')); ?></button>
+    <button type="button" class="btn btn-default" data-dismiss="modal"><?php echo e(trans('global.cancel')); ?></button>
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('Admin.Layouts.modal', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

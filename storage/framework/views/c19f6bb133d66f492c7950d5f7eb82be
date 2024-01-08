@@ -1,0 +1,96 @@
+<div class="tab-pane" id="routes_tab">
+    <div class="tab-pane-header">
+        <div class="form">
+            <div class="input-group">
+                <div class="form-group search">
+                    <?php echo Form::text('search', null, ['class' => 'form-control', 'placeholder' => trans('front.search'), 'autocomplete' => 'off']); ?>
+
+                </div>
+                <?php if(Auth::User()->perm('routes', 'edit')): ?>
+                    <span class="input-group-btn">
+                        <a href="javascript:" class="btn btn-primary" type="button" onClick="app.routes.create();">
+                            <i class="icon add"></i>
+                        </a>
+                    </span>
+                <?php endif; ?>
+            </div>
+        </div>
+    </div>
+
+    <div class="tab-pane-body">
+        <div id="ajax-routes"></div>
+    </div>
+</div>
+
+<div class="tab-pane" id="routes_create">
+    <?php echo Form::hidden('polyline'); ?>
+
+    <?php echo Form::open(['route' => 'routes.store', 'method' => 'POST', 'id' => 'route_create']); ?>
+
+    <div class="tab-pane-body">
+
+        <div class="alert alert-info">
+            <?php echo trans('front.please_draw_route'); ?>
+
+        </div>
+
+        <?php echo Form::hidden('id'); ?>
+
+
+        <div class="form-group">
+            <?php echo Form::label('name', trans('validation.attributes.name').':'); ?>
+
+            <?php echo Form::text('name', null, ['class' => 'form-control']); ?>
+
+        </div>
+        <div class="form-group">
+            <?php echo Form::label('color', trans('validation.attributes.color').':'); ?>
+
+            <?php echo Form::text('color', '#1938FF', ['class' => 'form-control colorpicker']); ?>
+
+        </div>
+
+        <div class="buttons text-center">
+            <a type="button" class="btn btn-action" href="javascript:" onClick="app.routes.store();"><?php echo trans('global.save'); ?></a>
+            <a type="button" class="btn btn-default" href="javascript:" onClick="app.openTab('routes_tab');"><?php echo trans('global.cancel'); ?></a>
+        </div>
+    </div>
+    <?php echo Form::close(); ?>
+
+</div>
+
+<div class="tab-pane" id="routes_edit">
+    <?php echo Form::hidden('polyline'); ?>
+
+    <?php echo Form::open(['route' => 'routes.update', 'method' => 'PUT', 'id' => 'route_update']); ?>
+
+    <div class="tab-pane-body">
+
+        <div class="alert alert-info">
+            <?php echo trans('front.please_draw_route'); ?>
+
+        </div>
+        <?php echo Form::hidden('id'); ?>
+
+
+        <div class="form-group">
+            <?php echo Form::label('name', trans('validation.attributes.name').':'); ?>
+
+            <?php echo Form::text('name', null, ['class' => 'form-control']); ?>
+
+        </div>
+        <div class="form-group">
+            <?php echo Form::label('color', trans('validation.attributes.color').':'); ?>
+
+            <?php echo Form::text('color', '#1938FF', ['class' => 'form-control colorpicker']); ?>
+
+        </div>
+
+        <div class="buttons text-center">
+            <a type="button" class="btn btn-action" href="javascript:" onClick="app.routes.update();"><?php echo trans('global.save'); ?></a>
+            <a type="button" class="btn btn-default" href="javascript:" onClick="app.openTab('routes_tab');"><?php echo trans('global.cancel'); ?></a>
+        </div>
+    </div>
+    <?php echo Form::close(); ?>
+
+</div>

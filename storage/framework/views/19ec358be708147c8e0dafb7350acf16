@@ -1,0 +1,86 @@
+<?php $__env->startSection('content'); ?>
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <?php echo e(rtl(trans('front.report_type'), $data)); ?>: <?php echo e(rtl($types[$data['type']], $data)); ?>
+
+        </div>
+        <div class="panel-body">
+            <table class="table" style="margin-bottom: 0px">
+                <tbody>
+                <tr>
+                    <th><?php echo rtl(trans('front.time_period'), $data); ?>:</th>
+                    <td><?php echo e($data['date_from']); ?> - <?php echo e($data['date_to']); ?></td>
+                    <th>&nbsp;</th>
+                    <td>&nbsp;</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="panel-body no-padding">
+            <table class="table table-striped table-speed" style="margin-bottom: 0px">
+                <thead>
+                <tr>
+                    <th><?php echo e(rtl(trans('validation.attributes.device_id'), $data)); ?></th>
+                    <th><?php echo e(rtl(trans('front.route_start'), $data)); ?></th>
+                    <th><?php echo e(rtl(trans('front.route_end'), $data)); ?></th>
+                    <th><?php echo e(rtl(trans('front.route_length'), $data)); ?></th>
+                    <th><?php echo e(rtl(trans('front.move_duration'), $data)); ?></th>
+                    <th><?php echo e(rtl(trans('front.stop_duration'), $data)); ?></th>
+                    <th><?php echo e(rtl(trans('front.top_speed'), $data)); ?></th>
+                    <th><?php echo e(rtl(trans('front.average_speed'), $data)); ?></th>
+                    <th><?php echo e(rtl(trans('front.overspeed_count'), $data)); ?></th>
+                    <th><?php echo e(rtl(trans('front.fuel_consumption'), $data)); ?></th>
+                    <th><?php echo e(rtl(trans('front.fuel_cost'), $data)); ?></th>
+                </tr>
+                </thead>
+                <tbody>
+                <?php foreach($devices as $device): ?>
+                    <?php if(!isset($items[$device['id']])): ?>
+                        <tr>
+                            <td><?php echo e(rtl($device['name'], $data)); ?></td>
+                            <td colspan="20"><?php echo e(rtl(trans('front.nothing_found_request'), $data)); ?></td>
+                        </tr>
+                    <?php else: ?>
+                        <tr>
+                            <td><?php echo e(rtl($device['name'], $data)); ?></td>
+                            <td><?php echo e($items[$device['id']]->route_start); ?></td>
+                            <td><?php echo e($items[$device['id']]->route_end); ?></td>
+                            <td><?php echo e($items[$device['id']]->unit_of_distance == 'mi' ? kilometersToMiles($items[$device['id']]->distance_sum) : $items[$device['id']]->distance_sum); ?> <?php echo e(trans('front.'.$items[$device['id']]->unit_of_distance)); ?></td>
+                            <td><?php echo e($items[$device['id']]->move_duration); ?></td>
+                            <td><?php echo e($items[$device['id']]->stop_duration); ?></td>
+                            <td><?php echo e($items[$device['id']]->top_speed); ?> <?php echo e(trans("front.dis_h_{$items[$device['id']]->unit_of_distance}")); ?></td>
+                            <td><?php echo e($items[$device['id']]->average_speed); ?> <?php echo e(trans("front.dis_h_{$items[$device['id']]->unit_of_distance}")); ?></td>
+                            <td><?php echo e($items[$device['id']]->overspeed_count); ?></td>
+                            <?php if(empty($items[$device['id']]->fuel_consumption)): ?>
+                                <td><?php echo e($device['fuel_measurement_id'] == 1 ? float($items[$device['id']]->distance_sum * $device['fuel_per_km']).' '.trans('front.liters') : float(litersToGallons($items[$device['id']]->distance_sum * $device['fuel_per_km'])).' '.trans('front.gallons')); ?></td>
+                            <?php else: ?>
+                                <?php
+                                $cons = 0;
+                                foreach($items[$device['id']]->fuel_consumption as $id => $value) {
+                                    $cons += $value;
+                                }
+                                ?>
+                                <td><?php echo e(float($cons).' '.($device['fuel_measurement_id'] == 1 ? trans('front.liters') : trans('front.gallons'))); ?></td>
+                            <?php endif; ?>
+                            <td>
+                                <?php if($device['fuel_price'] > 0): ?>
+                                    <?php if(empty($items[$device['id']]->fuel_consumption)): ?>
+                                        <?php $fuel_consumption = $device['fuel_measurement_id'] == 1 ? $items[$device['id']]->distance_sum * $device['fuel_per_km'] : litersToGallons($items[$device['id']]->distance_sum * $device['fuel_per_km']); ?>
+                                        <?php echo e(float($fuel_consumption * $device['fuel_price'])); ?>
+
+                                    <?php else: ?>
+                                        <?php $value = array_sum($items[$device['id']]->fuel_consumption); ?>
+                                        <?php echo e(float($value * $device['fuel_price'])); ?>
+
+                                    <?php endif; ?>
+                                <?php endif; ?>
+                            </td>
+                        </tr>
+                    <?php endif; ?>
+                <?php endforeach; ?>
+                </tbody>
+            </table>
+        </div>
+    </div>
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('Frontend.Reports.parse.layout', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

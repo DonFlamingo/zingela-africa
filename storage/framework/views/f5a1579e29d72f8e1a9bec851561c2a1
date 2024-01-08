@@ -1,0 +1,364 @@
+<?php $__env->startSection('content'); ?>
+
+    <div class="row">
+        <div class="col-sm-6">
+
+            <?php if(Session::has('user_defaults_errors')): ?>
+                <div class="alert alert-danger">
+                    <ul>
+                        <?php foreach(Session::get('user_defaults_errors')->all() as $error): ?>
+                            <li><?php echo $error; ?></li>
+                        <?php endforeach; ?>
+                    </ul>
+                </div>
+            <?php endif; ?>
+
+            <div class="panel panel-default">
+
+                <div class="panel-heading">
+                    <div class="panel-title"><?php echo e(trans('front.registration')); ?></div>
+                </div>
+
+                <div class="panel-body">
+                    <?php echo Form::open(array('route' => 'admin.main_server_settings.new_user_defaults_save', 'method' => 'POST', 'class' => 'form form-horizontal', 'id' => 'new-user-defaults-form')); ?>
+
+
+                    <div class="form-group">
+                        <?php echo Form::label('allow_users_registration', trans('validation.attributes.allow_users_registration'), ['class' => 'col-xs-12 col-sm-4 control-label"']); ?>
+
+                        <div class="col-xs-12 col-sm-8">
+                            <?php echo Form::select('allow_users_registration', ['0' => trans('global.no'), '1' => trans('global.yes')], $settings['allow_users_registration'], ['class' => 'form-control']); ?>
+
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-xs-12 col-sm-4"></div>
+                        <div class="col-xs-12 col-sm-8">
+                            <div class="checkbox">
+                                <?php echo Form::checkbox('enable_plans', 1, settings('main_settings.enable_plans')); ?>
+
+                                <?php echo Form::label('enable_plans', trans('validation.attributes.enable_plans') ); ?>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group" id="default_billing_plan">
+                        <?php echo Form::label('default_billing_plan', trans('validation.attributes.default_billing_plan'), ['class' => 'col-xs-12 col-sm-4 control-label"']); ?>
+
+                        <div class="col-xs-12 col-sm-8">
+                            <?php echo Form::select('default_billing_plan', $items->lists('title','id')->all(), settings('main_settings.default_billing_plan'), ['class' => 'form-control']); ?>
+
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <?php echo Form::label('default_timezone', trans('validation.attributes.default_timezone'), ['class' => 'col-xs-12 col-sm-4 control-label"']); ?>
+
+                        <div class="col-xs-12 col-sm-8">
+                            <?php echo Form::select('default_timezone', $timezones, $settings['default_timezone'], ['class' => 'form-control']); ?>
+
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <?php echo Form::label(null, trans('validation.attributes.daylight_saving_time'), ['class' => 'col-xs-12 col-sm-4 control-label"']); ?>
+
+                        <div class="col-xs-12 col-sm-8">
+                            <div class="col-xs-6">
+                                <div class="form-group input-group">
+                                    <div class="checkbox input-group-btn">
+                                        <?php echo Form::checkbox('dst', 1, !is_null(settings('main_settings.dst'))); ?>
+
+                                        <?php echo Form::label(null); ?>
+
+                                    </div>
+                                    <?php echo Form::text('dst_date_from', settings('main_settings.dst_date_from'), ['class' => 'form-control', 'placeholder' => trans('validation.attributes.date_from')]); ?>
+
+                                </div>
+                            </div>
+                            <div class="col-xs-6">
+                                <div class="form-group input-group">
+                                    <div class="input-group-btn">
+                                        <?php echo Form::label(null, '-'); ?>
+
+                                    </div>
+                                    <?php echo Form::text('dst_date_to', settings('main_settings.dst_date_to'), ['class' => 'form-control', 'placeholder' => trans('validation.attributes.date_to')]); ?>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="default_user_fields">
+                        <div class="form-group">
+                            <?php echo Form::label(null, trans('validation.attributes.devices_limit'), ['class' => 'col-xs-12 col-sm-4 control-label"']); ?>
+
+                            <div class="col-xs-12 col-sm-8">
+                                <div class="input-group">
+                                    <div class="checkbox input-group-btn">
+                                        <?php echo Form::checkbox('enable_devices_limit', 1, !is_null(settings('main_settings.devices_limit'))); ?>
+
+                                        <?php echo Form::label(null); ?>
+
+                                    </div>
+                                    <?php echo Form::text('devices_limit', settings('main_settings.devices_limit'), ['class' => 'form-control']); ?>
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <?php echo Form::label(null, trans('validation.attributes.subscription_expiration_after_days'), ['class' => 'col-xs-12 col-sm-4 control-label"']); ?>
+
+                            <div class="col-xs-12 col-sm-8">
+                                <div class="input-group">
+                                    <div class="checkbox input-group-btn">
+                                        <?php echo Form::checkbox('enable_subscription_expiration_after_days', 1, !is_null(settings('main_settings.subscription_expiration_after_days'))); ?>
+
+                                        <?php echo Form::label(null); ?>
+
+                                    </div>
+                                    <?php echo Form::text('subscription_expiration_after_days', settings('main_settings.subscription_expiration_after_days'), ['class' => 'form-control']); ?>
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <div>
+                            <h3><?php echo e(trans('validation.attributes.permissions')); ?></h3>
+                            <table class="table">
+                                <thead>
+                                <th style="text-align: left"><?php echo e(trans('front.permission')); ?></th>
+                                <th style="text-align: center"><?php echo e(trans('front.view')); ?></th>
+                                <th style="text-align: center"><?php echo e(trans('global.edit')); ?></th>
+                                <th style="text-align: center"><?php echo e(trans('global.delete')); ?></th>
+                                </thead>
+                                <tbody>
+                                <?php foreach($perms as $perm => $modes): ?>
+                                    <tr>
+                                        <td><?php echo e(trans('front.'.$perm)); ?></td>
+                                        <td style="text-align: center">
+                                            <div class="checkbox">
+                                                <?php if($modes['view']): ?>
+                                                    <?php echo Form::checkbox("perms[$perm][view]", 1, getMainPermission($perm, 'view'), ['class' => 'perm_checkbox perm_view']); ?>
+
+                                                <?php else: ?>
+                                                    <?php echo Form::checkbox('', 0, 0, ['disabled' => 'disabled']); ?>
+
+                                                <?php endif; ?>
+                                                <?php echo Form::label(null, null); ?>
+
+                                            </div>
+                                        </td>
+                                        <td style="text-align: center">
+                                            <div class="checkbox">
+                                                <?php if($modes['edit']): ?>
+                                                    <?php echo Form::checkbox("perms[$perm][edit]", 1, getMainPermission($perm, 'edit'), ['class' => 'perm_checkbox perm_edit']); ?>
+
+                                                <?php else: ?>
+                                                    <?php echo Form::checkbox('', 0, 0, ['disabled' => 'disabled']); ?>
+
+                                                <?php endif; ?>
+                                                <?php echo Form::label(null, null); ?>
+
+                                            </div>
+                                        </td>
+                                        <td style="text-align: center">
+                                            <div class="checkbox">
+                                                <?php if($modes['remove']): ?>
+                                                    <?php echo Form::checkbox("perms[$perm][remove]", 1, getMainPermission($perm, 'remove'), ['class' => 'perm_checkbox perm_remove']); ?>
+
+                                                <?php else: ?>
+                                                    <?php echo Form::checkbox('', 0, 0, ['disabled' => 'disabled']); ?>
+
+                                                <?php endif; ?>
+                                                <?php echo Form::label(null, null); ?>
+
+                                            </div>
+                                        </td>
+                                    </tr>
+                                <?php endforeach; ?>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <?php echo Form::close(); ?>
+
+                </div>
+
+                <div class="panel-footer">
+                    <button type="submit" class="btn btn-action" onClick="$('#new-user-defaults-form').submit();"><?php echo e(trans('global.save')); ?></button>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-sm-6">
+            <?php if(Session::has('billing_success')): ?>
+                <div class="alert alert-success">
+                    <?php echo Session::get('billing_success'); ?>
+
+                </div>
+            <?php endif; ?>
+            <?php if(Session::has('billing_errors')): ?>
+                <div class="alert alert-danger">
+                    <ul>
+                        <?php foreach(Session::get('billing_errors')->all() as $error): ?>
+                            <li><?php echo $error; ?></li>
+                        <?php endforeach; ?>
+                    </ul>
+                </div>
+            <?php endif; ?>
+
+            <div class="panel panel-default">
+
+                <div class="panel-heading">
+                    <div class="panel-title"><?php echo e(trans('admin.billing_gateway')); ?></div>
+                </div>
+
+                <div class="panel-body">
+                    <?php echo Form::open(array('route' => 'admin.billing.store', 'method' => 'POST', 'class' => 'form form-horizontal', 'id' => 'billing-gateway-form')); ?>
+
+
+                    <div class="form-group">
+                        <?php echo Form::label('payment_type', trans('validation.attributes.payment_type'), ['class' => 'col-xs-12 col-sm-4 control-label"']); ?>
+
+                        <div class="col-xs-12 col-sm-8">
+                            <?php echo Form::select('payment_type', $payment_types, settings('main_settings.payment_type'), ['class' => 'form-control']); ?>
+
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <?php echo Form::label('paypal_client_id', trans('validation.attributes.paypal_client_id'), ['class' => 'col-xs-12 col-sm-4 control-label"']); ?>
+
+                        <div class="col-xs-12 col-sm-8">
+                            <?php echo Form::text('paypal_client_id', settings('main_settings.paypal_client_id'), ['class' => 'form-control']); ?>
+
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <?php echo Form::label('paypal_secret', trans('validation.attributes.paypal_secret'), ['class' => 'col-xs-12 col-sm-4 control-label"']); ?>
+
+                        <div class="col-xs-12 col-sm-8">
+                            <?php echo Form::text('paypal_secret', settings('main_settings.paypal_secret'), ['class' => 'form-control']); ?>
+
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <?php echo Form::label('paypal_currency', trans('validation.attributes.paypal_currency'), ['class' => 'col-xs-12 col-sm-4 control-label"']); ?>
+
+                        <div class="col-xs-12 col-sm-8">
+                            <?php echo Form::text('paypal_currency', settings('main_settings.paypal_currency'), ['class' => 'form-control']); ?>
+
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <?php echo Form::label('paypal_payment_name', trans('validation.attributes.paypal_payment_name'), ['class' => 'col-xs-12 col-sm-4 control-label"']); ?>
+
+                        <div class="col-xs-12 col-sm-8">
+                            <?php echo Form::text('paypal_payment_name', settings('main_settings.paypal_payment_name'), ['class' => 'form-control']); ?>
+
+                        </div>
+                    </div>
+                    <?php echo Form::close(); ?>
+
+                </div>
+
+                <div class="panel-footer">
+                    <button type="submit" class="btn btn-action" onClick="$('#billing-gateway-form').submit();"><?php echo e(trans('global.save')); ?></button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="panel panel-default" id="table_billing_plans">
+                <div class="panel-heading">
+                    <ul class="nav nav-tabs nav-icons pull-right">
+                        <li role="presentation" class="">
+                            <a href="javascript:" type="button" data-modal="billing_plans_create" data-url="<?php echo e(route("admin.billing.create")); ?>">
+                                <i class="icon add" title="<?php echo e(trans('admin.add_new_user')); ?>"></i>
+                            </a>
+                        </li>
+                    </ul>
+
+                    <div class="panel-title"><?php echo trans('front.plans'); ?></div>
+                </div>
+
+                <div class="panel-body" data-table>
+                    <?php echo $__env->make('Admin.Billing.table', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+                </div>
+            </div>
+        </div>
+    </div>
+<?php $__env->stopSection(); ?>
+
+<?php $__env->startSection('javascript'); ?>
+<script>
+    tables.set_config('table_billing_plans', {
+        url:'<?php echo e(route("admin.billing.plans")); ?>',
+        delete_url:'<?php echo e(route("admin.billing.destroy")); ?>'
+    });
+
+    function billing_plans_edit_modal_callback() {
+        tables.get('table_billing_plans');
+        updateBillingPlans();
+    }
+
+    function billing_plans_create_modal_callback() {
+        tables.get('table_billing_plans');
+        updateBillingPlans();
+    }
+
+    function updateBillingPlans() {
+        $.ajax({
+            type: 'GET',
+            dataType: "html",
+            url: '<?php echo e(route('admin.billing.billing_plans_form')); ?>',
+            success: function(res){
+                $('#default_billing_plan div').html(res);
+            }
+        });
+    }
+
+    $(document).ready(function() {
+        $(document).on('change', 'input[name="enable_plans"]', function() {
+            if ($(this).prop('checked')) {
+                $('#default_billing_plan').show();
+                $('#default_user_fields').hide();
+            }
+            else {
+                $('#default_user_fields').show();
+                $('#default_billing_plan').hide();
+            }
+        });
+
+        $(document).on('click', '.multi_delete', function() {
+            setTimeout(function() {
+                updateBillingPlans();
+            }, 2000);
+        });
+
+        $('input[name="enable_plans"]').trigger('change');
+
+        checkPerms();
+
+        $(document).ready(function () {
+            $('input[name="dst_date_from"]').datetimepicker({
+                changeYear: false,
+                format: 'mm-dd hh:ii',
+                closeOnDateSelect: true
+            });
+            $('input[name="dst_date_to"]').datetimepicker({
+                changeYear: false,
+                format: 'mm-dd hh:ii',
+                closeOnDateSelect: true
+            });
+        });
+    });
+</script>
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('Admin.Layouts.default', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

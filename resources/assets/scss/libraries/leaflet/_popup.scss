@@ -1,0 +1,74 @@
+#gps-device-parameters-view {
+  width: 300px;
+  max-width: 100%;
+
+  span[data-device="streetview"] {
+    min-height: 125px;
+  }
+}
+#gps-device-street-view-large {
+  width: 500px;
+  max-width: 100%;
+
+  span[data-device="streetview"] {
+    min-height: 261px;
+  }
+}
+
+.leaflet-popup-map-icon {
+  width: 200px;
+}
+
+.leaflet-popup-content {
+  background: $popup-body-bg;
+
+  @include box-shadow(0 6px 12px rgba(0,0,0,.175));
+
+  img {
+    max-width: 100%;
+  }
+}
+.popup-header {
+  @include clearfix;
+  background: $popup-header-bg;
+
+  .nav-tabs {
+    float: right;
+    //margin: -($popup-header-padding);
+  }
+
+  .popup-title {
+    @include text-overflow;
+    font-size: $popup-title-font-size;
+    color: $popup-title-color;
+
+    padding: $popup-header-padding;
+  }
+}
+
+.popup-body {
+  background: $popup-body-bg;
+  padding: $popup-inner-padding;
+  color: $popup-body-color;
+  font-size: $popup-body-font-size;
+
+  > .nav {
+    margin: -($popup-inner-padding);
+    margin-bottom: $popup-inner-padding;
+  }
+
+  .table {
+    margin-bottom: 0;
+
+    tbody > tr {
+      > th {
+        font-weight: normal;
+        width: 35%;
+      }
+      > td,
+      > th {
+        border: 0;
+      }
+    }
+  }
+}

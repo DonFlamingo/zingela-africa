@@ -1,0 +1,43 @@
+<div class="table_error"></div>
+<div class="table-responsive">
+    <table class="table table-list">
+        <thead>
+        <tr>
+            <?php echo tableHeaderSort($items->sorting, 'title'); ?>
+
+            <?php echo tableHeader('admin.actions', 'style="text-align: right;"'); ?>
+
+        </tr>
+        </thead>
+
+        <tbody>
+        <?php if(count($collection = $items->getCollection())): ?>
+            <?php foreach($collection as $item): ?>
+                <tr>
+                    <td>
+                        <?php echo $item->title; ?>
+
+                    </td>
+                    <td class="actions">
+                        <div class="btn-group dropdown droparrow" data-position="fixed">
+                            <i class="btn icon edit" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"></i>
+                            <ul class="dropdown-menu">
+                                <li><a href="javascript:" data-modal="<?php echo e($section); ?>_edit" data-url="<?php echo e(route("admin.{$section}.edit", $item->id)); ?>"><?php echo trans('global.edit'); ?></a></li>
+                            </ul>
+                        </div>
+                    </td>
+                </tr>
+            <?php endforeach; ?>
+        <?php else: ?>
+            <tr class="">
+                <td class="no-data" colspan="2">
+                    <?php echo trans('admin.no_data'); ?>
+
+                </td>
+            </tr>
+        <?php endif; ?>
+        </tbody>
+    </table>
+</div>
+
+<?php echo $__env->make("Admin.Layouts.partials.pagination", array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

@@ -1,0 +1,106 @@
+<?php if(!empty($grouped)): ?>
+    <?php foreach($grouped as $id => $devices): ?>
+        <div class="group" data-toggle="multiCheckbox">
+            <div class="group-heading">
+
+                <div class="checkbox">
+                    <input type="checkbox" data-toggle="checkbox">
+                    <label></label>
+                </div>
+
+                <div class="group-title <?php echo e(isset($device_groups_opened[$id]) ? '' : 'collapsed'); ?>" data-toggle="collapse" data-target="#device-group-<?php echo e($id); ?>" data-parent="#objects_tab" aria-expanded="false" aria-controls="device-group-<?php echo e($id); ?>">
+                    <?php echo e($device_groups[$id]); ?> <span class="count"><?php echo e(count($devices)); ?></span>
+                </div>
+                <?php /*
+                <?php if($id): ?>
+                    <div class="btn-group dropleft droparrow"  data-position="fixed">
+                        <i class="btn icon options" data-toggle="dropdown" data-position="fixed" aria-haspopup="true" aria-expanded="false"></i>
+                    </div>
+                <?php endif; ?>
+                */ ?>
+            </div>
+
+            <div id="device-group-<?php echo e($id); ?>" class="group-collapse collapse <?php echo e(!isset($device_groups_opened[$id]) ? '' : 'in'); ?>" data-id="<?php echo e($id); ?>" role="tabpanel">
+                <div class="group-body">
+                    <ul class="group-list">
+                        <?php foreach($devices as $key => $item): ?>
+                            <li data-device-id="<?php echo e($item['id']); ?>">
+                                <div class="checkbox">
+                                    <input type="checkbox" name="items[<?php echo e($item['id']); ?>]" value="<?php echo e($item['id']); ?>" <?php echo e(!empty($item['pivot']['active']) ? 'checked="checked"' : ''); ?> onChange="app.devices.active('<?php echo e($item['id']); ?>', this.checked);"/>
+                                    <label></label>
+                                </div>
+                                <div class="name" onClick="app.devices.select(<?php echo e($item['id']); ?>);">
+                                    <span data-device="name"><?php echo e($item['name']); ?></span>
+                                </div>
+                                <div class="details">
+                                    <span data-device="speed"></span>
+                                    <?php if( $item['engine_hours'] != 'gps' ): ?>
+                                    <span data-device="detect_engine"><i class="icon detect_engine"></i></span>
+                                    <?php endif; ?>
+                                    <span data-device="status" data-toggle="tooltip" data-placement="top" title=""></span>
+
+                                    <div class="btn-group dropleft droparrow"  data-position="fixed">
+                                        <i class="btn icon options" data-toggle="dropdown" data-position="fixed" aria-haspopup="true" aria-expanded="false"></i>
+                                        <ul class="dropdown-menu" >
+                                            <?php if( Auth::User()->perm('history', 'view') ): ?>
+                                                <li>
+                                                    <a href="javascript:" class="object_show_history" onClick="app.history.device('<?php echo e($item['id']); ?>', 'last_hour');">
+                                                        <span class="icon last-hour"></span>
+                                                        <span class="text"><?php echo e(trans('front.show_history')); ?> (<?php echo e(mb_strtolower(trans('front.last_hour'))); ?>)</span>
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a href="javascript:" class="object_show_history" onClick="app.history.device('<?php echo e($item['id']); ?>', 'today');">
+                                                        <span class="icon today"></span>
+                                                        <span class="text"><?php echo e(trans('front.show_history')); ?> (<?php echo e(mb_strtolower(trans('front.today'))); ?>)</span>
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a href="javascript:" class="object_show_history" onClick="app.history.device('<?php echo e($item['id']); ?>', 'yesterday');">
+                                                        <span class="icon yesterday"></span>
+                                                        <span class="text"><?php echo e(trans('front.show_history')); ?> (<?php echo e(mb_strtolower(trans('front.yesterday'))); ?>)</span>
+                                                    </a>
+                                                </li>
+                                            <?php endif; ?>
+
+                                            <li>
+                                                <a href="javascript:" data-url="<?php echo e(route('devices.follow_map', [$item['id']])); ?>" data-id="<?php echo e($item['id']); ?>" onClick="app.devices.follow(<?php echo e($item['id']); ?>);" data-name="<?php echo e(trans('front.follow').' ('.$item['name'].')'); ?>">
+                                                    <span class="icon follow"></span>
+                                                    <span class="text"><?php echo e(trans('front.follow')); ?></span>
+                                                </a>
+                                            </li>
+
+                                            <?php if( Auth::User()->perm('send_command', 'view') ): ?>
+                                                <li>
+                                                    <a href="javascript:" data-url="<?php echo e(route('send_command.create')); ?>" data-modal="send_command" data-id="<?php echo e($item['id']); ?>">
+                                                        <span class="icon send-command"></span>
+                                                        <span class="text"><?php echo e(trans('front.send_command')); ?></span>
+                                                    </a>
+                                                </li>
+                                            <?php endif; ?>
+
+                                            <?php if( Auth::User()->perm('devices', 'edit') ): ?>
+                                                <li>
+                                                    <a href="javascript:" data-url="<?php echo e(route('devices.edit', [$item['id'], 0])); ?>" data-modal="devices_edit">
+                                                        <span class="icon edit"></span>
+                                                        <span class="text"><?php echo e(trans('global.edit')); ?></span>
+                                                    </a>
+                                                </li>
+                                            <?php endif; ?>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </li>
+                            <?php
+                            unset($devices[$key]['traccar'], $devices[$key]['traccar_device_id'], $devices[$key]['parameters']);
+                            ?>
+                        <?php endforeach; ?>
+                    </ul>
+                    <script>app.devices.addMulti(JSON.parse('<?php echo json_encode($devices); ?>'));</script>
+                </div>
+            </div>
+        </div>
+    <?php endforeach; ?>
+<?php else: ?>
+    <p class="no-results"><?php echo trans('front.no_devices'); ?></p>
+<?php endif; ?>

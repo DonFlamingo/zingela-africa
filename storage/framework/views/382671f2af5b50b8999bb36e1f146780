@@ -1,0 +1,17 @@
+<div class="nav-pagination">
+    <?php echo $items->render(); ?>
+
+</div>
+<?php /*
+<div class="pagination">
+    <a href="<?php echo e($url_path); ?>?page=<?php echo e($page - 1); ?>" class="pag <?php if($page <= 1): ?>disabled <?php endif; ?>" data-page="<?php echo e($page - 1); ?>">&#171;</a>
+    <?php foreach($pagination as $key => $lpage): ?>
+        <?php if($lpage == '.'): ?>
+            <a href="#" class="pag_space"></a>
+        <?php else: ?>
+            <a href="<?php echo e($url_path); ?>?page=<?php echo e($lpage); ?>" class="pag <?php if($lpage == $page): ?> active <?php endif; ?>" data-page="<?php echo e($lpage); ?>"><?php echo e($lpage); ?></a>
+        <?php endif; ?>
+    <?php endforeach; ?>
+    <a href="<?php echo e($url_path); ?>?page=<?php echo e($page + 1); ?>" class="pag <?php if($page >= $total_pages): ?>disabled <?php endif; ?>" data-page="<?php echo e($page + 1); ?>">&#187;</a>
+</div>
+*/ ?>

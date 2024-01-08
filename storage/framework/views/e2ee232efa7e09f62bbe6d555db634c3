@@ -1,0 +1,31 @@
+<div class="tab-pane-header">
+    <div class="form">
+        <div class="input-group">
+            <div class="form-group search">
+                <?php echo Form::text('search', null, ['class' => 'form-control', 'placeholder' => trans('front.search'), 'autocomplete' => 'off']); ?>
+
+            </div>
+            <span class="input-group-btn">
+                <?php /*
+                <button class="btn btn-default" type="button">
+                    <i class="icon filter"></i>
+                </button>
+                */ ?>
+                <?php if( settings('plugins.object_listview.status') && Auth::User()->perm('devices', 'view') ): ?>
+                    <a href="<?php echo e(route('objects.listview')); ?>" class="btn btn-primary" target="_blank">
+                        <i class="icon list"></i>
+                    </a>
+                <?php endif; ?>
+                <?php if(Auth::User()->perm('devices', 'edit')): ?>
+                <button class="btn btn-primary" type="button"  data-url="<?php echo route('devices.create'); ?>" data-modal="devices_create">
+                    <i class="icon add"></i>
+                </button>
+                <?php endif; ?>
+            </span>
+        </div>
+    </div>
+</div>
+
+<div class="tab-pane-body">
+    <div id="ajax-items"></div>
+</div>

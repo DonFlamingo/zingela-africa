@@ -1,0 +1,63 @@
+<?php if(Session::has('message')): ?>
+    <div class="alert alert-success">
+        <?php echo e(Session::get('message')); ?>
+
+    </div>
+<?php endif; ?>
+<?php if(Session::has('error')): ?>
+    <div class="alert alert-danger">
+        <?php echo e(Session::get('error')); ?>
+
+    </div>
+<?php endif; ?>
+
+<div class="table-responsive">
+    <table class="table table-list" data-toggle="multiCheckbox">
+        <thead>
+        <tr>
+            <?php echo tableHeader('validation.attributes.active'); ?>
+
+            <?php echo tableHeader('validation.attributes.port'); ?>
+
+            <?php echo tableHeader('validation.attributes.name'); ?>
+
+            <?php echo tableHeader('validation.attributes.extra'); ?>
+
+            <?php echo tableHeader('admin.actions', 'style="text-align: right;"'); ?>
+
+        </tr>
+        </thead>
+        <tbody>
+        <?php if(count($ports)): ?>
+            <?php foreach($ports as $port): ?>
+                <tr>
+                    <td>
+                        <span class="label label-sm label-<?php echo $port->active ? 'success' : 'danger'; ?>">
+                            <?php echo trans('validation.attributes.active'); ?>
+
+                        </span>
+                    </td>
+                    <td><?php echo e($port->port); ?></td>
+                    <td><?php echo e($port->name); ?></td>
+                    <td><?php echo e(count(json_decode($port->extra, TRUE))); ?></td>
+                    <td class="actions">
+                        <div class="btn-group dropdown droparrow" data-position="fixed">
+                            <i class="btn icon edit" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"></i>
+                            <ul class="dropdown-menu">
+                                <li><a href="javascript:" data-modal="ports_edit" data-url="<?php echo e(route('admin.ports.edit', $port->name)); ?>"><?php echo trans('global.edit'); ?></a></li>
+                            </ul>
+                        </div>
+                    </td>
+                </tr>
+            <?php endforeach; ?>
+        <?php else: ?>
+            <tr>
+                <td colspan="5">
+                    <?php echo e(trans('admin.no_data')); ?>
+
+                </td>
+            </tr>
+        <?php endif; ?>
+        </tbody>
+    </table>
+</div>

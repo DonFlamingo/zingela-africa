@@ -1,0 +1,21 @@
+.scrollbar {
+  &::-webkit-scrollbar {
+    width: $scrollbar-size;
+    height: $scrollbar-size;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: $scrollbar-track-bg;
+    border: 1px solid $scrollbar-track-border;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: $scrollbar-thumb-bg;
+    border: 1px solid $scrollbar-thumb-border;
+  }
+}
+
+body {
+  scrollbar-face-color: $scrollbar-track-bg;
+  scrollbar-track-color: $scrollbar-thumb-bg;
+}

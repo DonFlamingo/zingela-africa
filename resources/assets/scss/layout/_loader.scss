@@ -1,0 +1,136 @@
+#loading,
+.loading{
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 99999;
+  color: $brand-primary;
+}
+
+#loading {
+  display: table;
+  vertical-align: middle;
+  background-color: $color-bg-000;
+}
+#loading,
+.loading{
+  .backdrop {
+    background-color: $color-bg-000;
+    opacity: 0.5;
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+  }
+  .outter {
+    display: table;
+    vertical-align: middle;
+    height: 100%;
+    width: 100%;
+  }
+
+  .middle {
+    display: table-cell;
+    vertical-align: middle;
+  }
+
+  .inner {
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
+@keyframes rotate {
+  0% {
+    -webkit-transform: rotate(0deg) scale(1);
+    transform: rotate(0deg) scale(1); }
+  50% {
+    -webkit-transform: rotate(180deg) scale(0.6);
+    transform: rotate(180deg) scale(0.6); }
+  100% {
+    -webkit-transform: rotate(360deg) scale(1);
+    transform: rotate(360deg) scale(1); }
+}
+
+.loader {
+  display: block;
+  position: relative;
+  margin: auto;
+  height: 35px;
+  width: 35px;
+
+  &:before,
+  &:after {
+    -webkit-animation-fill-mode: both;
+    animation-fill-mode: both;
+
+    content: " ";
+    position: absolute;
+    left: 0px;
+    top:  0px;
+    border: 2px solid $brand-primary;
+    border-bottom-color: transparent;
+    border-top-color: transparent;
+    border-radius: 100%;
+    height: 35px;
+    width: 35px;
+    -webkit-animation: rotate 1s 0s ease-in-out infinite;
+    animation: rotate 1s 0s ease-in-out infinite;
+  }
+
+  &:after {
+    display: inline-block;
+    top: 10px;
+    left: 10px;
+    width: 15px;
+    height: 15px;
+    -webkit-animation-duration: .5s;
+    animation-duration: .5s;
+    border-color: $brand-primary transparent;
+    -webkit-animation-direction: reverse;
+    animation-direction: reverse;
+  }
+
+  &.large {
+    height: 60px;
+    width: 60px;
+
+    &:before{
+      height: 60px;
+      width: 60px;
+      border-width: 3px;
+    }
+    &:after {
+      top: 10px;
+      left: 10px;
+      width: 40px;
+      height: 40px;
+      border-width: 3px;
+    }
+  }
+
+  &.small {
+    height: 20px;
+    width: 20px;
+
+    &:before{
+      height: 20px;
+      width: 20px;
+      border-width: 1px;
+    }
+    &:after {
+      top: 5px;
+      left: 5px;
+      width: 10px;
+      height: 10px;
+      border-width: 1px;
+    }
+  }
+}

@@ -1,0 +1,39 @@
+<?php echo Form::hidden('trans_file', $file); ?>
+
+<?php if($file != 'validation'): ?>
+    <?php foreach($en_translations as $key => $value): ?>
+        <?php if(empty($value)): ?>
+            <?php continue; ?>
+        <?php endif; ?>
+        <tr>
+            <td style="min-width: 30%; overflow: hidden"><?php echo $value; ?></td>
+            <td style="min-width: 30%; overflow: hidden"><?php echo !array_key_exists($key, $or_translations) ? $value : $or_translations[$key]; ?></td>
+            <td style="min-width: 40%"><textarea name="trans[<?php echo e($key); ?>]" data-key="<?php echo e($key); ?>" class="form-control" rows="3"><?php echo e(!array_key_exists($key, $translations) ? $value : $translations[$key]); ?></textarea></td>
+        </tr>
+    <?php endforeach; ?>
+<?php else: ?>
+    <?php foreach($en_translations as $key => $value): ?>
+        <?php if(empty($value)): ?>
+            <?php continue; ?>
+        <?php endif; ?>
+
+        <?php if(is_array($value)): ?>
+            <?php foreach($value as $skey => $svalue): ?>
+                <?php if(empty($svalue) || is_array($svalue)): ?>
+                    <?php continue; ?>
+                <?php endif; ?>
+                <tr>
+                    <td style="min-width: 30%; overflow: hidden"><?php echo $svalue; ?></td>
+                    <td style="min-width: 30%; overflow: hidden"><?php echo !array_key_exists($skey, $or_translations[$key]) ? $svalue : $or_translations[$key][$skey]; ?></td>
+                    <td style="min-width: 40%"><textarea name="trans[<?php echo e($key); ?>][<?php echo e($skey); ?>]" data-key="<?php echo e($key.'.'.$skey); ?>" class="form-control" rows="3"><?php echo e(!array_key_exists($skey, $translations[$key]) ? $svalue : $translations[$key][$skey]); ?></textarea></td>
+                </tr>
+            <?php endforeach; ?>
+        <?php else: ?>
+        <tr>
+            <td style="min-width: 30%; overflow: hidden"><?php echo $value; ?></td>
+            <td style="min-width: 30%; overflow: hidden"><?php echo !array_key_exists($key, $or_translations) ? $value : $or_translations[$key]; ?></td>
+            <td style="min-width: 40%"><textarea name="trans[<?php echo e($key); ?>]" data-key="<?php echo e($key); ?>" class="form-control" rows="3"><?php echo e(!array_key_exists($key, $translations) ? $value : $translations[$key]); ?></textarea></td>
+        </tr>
+        <?php endif; ?>
+    <?php endforeach; ?>
+<?php endif; ?>

@@ -1,0 +1,165 @@
+<?php $__env->startSection('content'); ?>
+    <?php $line = 0; ?>
+    <?php foreach($devices as $device): ?>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <?php echo e(rtl(trans('front.report_type'), $data)); ?>: <?php echo e(rtl($types[$data['type']], $data)); ?>
+
+            </div>
+            <div class="panel-body">
+                <table class="table" style="margin-bottom: 0px">
+                    <tbody>
+                    <tr>
+                        <th><?php echo e(rtl(trans('validation.attributes.device_id'), $data)); ?>:</th>
+                        <th><?php echo e(rtl($device['name'], $data)); ?></th>
+                        <th>&nbsp;</th>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <th><?php echo rtl(trans('front.time_period'), $data); ?>:</th>
+                        <th><?php echo e($data['date_from']); ?> - <?php echo e($data['date_to']); ?></th>
+                        <th>&nbsp;</th>
+                        <td>&nbsp;</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        <?php $line += 3; ?>
+            <div class="panel-body no-padding">
+                <table class="table table-striped table-speed" style="margin-bottom: 0px">
+                    <thead>
+                    <tr>
+                        <th><?php echo e(rtl(trans('front.driver'), $data)); ?></th>
+                        <th><?php echo e(rtl(trans('front.distance_driver'), $data)); ?></th>
+                        <th><?php echo e(rtl(trans('front.overspeed_duration'), $data)); ?> (s)</th>
+                        <th><?php echo e(rtl(trans('front.overspeed_score'), $data)); ?></th>
+                        <th><?php echo e(rtl(trans('front.harsh_acceleration_count'), $data)); ?></th>
+                        <th><?php echo e(rtl(trans('front.harsh_acceleration_score'), $data)); ?>(/100kms)</th>
+                        <th><?php echo e(rtl(trans('front.harsh_braking_count'), $data)); ?></th>
+                        <th><?php echo e(rtl(trans('front.harsh_braking_score'), $data)); ?>(/100kms)</th>
+                        <th>Total Score</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <?php if(!isset($items[$device['id']]) || empty($items[$device['id']])): ?>
+                        <tr>
+                            <td colspan="9"><?php echo e(rtl(trans('front.nothing_found_request'), $data)); ?></td>
+                        </tr>
+                    <?php else: ?>
+                        <?php
+                        $device_items = $items[$device['id']];
+                        ?>
+                        <?php $line += 1; ?>
+                        <?php foreach($device_items as $item): ?>
+                            <?php
+                            $line += 1;
+                            $distance = float($item['distance']);
+
+                            $overspeed_score = $item['time'] > 0 && $distance > 0 ? float($item['time']/10/$distance*100) : 0;
+                            $harsh_accl_score = $item['ha'] > 0 && $distance > 0 ? float($item['ha']/$distance*100) : 0;
+                            $harsh_braking_score = $item['hb'] > 0 && $distance > 0 ? float($item['hb']/$distance*100) : 0;
+                            $rag = $overspeed_score + $harsh_accl_score + $harsh_braking_score;
+                            if($rag > 300) {
+                            	$rag = 100;
+                            }
+                    
+                    		else {
+                            	$rag = round(($rag/300) * 100);
+                            }
+
+                            ?>
+                            <?php if($data['format'] == 'xls'): ?>
+                                <tr style="background-color: <?php echo e($rag > 95 ? '#FF0000' : ($rag < 50 ? '#00d400' : '#FFFF00')); ?>; color: #000000;">
+                                    <td style="text-align: center;"><?php echo e(!empty($item['name']) ? $item['name'] : '-'); ?></td>
+                                    <td style="text-align: center;"><?php echo e($distance); ?></td>
+                                    <td style="text-align: center;"><?php echo e($item['time']); ?></td>
+                                    <td style="text-align: center;"><?php echo e($overspeed_score); ?></td>
+                                    <td style="text-align: center;"><?php echo e($item['ha']); ?></td>
+                                    <td style="text-align: center;"><?php echo e($harsh_accl_score); ?></td>
+                                    <td style="text-align: center;"><?php echo e($item['hb']); ?></td>
+                                    <td style="text-align: center;"><?php echo e($harsh_braking_score); ?></td>
+                                    <td style="text-align: center;"><?php echo e($rag); ?></td>
+                                </tr>
+                            <?php else: ?>
+                                <tr style="background-color: <?php echo e($rag > 95 ? '#FF0000' : ($rag < 50 ? '#00d400' : '#FFFF00')); ?>; color: #000000;">
+                                    <td style="text-align: center;"><?php echo e(!empty($item['name']) ? rtl($item['name'], $data) : '-'); ?></td>
+                                    <td style="text-align: center;"><?php echo e($distance); ?></td>
+                                    <td style="text-align: center;"><?php echo e($item['time']); ?></td>
+                                    <td style="text-align: center;"><?php echo e($overspeed_score); ?></td>
+                                    <td style="text-align: center;"><?php echo e($item['ha']); ?></td>
+                                    <td style="text-align: center;"><?php echo e($harsh_accl_score); ?></td>
+                                    <td style="text-align: center;"><?php echo e($item['hb']); ?></td>
+                                    <td style="text-align: center;"><?php echo e($harsh_braking_score); ?></td>
+                                    <td style="text-align: center;"><?php echo e($rag); ?></td>
+                                </tr>
+                            <?php endif; ?>
+                        <?php endforeach; ?>
+                    <?php endif; ?>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <?php $line += 4; ?>
+    <?php endforeach; ?>
+    <div class="panel panel-default">
+        <div class="panel-body no-padding" style="padding: 0px;">
+            <table class="table " style="color: #000000; margin-bottom: 0px">
+                <tbody>
+                <tr>
+                    <td style="background-color: #FF0000;"><?php echo e(rtl(strtoupper(trans('front.above')), $data)); ?> 95</td>
+                </tr>
+                <tr>
+                    <td style="background-color: #FFFF00;">From 50 to 95</td>
+                </tr>
+                <tr>
+                    <td style="background-color: #00d400;"><?php echo e(rtl(strtoupper(trans('front.less_than')), $data)); ?> 50</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <?php if($data['format'] != 'xls'): ?>
+    <div class="panel panel-default">
+        <div class="panel-body no-padding" style="padding: 0px;">
+            <table class="table" style="table-layout: auto; margin-bottom: 0px;">
+                <tbody>
+                <tr>
+                    <td style="width: 150px;">D</td>
+                    <td><?php echo e(rtl(trans('front.distance_driver'), $data)); ?></td>
+                </tr>
+                <tr>
+                    <td style="width: 150px;">OD</td>
+                    <td><?php echo e(rtl(trans('front.overspeed_duration'), $data)); ?></td>
+                </tr>
+                <tr>
+                    <td style="width: 150px;">AC</td>
+                    <td><?php echo e(rtl(trans('front.harsh_acceleration_count'), $data)); ?></td>
+                </tr>
+                <tr>
+                    <td style="width: 150px;">AS = AC / D * 100</td>
+                    <td><?php echo e(rtl(trans('front.harsh_acceleration_score'), $data)); ?></td>
+                </tr>
+                <tr>
+                    <td style="width: 150px;">BC</td>
+                    <td><?php echo e(rtl(trans('front.harsh_braking_count'), $data)); ?></td>
+                </tr>
+                <tr>
+                    <td style="width: 150px;">BS = BC / D * 100</td>
+                    <td><?php echo e(rtl(trans('front.harsh_braking_score'), $data)); ?></td>
+                </tr>
+                <tr>
+                    <td style="width: 150px;">OS = OD / 10 / D * 100</td>
+                    <td><?php echo e(rtl(trans('front.overspeed_score'), $data)); ?></td>
+                </tr>
+                <tr>
+                    <td style="width: 150px;">R = OS + AS + BS. If R > 300, R = 100 Else (R/300) * 100</td>
+                    <td>Driver Performance</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <?php endif; ?>
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('Frontend.Reports.parse.layout', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

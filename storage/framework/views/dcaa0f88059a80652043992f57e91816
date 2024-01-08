@@ -1,0 +1,94 @@
+<div class="table-responsive">
+    <table class="table table-list" data-toggle="multiCheckbox">
+        <thead>
+            <tr>
+                <?php echo tableHeaderCheckall(['delete_url' => trans('admin.delete_selected')]); ?>
+
+                <?php echo tableHeader('validation.attributes.name'); ?>
+
+                <?php echo tableHeader('validation.attributes.type'); ?>
+
+                <?php echo tableHeader('validation.attributes.format'); ?>
+
+                <?php echo tableHeader('admin.size'); ?>
+
+                <?php echo tableHeader('validation.attributes.send_to_email'); ?>
+
+                <?php echo tableHeader('global.is_send'); ?>
+
+                <th></th>
+            </tr>
+        </thead>
+
+        <tbody>
+        <?php if(count($logs)): ?>
+            <?php foreach($logs as $log): ?>
+                <tr>
+					<td>
+                        <div class="checkbox">
+                            <input type="checkbox" class="checkboxes" value="<?php echo e($log->id); ?>">
+                            <label></label>
+                        </div>
+                    </td>
+                    <td>
+                        <?php echo e($log->title); ?>
+
+                    </td>
+                    <td>
+                        <?php echo e($log->type_text); ?>
+
+                    </td>
+					<td>
+                        <?php echo e($log->format_text); ?>
+
+                    </td>
+                    <td>
+                        <?php echo e(formatBytes( $log->size )); ?>
+
+                    </td>
+                    <td>
+                        <?php echo e($log->email); ?>
+
+                    </td>
+                    <td>
+                        <?php echo e($log->is_send ? trans('global.yes') : trans('global.no')); ?>
+
+                    </td>
+                    <td class="actions">
+						<a href="<?php echo e(route('reports.log_download', $log->id)); ?>"><i class="icon download"></i></a>
+                        <a href="<?php echo e(route('reports.log_destroy')); ?>" class="js-confirm-link remove-icon" data-confirm="<?php echo e(trans('admin.do_delete')); ?>" data-id="<?php echo e($log->id); ?>" data-method="DELETE" alt="<?php echo e(trans('global.delete')); ?>">
+                            <i class="icon delete"></i>
+                        </a>
+                    </td>
+                </tr>
+            <?php endforeach; ?>
+        <?php else: ?>
+            <tr>
+                <td colspan="8" class="no-data">
+                    <?php echo e(trans('admin.no_data')); ?>
+
+                </td>
+            </tr>
+        <?php endif; ?>
+        </tbody>
+    </table>
+</div>
+
+<div class="nav-pagination">
+    <?php echo $logs->setPath(route('reports.logs'))->render(); ?>
+
+</div>
+
+<div class="modal" id="js-confirm-link" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                loading
+            </div>
+            <div class="modal-footer">
+                <button type="button" value="cancel" class="btn btn-default" data-dismiss="modal"><?php echo e(trans('admin.cancel')); ?></button>
+                <button type="button" value="confirm" class="btn btn-action submit js-confirm-link-yes"><?php echo e(trans('admin.confirm')); ?></button>
+            </div>
+        </div>
+    </div>
+</div>

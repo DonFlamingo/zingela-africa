@@ -1,0 +1,175 @@
+<?php $__env->startSection('title', trans('global.add_new')); ?>
+
+<?php $__env->startSection('body'); ?>
+    <ul class="nav nav-tabs nav-default" role="tablist">
+        <li class="active"><a href="#alerts-form-add-user" role="tab" data-toggle="tab"><?php echo trans('front.user_info'); ?> & <?php echo trans('front.devices'); ?></a></li>
+        <?php if(count($drivers)): ?>
+            <li><a href="#alerts-form-add-drivers" role="tab" data-toggle="tab"><?php echo trans('front.drivers'); ?></a></li>
+        <?php endif; ?>
+        <li><a href="#alerts-form-add-geofences" role="tab" data-toggle="tab"><?php echo trans('front.geofencing'); ?></a></li>
+        <li><a href="#alerts-form-add-overspeed" role="tab" data-toggle="tab"><?php echo trans('front.overspeed'); ?></a></li>
+        <?php /*<li><a href="#alerts-form-add-fuel" role="tab" data-toggle="tab"><?php echo trans('validation.attributes.fuel_consumption'); ?></a></li>*/ ?>
+        <li><a href="#alerts-form-add-events" role="tab" data-toggle="tab"><?php echo trans('front.events'); ?></a></li>
+    </ul>
+    
+    <?php echo Form::open(['route' => 'alerts.store', 'method' => 'POST', 'class' => 'alert-form']); ?>
+
+    <?php echo Form::hidden('id'); ?>
+
+        <div class="tab-content">
+            <div id="alerts-form-add-user" class="tab-pane active">
+
+                <div class="form-group">
+                    <?php echo Form::label('name', trans('validation.attributes.name').'*:'); ?>
+
+                    <?php echo Form::text('name', null, ['class' => 'form-control']); ?>
+
+                </div>
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <?php echo Form::label('email', trans('validation.attributes.email').':'); ?>
+
+                            <?php echo Form::email('email', null, ['class' => 'form-control']); ?>
+
+                            <small><?php echo trans('front.email_semicolon'); ?></small>
+                        </div>
+                    </div>
+                    <?php if(Auth::User()->sms_gateway): ?>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <?php echo Form::label('mobile_phone', trans('validation.attributes.mobile_phone').':'); ?>
+
+                                <?php echo Form::text('mobile_phone', null, ['class' => 'form-control']); ?>
+
+                                <small><?php echo trans('front.sms_semicolon'); ?></small>
+                            </div>
+                        </div>
+                    <?php endif; ?>
+                </div>
+                <?php /*<div class="form-group">
+                    <label><?php echo Form::checkbox('ac_alarm', 1, null); ?> <?php echo trans('front.ac_alarm'); ?></label>
+                </div>*/ ?>
+
+                <div class="form-group">
+                    <?php echo Form::label('devices', trans('validation.attributes.devices').'*:'); ?>
+
+                    <?php echo Form::select('devices[]',$devices , null, ['class' => 'form-control multiexpand', 'multiple' => 'multiple', 'data-live-search' => true, 'data-actions-box' => true]); ?>
+
+                </div>
+            </div>
+
+            <div id="alerts-form-add-drivers" class="tab-pane">
+                <div class="form-group">
+                    <div class="alert alert-info"><?php echo e(trans('front.alert_tab_driver_note')); ?></div>
+                    <?php echo Form::label('drivers', trans('front.drivers').':'); ?>
+
+                    <?php echo Form::select('drivers[]', $drivers, null, ['class' => 'form-control multiexpand', 'multiple' => 'multiple', 'data-live-search' => true, 'data-actions-box' => true]); ?>
+
+                </div>
+            </div>
+
+            <div id="alerts-form-add-geofences" class="tab-pane">
+                <?php if(!empty($geofences)): ?>
+                <div class="row">
+                    <div class="form-group col-md-6 col-sm-6 col-xs-12">
+                        <?php echo Form::label('geofences', trans('validation.attributes.geofences').':'); ?>
+
+                        <?php echo Form::hidden('geofences'); ?>
+
+                        <div class="row">
+                            <div class="form-group col-md-6 col-sm-6 col-xs-12">
+                                <?php echo Form::select('geofence', $geofences, null, ['class' => 'form-control']); ?>
+
+                            </div>
+                            <div class="form-group col-md-6 col-sm-6 col-xs-12">
+                                <?php echo Form::select('zone_type', $alert_zones, null, ['class' => 'form-control']); ?>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group col-md-4 col-sm-4 col-xs-10">
+                        <div class="row">
+                            <div class="form-group col-md-6 col-sm-6 col-xs-6">
+                                <?php echo Form::label('geofences', trans('front.from').':'); ?>
+
+                                <?php echo Form::text('time_from', '00:00', ['class' => 'form-control']); ?>
+
+                            </div>
+                            <div class="form-group col-md-6 col-sm-6 col-xs-6">
+                                <?php echo Form::label('geofences', trans('front.to').':'); ?>
+
+                                <?php echo Form::text('time_to', '00:00', ['class' => 'form-control']); ?>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group col-md-1 col-sm-1 col-xs-2">
+                        <div class="row">
+                            <?php echo Form::label(null, '&nbsp;'); ?>
+
+                            <a href="javascript:" class="btn btn-action btn-block alert-add-geofence"><i class="icon add" title="<?php echo e(trans('global.add')); ?>"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <small><?php echo e(trans('front.geofence_help_text')); ?></small>
+                <?php else: ?>
+                    <div class="alert alert-warning" role="alert"><?php echo trans('front.no_geofences'); ?></div>
+                <?php endif; ?>
+                <table class="table table-bordered alerts-geofences-list"></table>
+            </div>
+
+            <div id="alerts-form-add-overspeed" class="tab-pane">
+                <div class="form-group">
+                    <?php echo Form::label('overspeed', trans('validation.attributes.overspeed').':'); ?><br>
+                    <div class="row">
+                        <div class="form-group col-md-5 col-sm-5 col-xs-12">
+                            <?php echo Form::text('speed', null, ['class' => 'form-control numeric', 'placeholder' => trans('global.speed')]); ?>
+
+                        </div>
+                        <div class="form-group col-md-5 col-sm-4 col-xs-12">
+                            <?php echo Form::select('distance', $alert_distance, null, ['class' => 'form-control']); ?>
+
+                        </div>
+                        <div class="col-md-1 col-sm-1 col-xs-12">
+                            <a href="javascript:" class="btn btn-action alert-add-overspeed"><i class="icon add" title="<?php echo e(trans('global.add')); ?>"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <table class="table table-bordered alerts-overspeed-list"></table>
+            </div>
+
+            <div id="alerts-form-add-events" class="tab-pane">
+                <div class="form-group">
+                    <?php echo Form::label('event', trans('validation.attributes.event').':'); ?><br>
+                    <div class="row">
+                        <div class="form-group col-md-3 col-sm-3 col-xs-12">
+                            <?php echo Form::select('event_type', $event_types, null, ['class' => 'form-control']); ?>
+
+                        </div>
+                        <div class="form-group col-md-3 col-sm-3 col-xs-12 event_protocol_ajax">
+                            <?php echo Form::select('event_protocols', $event_protocols, null, ['class' => 'form-control']); ?>
+
+                        </div>
+                        <div class="form-group col-md-4 col-sm-4 col-xs-12 event_id_ajax">
+                            <?php echo Form::select('event_id', [], null, ['class' => 'form-control', 'disabled' => 'disabled']); ?>
+
+                        </div>
+                        <div class="col-md-1 col-sm-1 col-xs-12">
+                            <a href="javascript:" class="btn btn-action alert-add-event"><i class="icon add" title="<?php echo e(trans('global.add')); ?>"></i></a>
+                        </div>
+                    </div>
+                    <div>
+                        <?php echo trans('front.alert_events_tip'); ?>
+
+                    </div>
+                </div>
+                <table class="table table-bordered alerts-events-list">
+                </table>
+            </div>
+        </div>
+
+    <?php echo Form::close(); ?>
+
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('Frontend.Layouts.modal', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

@@ -1,0 +1,70 @@
+<?php /* TODO empty-input-add */ ?>
+
+
+<?php $__env->startSection('title'); ?>
+    <i class="icon event-add"></i> <?php echo e(trans('global.add_new')); ?>
+
+<?php $__env->stopSection(); ?>
+
+<?php $__env->startSection('body'); ?>
+    <?php echo Form::open(['route' => 'admin.events.store', 'method' => 'POST']); ?>
+
+    <?php echo Form::hidden('id'); ?>
+
+    <div class="form-group">
+        <div class="checkbox">
+            <?php echo Form::checkbox('always', 1, 0); ?>
+
+            <?php echo Form::label(null, trans('admin.show_always')); ?>
+
+        </div>
+    </div>
+
+    <div class="form-group">
+        <?php echo Form::label('protocol', trans('validation.attributes.device_protocol').':'); ?>
+
+        <?php echo Form::select('protocol', $protocols, null, ['class' => 'form-control', 'data-live-search' => true]); ?>
+
+    </div>
+
+    <div class="form-group">
+        <?php echo Form::label('tag_value', trans('front.conditions').':'); ?>
+
+        <?php echo Form::hidden('conditions'); ?>
+
+        <div class="empty-input-items">
+            <div class="form-group empty-input-add-new">
+                <div class="row">
+                    <div class="col-md-4 col-xs-4">
+                        <?php echo Form::text('tag[]', null, ['class' => 'form-control', 'placeholder' => trans('validation.attributes.parameter')]); ?>
+
+                    </div>
+                    <div class="col-md-4 col-xs-4">
+                        <?php echo Form::select('type[]', $types, null, ['class' => 'form-control']); ?>
+
+                    </div>
+                    <div class="col-md-4 col-xs-4">
+                        <div class="input-group">
+                            <?php echo Form::text('tag_value[]', null, ['class' => 'form-control', 'placeholder' => trans('validation.attributes.tag_value')]); ?>
+
+                            <span class="input-group-addon"><a href="javascript:" class="delete-item remove-icon"><span aria-hidden="true">×</span></a></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="alert alert-info" style="font-size: 12px;">
+        <?php echo trans('front.setflag_on_off_events_info'); ?>
+
+    </div>
+    <div class="form-group">
+        <?php echo Form::label('message', trans('validation.attributes.message').':'); ?>
+
+        <?php echo Form::text('message', null, ['class' => 'form-control']); ?>
+
+    </div>
+    <?php echo Form::close(); ?>
+
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('Frontend.Layouts.modal', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

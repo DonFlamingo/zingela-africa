@@ -1,0 +1,310 @@
+<?php $__env->startSection('title'); ?>
+    <i class="icon device"></i> <?php echo trans('global.add_new'); ?>
+
+<?php $__env->stopSection(); ?>
+
+<?php $__env->startSection('body'); ?>
+    <ul class="nav nav-tabs nav-default" role="tablist">
+        <li class="active"><a href="#device-add-form-main" role="tab" data-toggle="tab"><?php echo trans('front.main'); ?></a></li>
+        <li><a href="#device-add-form-icons" role="tab" data-toggle="tab"><?php echo trans('front.icons'); ?></a></li>
+        <li><a href="#device-add-form-advanced" role="tab" data-toggle="tab"><?php echo trans('front.advanced'); ?></a></li>
+        <?php if(isAdmin()): ?>
+            <li><a href="#device-add-form-sensors" role="tab" data-toggle="tab"><?php echo e(trans('front.sensors')); ?></a></li>
+        <?php endif; ?>
+        <li><a href="#device-add-form-accuracy" role="tab" data-toggle="tab"><?php echo trans('front.accuracy'); ?></a></li>
+        <li><a href="#device-add-form-tail" role="tab" data-toggle="tab"><?php echo trans('front.tail'); ?></a></li>
+        <li><a href="javascript:" role="tab" class="disabled"><?php echo trans('front.services'); ?></a></li>
+    </ul>
+
+    <?php echo Form::open(['route' => 'devices.store', 'method' => 'POST']); ?>
+
+    <?php echo Form::hidden('id'); ?>
+
+    <div class="tab-content">
+        <div id="device-add-form-main" class="tab-pane active">
+            <?php if(isAdmin()): ?>
+            <div class="form-group">
+                <?php echo Form::label('user_id', trans('validation.attributes.user').'*:'); ?>
+
+                <?php echo Form::select('user_id[]', $users->lists('email', 'id'), Auth::User()->id, ['class' => 'form-control', 'multiple' => 'multiple', 'data-live-search' => true]); ?>
+
+            </div>
+            <?php endif; ?>
+
+            <div class="form-group">
+                <?php echo Form::label('name', trans('validation.attributes.name').'*:'); ?>
+
+                <?php echo Form::text('name', null, ['class' => 'form-control']); ?>
+
+            </div>
+
+            <div class="form-group">
+                <?php echo Form::label('imei', trans('validation.attributes.imei_device').'*:'); ?>
+
+                <?php echo Form::text('imei', null, ['class' => 'form-control']); ?>
+
+            </div>
+
+            <?php if(isAdmin()): ?>
+                <div class="form-group">
+                    <?php echo Form::label('expiration_date', trans('validation.attributes.expiration_date').':'); ?>
+
+                    <div class="input-group">
+                        <div class="checkbox input-group-btn">
+                            <?php echo Form::checkbox('enable_expiration_date', 1, false); ?>
+
+                            <?php echo Form::label(null); ?>
+
+                        </div>
+                        <?php echo Form::text('expiration_date', NULL, ['class' => 'form-control datetimepicker']); ?>
+
+                    </div>
+                </div>
+            <?php endif; ?>
+        </div>
+        <div id="device-add-form-icons" class="tab-pane">
+            <div class="form-group">
+                <?php echo Form::label('device_icons_type', trans('validation.attributes.icon_type').':'); ?>
+
+                <?php echo Form::select('device_icons_type', $icons_type, null, ['class' => 'form-control']); ?>
+
+            </div>
+
+            <?php echo Form::hidden('icon_id'); ?>
+
+            <?php $i = 1; ?>
+            <?php foreach($device_icons_grouped as $group => $icons): ?>
+                <div class="device-icons-<?php echo e($group); ?> device-icons-group" style="display: none">
+                    <div class="form-group">
+                        <?php echo Form::label('icon_idd', trans('validation.attributes.icon_id').':'); ?>
+
+                    </div>
+
+                    <div class="icon-list">
+                        <?php foreach($icons as $icon): ?>
+                            <div class="checkbox-inline">
+                                <?php echo Form::radio('icon_id', $icon->id, ($i == 1)); ?>
+
+                                <label>
+                                    <img src="<?php echo asset($icon->path); ?>" alt="ICON" style="width: <?php echo $icon->width; ?>px; height: <?php echo $icon->height; ?>px;" />
+                                </label>
+                            </div>
+                        <?php endforeach; ?>
+                    </div>
+                </div>
+            <?php endforeach; ?>
+            <div class="device-icons-arrow device-icons-group" style="display: none">
+                <div class="form-group">
+                    <?php echo Form::label('icon_moving', trans('front.moving').':'); ?>
+
+                    <?php echo Form::select('icon_moving', $device_icon_colors, 'green', ['class' => 'form-control']); ?>
+
+                </div>
+                <div class="form-group">
+                    <?php echo Form::label('icon_stopped', trans('front.stopped').':'); ?>
+
+                    <?php echo Form::select('icon_stopped', $device_icon_colors, 'yellow', ['class' => 'form-control']); ?>
+
+                </div>
+                <div class="form-group">
+                    <?php echo Form::label('icon_offline', trans('front.offline').':'); ?>
+
+                    <?php echo Form::select('icon_offline', $device_icon_colors, 'red', ['class' => 'form-control']); ?>
+
+                </div>
+                <div class="form-group">
+                    <?php echo Form::label('icon_engine', trans('front.engine_idle').':'); ?>
+
+                    <?php echo Form::select('icon_engine', $device_icon_colors, 'yellow', ['class' => 'form-control']); ?>
+
+                </div>
+            </div>
+        </div>
+        <div id="device-add-form-advanced" class="tab-pane">
+            <div class="form-group">
+                <?php echo Form::label('group_id', trans('validation.attributes.group_id').':'); ?>
+
+                <?php echo Form::select('group_id', $device_groups, null, ['class' => 'form-control', 'data-live-search' => true]); ?>
+
+            </div>
+
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <?php echo Form::label('sim_number', trans('validation.attributes.sim_number').':'); ?>
+
+                        <?php echo Form::text('sim_number', null, ['class' => 'form-control']); ?>
+
+                    </div>
+                    <div class="form-group">
+                        <?php echo Form::label('vin', trans('validation.attributes.vin').':'); ?>
+
+                        <?php echo Form::text('vin', null, ['class' => 'form-control']); ?>
+
+                    </div>
+                    <div class="form-group">
+                        <?php echo Form::label('device_model', trans('validation.attributes.device_model').':'); ?>
+
+                        <?php echo Form::text('device_model', null, ['class' => 'form-control']); ?>
+
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <?php echo Form::label('plate_number', trans('validation.attributes.plate_number').':'); ?>
+
+                        <?php echo Form::text('plate_number', null, ['class' => 'form-control']); ?>
+
+                    </div>
+                    <div class="form-group">
+                        <?php echo Form::label('registration_number', trans('validation.attributes.registration_number').':'); ?>
+
+                        <?php echo Form::text('registration_number', null, ['class' => 'form-control']); ?>
+
+                    </div>
+                    <div class="form-group">
+                        <?php echo Form::label('object_owner', trans('validation.attributes.object_owner').':'); ?>
+
+                        <?php echo Form::text('object_owner', null, ['class' => 'form-control']); ?>
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <?php echo Form::label('additional_notes', trans('validation.attributes.additional_notes').':'); ?>
+
+                <?php echo Form::text('additional_notes', null, ['class' => 'form-control']); ?>
+
+            </div>
+            <div class="form-group">
+                <div class="checkbox">
+                    <?php echo Form::checkbox('gprs_templates_only', 1, 0); ?>
+
+                    <?php echo Form::label('gprs_templates_only', trans('validation.attributes.gprs_templates_only')); ?>
+
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <?php echo Form::label('fuel_measurement_id', trans('validation.attributes.fuel_measurement_type').':'); ?>
+
+                        <?php echo Form::select('fuel_measurement_id', $device_fuel_measurements_select, null, ['class' => 'form-control']); ?>
+
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="fuel_quantity">
+                            <span class="distance_title"></span> <?php echo trans('front.per_one'); ?> <span class="fuel_title"></span>:
+                        </label>
+                        <?php echo Form::text('fuel_quantity', null, ['class' => 'form-control', 'placeholder' => '0.00', 'id' => 'fuel_quantity']); ?>
+
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="fuel_price">
+                            <?php echo trans('front.cost_for'); ?> <span class="fuel_title"></span>:
+                        </label>
+                        <?php echo Form::text('fuel_price', null, ['class' => 'form-control', 'placeholder' => '0.00', 'id' => 'fuel_price']); ?>
+
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <?php echo Form::label('timezone_id', trans('validation.attributes.time_adjustment').':'); ?>
+
+                <?php echo Form::select('timezone_id', $timezones, 0, ['class' => 'form-control']); ?>
+
+                <small><?php echo trans('front.by_default_time'); ?></small>
+            </div>
+        </div>
+        <div id="device-add-form-sensors" class="tab-pane">
+            <div class="form-group">
+                <?php echo Form::label('sensor_group_id', trans('validation.attributes.sensor_group_id').':'); ?>
+
+                <?php echo Form::select('sensor_group_id', $sensor_groups, null, ['class' => 'form-control']); ?>
+
+            </div>
+        </div>
+        <div id="device-add-form-accuracy" class="tab-pane">
+            <div class="form-group">
+                <?php echo Form::label('min_moving_speed', trans('validation.attributes.min_moving_speed').' ('.trans('front.affects_stops_track',['default'=>6]).'):'); ?>
+
+                <?php echo Form::text('min_moving_speed', '6', ['class' => 'form-control']); ?>
+
+            </div>
+            <div class="form-group">
+                <?php echo Form::label('min_fuel_fillings', trans('validation.attributes.min_fuel_fillings').' ('.trans('front.default_value',['default'=>10]).'):'); ?>
+
+                <?php echo Form::text('min_fuel_fillings', '10', ['class' => 'form-control']); ?>
+
+            </div>
+            <div class="form-group">
+                <?php echo Form::label('min_fuel_thefts', trans('validation.attributes.min_fuel_thefts').' ('.trans('front.default_value',['default'=>10]).'):'); ?>
+
+                <?php echo Form::text('min_fuel_thefts', '10', ['class' => 'form-control']); ?>
+
+            </div>
+        </div>
+        <div id="device-add-form-tail" class="tab-pane">
+            <div class="form-group">
+                <?php echo Form::label('tail_color', trans('validation.attributes.tail_color').':'); ?>
+
+                <?php echo Form::text('tail_color', '#33CC33', ['class' => 'form-control colorpicker']); ?>
+
+            </div>
+            <div class="form-group">
+                <?php echo Form::label('tail_length', trans('validation.attributes.tail_length').' (0-10 '.trans('front.last_points').'):'); ?>
+
+                <?php echo Form::text('tail_length', '5', ['class' => 'form-control']); ?>
+
+            </div>
+            <?php /*<div class="form-group">
+                <?php echo Form::label('snap_to_road', trans('front.snap_to_road').':'); ?>
+
+                <?php echo Form::checkbox('snap_to_road', 1, null); ?>
+
+            </div>*/ ?>
+        </div>
+    </div>
+    <?php echo Form::close(); ?>
+
+
+    <script>
+        $(document).ready(function() {
+            var measurements = <?php echo json_encode($device_fuel_measurements); ?>;
+
+            if ( typeof _static_objects_create === "undefined" ) {
+                var _static_objects_create = true;
+
+                $(document).on('change', '#devices_create select[name="fuel_measurement_id"]', function () {
+                    var val = $(this).val();
+
+                    $.each(measurements, function (index, value) {
+                        if (value.id == val) {
+                            $('.distance_title').html(value.distance_title);
+                            $('.fuel_title').html(value.fuel_title);
+                        }
+                    });
+                });
+
+                $(document).on('change', '#devices_create input[name="enable_expiration_date"]', function () {
+                    if ($(this).prop('checked'))
+                        $('input[name="expiration_date"]').removeAttr('disabled');
+                    else
+                        $('input[name="expiration_date"]').attr('disabled', 'disabled');
+                });
+            }
+
+            $('#devices_create select[name="fuel_measurement_id"]').trigger('change');
+
+            $('#devices_create select[name="device_icons_type"]').trigger('change');
+
+            $('#devices_create input[name="enable_expiration_date"]').trigger('change');
+        });
+    </script>
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('Frontend.Layouts.modal', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

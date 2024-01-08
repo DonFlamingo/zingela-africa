@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title><?php echo e(settings('main_settings.server_name')); ?></title>
+
+    <base href="<?php echo e(url('/')); ?>">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="<?php if($_ENV['server'] == 'gpsbait'): ?> GPSBait, Law Enforcement Grade GPS Tracking Hardware and Software <?php else: ?> GPS Tracking System for Personal Use or Business <?php endif; ?>">
+    <link rel="shortcut icon" href="<?php echo e(asset_logo('favicon')); ?>" type="image/x-icon">
+
+    <link rel="stylesheet" href="<?php echo e(asset('assets/css/'.settings('main_settings.template_color').'.css?v='.config('tobuli.version'))); ?>">
+
+    <script src="<?php echo e(asset('assets/js/core.js?v='.config('tobuli.version'))); ?>" type="text/javascript"></script>
+    <script src="<?php echo e(asset('assets/js/app.js?v='.config('tobuli.version'))); ?>" type="text/javascript"></script>
+
+    <?php echo $__env->yieldContent('styles'); ?>
+
+</head>
+<body>
+<?php echo $__env->make('Frontend.Layouts.partials.loading', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+
+<div id="map"></div>
+
+<?php echo $__env->make('Frontend.Layouts.partials.trans', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+<?php echo $__env->make('Frontend.Layouts.partials.app', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+
+<script>
+    $(window).on("load", function() {
+        //$('a[href="#gps-device-street-view-large"]').addClass('disabled');
+
+        app.follow(<?php echo json_encode($item); ?>);
+    });
+</script>
+</body>

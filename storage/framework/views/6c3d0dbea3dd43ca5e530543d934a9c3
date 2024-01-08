@@ -1,0 +1,51 @@
+<?php $__env->startSection('content'); ?>
+    <div class="panel panel-default" id="table_ports">
+        <div class="panel-heading">
+            <ul class="nav nav-tabs nav-icons pull-right">
+                <li role="presentation">
+                    <a href="javascript:" type="button" data-modal="update_config" data-url="<?php echo e(route('admin.ports.do_update_config')); ?>">
+                        <i class="icon restart" title="<?php echo e(trans('admin.update_config_and')); ?>"></i>
+                    </a>
+                </li>
+                <li role="presentation">
+                    <a href="javascript:" type="button" data-modal="update_config" data-url="<?php echo e(route('admin.ports.do_reset_default')); ?>">
+                        <i class="icon reset" title="<?php echo e(trans('admin.reset_default')); ?>"></i>
+                    </a>
+                </li>
+            </ul>
+
+            <div class="panel-title"><?php echo e(trans('admin.tracking_ports')); ?></div>
+        </div>
+
+        <div class="panel-body" data-table>
+            <?php echo $__env->make('Admin.Ports.table', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+        </div>
+    </div>
+<?php $__env->stopSection(); ?>
+
+<?php $__env->startSection('javascript'); ?>
+    <script>
+        $(document).on('click', '.extra-empty input', function() {
+            var parent = $(this).closest('.extra-empty');
+            var time = new Date().getTime();
+            parent.removeClass('extra-empty');
+            parent.after('<div class="row extra-empty"><div class="col-xs-6"><input class="form-control" name="extra[' + time + '][name]" type="text"></div><div class="col-xs-6"><div class="input-group"><input class="form-control" name="extra[' + time + '][value]" type="text"><span class="input-group-addon"><a href="javascript:" class="delete-extra-item remove-icon"><span aria-hidden="true">×</span></a></span></div></div></div>');
+        });
+
+        $(document).on('click', 'div.row:not(.extra-empty) .delete-extra-item', function() {
+            $(this).closest('.row').remove();
+        });
+
+        tables.set_config('table_ports', {
+            url:'<?php echo e(route("admin.ports.index")); ?>'
+        });
+
+        function ports_edit_modal_callback() {
+            tables.get('table_ports');
+        }
+        function update_config_modal_callback() {
+            tables.get('table_ports');
+        }
+    </script>
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('Admin.Layouts.default', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

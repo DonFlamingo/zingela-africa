@@ -1,0 +1,414 @@
+@mixin icon-color($icon-element, $icon-color: $icon-color, $action-select: '&.active,&:hover', $icon-action-color: inherit) {
+  #{$icon-element} {
+    color: $icon-color;
+  }
+  #{$action-select} {
+    #{$icon-element} {
+      color: $icon-action-color;
+    }
+  }
+}
+
+.has-feedback .form-control-feedback {
+  line-height: $input-height-base;
+}
+
+.icon + .text {
+  vertical-align: middle;
+  //dropdownmenu bug
+  margin-left: 5px;
+}
+
+.icon-fa {
+  &:before {
+    font-family: "FontAwesome";
+  }
+}
+
+.ico.ico-object-arrow {
+  font-size: 25px;
+  text-shadow: 0px 0px 2px $color-border-100;
+}
+
+.icon {
+  @extend .ico;
+
+  &.check {
+    @extend .ico-check;
+  }
+  &.stylize-1 {
+    @extend .ico-stylize-1;
+  }
+
+  &.streetview,
+  &.camera {
+    @extend .ico-camera;
+  }
+  &.email {
+    @extend .icon-fa;
+    @extend .fa-envelope;
+  }
+  &.restart {
+    @extend .icon-fa;
+    @extend .fa-refresh;
+  }
+  &.reset {
+    @extend .icon-fa;
+    @extend .fa-repeat;
+  }
+  &.trash {
+    @extend .icon-fa;
+    @extend .fa-trash;
+  }
+  &.group-devices {
+    @extend .icon-fa;
+    @extend .fa-object-group;
+  }
+  &.unit-distance {
+    @extend .ico-arrow-left-right;
+  }
+  &.unit-altitude {
+    @extend .ico-arrow-up-down;
+  }
+  &.unit-capacity {
+    @extend .ico-fuel;
+  }
+  &.play {
+    @extend .icon-fa;
+    @extend .fa-play;
+  }
+  &.pause {
+    @extend .icon-fa;
+    @extend .fa-pause;
+  }
+  &.stop {
+    @extend .icon-fa;
+    @extend .fa-stop;
+  }
+  &.plus {
+    @extend .ico-plus;
+  }
+  &.minus {
+    @extend .ico-minus;
+  }
+  &.search {
+    @extend .ico-search;
+  }
+  &.globe {
+    @extend .icon-fa;
+    @extend .fa-globe;
+  }
+  &.map {
+    @extend .ico-location;
+  }
+  &.logs {
+    @extend .ico-logs;
+  }
+  &.content {
+    @extend .ico-details;
+  }
+  &.list {
+    @extend .ico-details;
+  }
+  &.map-change {
+    @extend .icon-fa;
+    @extend .fa-map-o;
+  }
+  &.map-expand {
+    @extend .icon-fa;
+    @extend .fa-arrows-alt;
+  }
+  &.zoomIn {
+    @extend .ico-zoom;
+  }
+  &.zoomOut {
+    @extend .ico-minus;
+  }
+  &.fitBounds {
+    @extend .ico-fitbounds;
+  }
+  &.remove-all {
+    @extend .ico-x;
+  }
+  &.remove,
+  &.delete {
+    @extend .ico-x;
+  }
+  &.add {
+    @extend .ico-plus;
+  }
+  &.options {
+    @extend .ico-options-v;
+  }
+  &.edit {
+    @extend .ico-gear;
+  }
+  &.multi-edit {
+    @extend .icon-fa;
+    @extend .fa-cogs;
+  }
+  &.filter {
+    @extend .icon-fa;
+    @extend .fa-filter;
+  }
+  &.history-clean {
+    @extend .ico-x;
+  }
+  &.history-export {
+    @extend .ico-download;
+  }
+  &.download {
+    @extend .ico-download;
+  }
+  &.upload {
+    @extend .ico-upload;
+  }
+  &.calendar {
+    @extend .icon-fa;
+    @extend .fa-calendar;
+  }
+  &.time {
+    @extend .icon-fa;
+    @extend .fa-clock-o;
+  }
+  &.last-hour {
+    @extend .ico-time-hour;
+  }
+  &.today {
+    @extend .ico-time-today;
+  }
+  &.yesterday {
+    @extend .ico-time-yesterday;
+  }
+  &.follow {
+    @extend .ico-follow;
+  }
+  &.send-command {
+    @extend .ico-arrow-right;
+  }
+  &.admin {
+    @extend .icon-fa;
+    @extend .fa-cogs;
+  }
+  &.tools {
+    @extend .ico-tool;
+  }
+
+  &.routes {
+    @extend .ico-street;
+  }
+  &.reports {
+    @extend .ico-reports;
+  }
+  &.ruler {
+    @extend .ico-ruler-o;
+  }
+  &.point {
+    @extend .ico-point;
+  }
+  &.address {
+    @extend .ico-house;
+  }
+  &.settings,
+  &.setting,
+  &.setup {
+    @extend .ico-gear-o;
+  }
+  &.membership {
+    @extend .ico-user;
+  }
+  &.password {
+    @extend .ico-user-settings;
+  }
+  &.logout {
+    @extend .icon-fa;
+    @extend .fa-key;
+  }
+  &.detect_engine,
+  &.engine {
+    @extend .ico-engine;
+  }
+
+  &.account {
+    @extend .ico-account;
+  }
+  &.users {
+    @extend .ico-user;
+  }
+  &.user {
+    @extend .ico-user;
+  }
+  &.user-add {
+    @extend .ico-user-add;
+  }
+  &.user-edit {
+    @extend .ico-user-settings;
+  }
+
+  &.devices {
+    @extend .ico-object-o;
+  }
+  &.device {
+    @extend .ico-object;
+  }
+  &.device-add {
+    @extend .ico-object-add;
+  }
+
+  &.pois {
+    @extend .ico-poi;
+  }
+  &.poi {
+    @extend .ico-poi;
+  }
+  &.poi-import {
+    @extend .ico-poi-import;
+  }
+
+  &.geofences {
+    @extend .ico-geofence;
+  }
+  &.geofence {
+    @extend .ico-geofence;
+  }
+  &.geofence-import {
+    @extend .ico-geofence-import;
+  }
+
+  &.alert {
+    @extend .ico-event;
+  }
+  &.alerts {
+    @extend .ico-event;
+  }
+  &.events {
+    @extend .ico-event;
+  }
+  &.event {
+    @extend .ico-event;
+  }
+  &.event-add {
+    @extend .ico-add-event;
+  }
+
+  &.show-name {
+    @extend .ico-show-names2;
+  }
+  &.show-tail {
+    @extend .ico-show-trail;
+  }
+  &.traffic {
+    @extend .ico-traffic;
+  }
+
+  &.sensors {
+    @extend .ico-sensor;
+  }
+  &.services {
+    @extend .ico-sensor;
+  }
+  &.door,
+  &.doors {
+    @extend .ico-doors;
+  }
+  &.acc,
+  &.ignition {
+    @extend .ico-ignition;
+  }
+  &.fuel_tank,
+  &.fuel {
+    @extend .ico-fuel;
+  }
+  &.odometer {
+    @extend .ico-odometer;
+  }
+  &.speed {
+    @extend .ico-speed;
+  }
+  &.tachometer {
+    @extend .ico-rpm;
+  }
+  &.temperature {
+    @extend .ico-temp;
+  }
+  &.satellites {
+    @extend .ico-signal;
+  }
+
+  &.gsm-0,
+  &.gsm-1,
+  &.gsm-2,
+  &.gsm-3,
+  &.gsm-4,
+  &.gsm-5,
+  &.battery-0,
+  &.battery-1,
+  &.battery-2,
+  &.battery-3,
+  &.battery-4,
+  &.battery-5 {
+    position: relative;
+    font-size: 1.8em;
+    color: inherit;
+    //line-height: 1;
+
+    &:before {
+      color: $color-status-on;
+      position: absolute;
+    }
+  }
+
+  &.gsm-0,
+  &.gsm-1,
+  &.gsm-2,
+  &.gsm-3,
+  &.gsm-4,
+  &.gsm-5 {
+    &:after {
+      @extend .ico-gsm-0:before;
+    }
+  }
+
+  &.gsm-1:before {
+    @extend .ico-gsm-1:before;
+  }
+  &.gsm-2:before {
+    @extend .ico-gsm-2:before;
+  }
+  &.gsm-3:before {
+    @extend .ico-gsm-3:before;
+  }
+  &.gsm-4:before {
+    @extend .ico-gsm-4:before;
+  }
+  &.gsm-5:before {
+    @extend .ico-gsm-5:before;
+  }
+
+  &.battery-0,
+  &.battery-1,
+  &.battery-2,
+  &.battery-3,
+  &.battery-4,
+  &.battery-5 {
+    &:after {
+      @extend .ico-battery-0:before;
+    }
+  }
+
+  &.battery-1:before {
+    @extend .ico-battery-1:before;
+  }
+  &.battery-2:before {
+    @extend .ico-battery-2:before;
+  }
+  &.battery-3:before {
+    @extend .ico-battery-3:before;
+  }
+  &.battery-4:before {
+    @extend .ico-battery-4:before;
+  }
+  &.battery-5:before {
+    @extend .ico-battery-5:before;
+  }
+}

@@ -1,0 +1,139 @@
+.tab-pane {
+  @extend .fadeIn;
+  @extend .animated;
+}
+
+#sidebar {
+
+  background: $sidebar-bg;
+  border-right: 1px solid $color-border-100;
+  position: absolute;
+  z-index: 999;
+  bottom: 0;
+  left: 0;
+  @include calc('max-height', 90%, '100% - 100px');
+  height: 100%;
+
+  .btn-collapse {
+    @extend .collapse-left;
+  }
+
+  &.collapsed {
+    .sidebar-content {
+      width: 0;
+      min-width: 0;
+      overflow: hidden;
+
+      -webkit-transition: all 0.5s ease;
+      -moz-transition: all 0.5s ease;
+      -o-transition: all 0.5s ease;
+      transition: all 0.5s ease;
+    }
+
+    .btn-collapse {
+      @extend .collapsed;
+    }
+  }
+  .sidebar-content {
+    height: 100%;
+    max-width: 250px;
+    min-width: 250px;
+
+    @media (min-width: $screen-sm-min) {
+      max-width: 300px;
+    }
+    @media (min-width: $screen-md-min) {
+      max-width: 330px;
+    }
+  }
+
+  .nav-tabs {
+     > li {
+       display: table-cell;
+       width: 1%;
+       float: none;
+
+       > a {
+         text-align: center;
+       }
+     }
+  }
+
+  .tab-pane-header {
+    padding: $sidebar-tab-header-padding;
+  }
+  .tab-pane-body {
+    overflow-y: auto;
+
+    @extend .scrollbar;
+  }
+  .tab-pane-footer {
+    padding: $sidebar-tab-footer-padding;
+  }
+
+  .no-results {
+    margin: 5px;
+    text-align: center;
+  }
+
+  #events_tab {
+    .tab-pane-body > table {
+      > thead > tr {
+        > th,
+        > td {
+          &:first-child {
+            padding-left: $sidebar-padding-horizontal;
+          }
+          &:last-child {
+            padding-right: $sidebar-padding-horizontal;
+          }
+        }
+      }
+    }
+    .datetime {
+      .date{
+        display: block;
+        font-size: .9em;
+      }
+      .time {
+        display: block;
+        font-size: .9em;
+      }
+    }
+  }
+
+  #geofencing_create,
+  #geofencing_edit,
+  #routes_create,
+  #routes_edit,
+  #map_icons_create,
+  #map_icons_edit
+  {
+    .tab-pane-body {
+      padding: $sidebar-padding;
+    }
+  }
+}
+
+.history{
+  padding: 5px 0;
+  background-color: $color-bg-100;
+
+  -moz-box-shadow:    inset  0  10px 10px -10px $color-shadow, inset  0 -10px 10px -10px $color-shadow;
+  -webkit-box-shadow: inset  0  10px 10px -10px $color-shadow, inset  0 -10px 10px -10px $color-shadow;
+  box-shadow:         inset  0  10px 10px -10px $color-shadow, inset  0 -10px 10px -10px $color-shadow;
+
+  .table {
+    margin-bottom: 0;
+
+    tr.active > td {
+      background: $color-bg-000;
+    }
+  }
+}
+
+#ajax-events .table tbody,
+#ajax-history .table tbody{
+  font-size: 11px;
+}
+

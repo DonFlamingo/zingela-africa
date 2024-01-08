@@ -1,0 +1,21 @@
+<?php $__env->startSection('title'); ?>
+    <?php echo trans('front.settings'); ?>
+
+<?php $__env->stopSection(); ?>
+
+<?php $__env->startSection('body'); ?>
+
+    <?php echo Form::open(['route' => 'objects.listview_settings.update', 'method' => 'POST']); ?>
+
+
+    <?php echo $__env->make('Frontend.ObjectsList.form', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+
+    <?php echo Form::close(); ?>
+
+<?php $__env->stopSection(); ?>
+
+<?php $__env->startSection('buttons'); ?>
+    <button type="button" class="btn btn-action update"><?php echo trans('global.save'); ?></button>
+    <button type="button" class="btn btn-default" data-dismiss="modal"><?php echo trans('global.close'); ?></button>
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('Frontend.Layouts.modal', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

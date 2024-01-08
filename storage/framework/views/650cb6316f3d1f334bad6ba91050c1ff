@@ -1,0 +1,72 @@
+<div class="table-responsive">
+    <table class="table table-list">
+        <thead>
+            <tr>
+                <th><?php echo trans('validation.attributes.title'); ?></th>
+                <th><?php echo trans('validation.attributes.type'); ?></th>
+                <th><?php echo trans('validation.attributes.format'); ?></th>
+                <th><?php echo trans('front.devices'); ?></th>
+                <th><?php echo trans('front.geofences'); ?></th>
+                <th><?php echo trans('front.schedule'); ?></th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+        <?php if(count($reports)): ?>
+            <?php foreach($reports as $report): ?>
+                <tr>
+                    <td>
+                        <?php echo e($report->title); ?>
+
+                    </td>
+                    <td>
+                        <?php echo e($types[$report->type]); ?>
+
+                    </td>
+                    <td>
+                        <?php echo e(trans('front.'.$report->format)); ?>
+
+                    </td>
+                    <td>
+                        <?php echo e(count($report->devices)); ?>
+
+                    </td>
+                    <td>
+                        <?php echo e(count($report->geofences)); ?>
+
+                    </td>
+                    <td>
+                        <?php echo ($report->daily || $report->weekly ? trans('global.yes') : trans('global.no')); ?>
+
+                    </td>
+                    <td class="actions">
+                        <a href="javascript:" class="report_item_edit"><i class="icon edit"></i></a>
+                        <?php
+                        $report = $report->toArray();
+                        $report['geofences'] = array_map(function($value) {
+                            return array_only($value, ['id']);
+                        },$report['geofences']);
+
+                        $report['devices'] = array_map(function($value) {
+                            return array_only($value, ['id']);
+                        },$report['devices']);
+                        ?>
+                        <span class="report_item_json hidden"><?php echo json_encode($report); ?></span>
+
+                        <a href="javascript:" data-url="<?php echo route('reports.do_destroy', $report['id']); ?>" data-modal="reports_destroy"><i class="icon delete"></i></a>
+                    </td>
+                </tr>
+            <?php endforeach; ?>
+        <?php else: ?>
+            <tr>
+                <td colspan="7"><?php echo trans('front.no_reports'); ?></td>
+            </tr>
+        <?php endif; ?>
+        </tbody>
+    </table>
+</div>
+
+<div class="nav-pagination">
+    <?php echo $reports->render(); ?>
+
+</div>

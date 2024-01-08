@@ -1,0 +1,54 @@
+<div class="table-responsive">
+    <table class="table table-list" data-toggle="multiCheckbox">
+        <thead>
+        <tr>
+            <?php echo tableHeaderCheckall(); ?>
+
+            <?php echo tableHeader('validation.attributes.title'); ?>
+
+            <?php echo tableHeader('validation.attributes.price'); ?>
+
+            <?php echo tableHeader('validation.attributes.objects'); ?>
+
+            <?php echo tableHeader('validation.attributes.duration_value'); ?>
+
+            <?php echo tableHeader('admin.actions', 'style="text-align: right"'); ?>
+
+        </tr>
+        </thead>
+        <tbody>
+        <?php if(count($items)): ?>
+            <?php foreach($items as $item): ?>
+                <tr>
+                    <td>
+                        <div class="checkbox">
+                            <input type="checkbox" class="checkboxes" value="<?php echo $item->id; ?>" <?php echo e($item->id == settings('main_settings.default_billing_plan') ? 'disabled="disabled"' : ''); ?>>
+                            <label></label>
+                        </div>
+                    </td>
+                    <td><?php echo e($item->title); ?></td>
+                    <td><?php echo e($item->price); ?></td>
+                    <td><?php echo e($item->objects); ?></td>
+                    <td><?php echo e($item->duration_value); ?> <?php echo e(trans('front.'.$item->duration_type)); ?></td>
+                    <td class="actions">
+                        <div class="btn-group dropdown droparrow" data-position="fixed">
+                            <i class="btn icon edit" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"></i>
+                            <ul class="dropdown-menu">
+                                <li><a href="javascript:" data-modal="billing_plans_edit" data-url="<?php echo e(route('admin.billing.edit', $item->id)); ?>"><?php echo trans('global.edit'); ?></a></li>
+        						<li><a href="javascript:" data-modal="billing_plans_edit" data-url="<?php echo e(route('admin.billing.billing_plans_getDestroyOne', $item->id)); ?>"><?php echo trans('global.delete'); ?></a></li>
+                            </ul>
+                        </div>
+                    </td>
+                </tr>
+            <?php endforeach; ?>
+        <?php else: ?>
+            <tr>
+                <td class="no-data" colspan="12">
+                    <?php echo trans('admin.no_data'); ?>
+
+                </td>
+            </tr>
+        <?php endif; ?>
+        </tbody>
+    </table>
+</div>

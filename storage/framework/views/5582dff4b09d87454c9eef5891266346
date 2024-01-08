@@ -1,0 +1,42 @@
+<?php if(!empty($alerts) && !empty($items = $alerts->toArray())): ?>
+    <ul class="group-list">
+        <?php foreach($items as $key => $item): ?>
+            <li data-alert-id="<?php echo e($item['id']); ?>">
+                <div class="checkbox">
+                    <input type="checkbox" name="alert[<?php echo e($item['id']); ?>]" value="<?php echo e($item['id']); ?>" <?php echo e(!empty($item['active']) ? 'checked="checked"' : ''); ?> onChange="app.alerts.active('<?php echo e($item['id']); ?>', this.checked);"/>
+                    <label></label>
+                </div>
+                <div class="name">
+                    <span data-alert="name"><?php echo e($item['name']); ?></span>
+                </div>
+                <div class="details">
+                    <?php if(Auth::User()->perm('alerts', 'edit') || Auth::User()->perm('alerts', 'remove')): ?>
+                        <div class="btn-group dropleft droparrow"  data-position="fixed">
+                            <i class="btn icon options" data-toggle="dropdown" data-position="fixed" aria-haspopup="true" aria-expanded="false"></i>
+                            <ul class="dropdown-menu" >
+                                <?php if( Auth::User()->perm('alerts', 'edit') ): ?>
+                                    <li>
+                                        <a href="javascript:;" data-url="<?php echo e(route('alerts.edit', $item['id'])); ?>" data-modal="alerts_edit">
+                                            <span class="icon edit"></span>
+                                            <span class="text"><?php echo e(trans('global.edit')); ?></span>
+                                        </a>
+                                    </li>
+                                <?php endif; ?>
+                                <?php if(Auth::User()->perm('alerts', 'remove')): ?>
+                                    <li>
+                                        <a href="javascript:;" data-url="<?php echo e(route('alerts.do_destroy', $item['id'])); ?>" data-modal="alerts_destroy">
+                                            <span class="icon delete"></span>
+                                            <span class="text"><?php echo e(trans('global.delete')); ?></span>
+                                        </a>
+                                    </li>
+                                <?php endif; ?>
+                            </ul>
+                        </div>
+                    <?php endif; ?>
+                </div>
+            </li>
+        <?php endforeach; ?>
+    </ul>
+<?php else: ?>
+    <p class="no-results"><?php echo trans('front.no_alerts'); ?></p>
+<?php endif; ?>

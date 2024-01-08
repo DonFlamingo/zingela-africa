@@ -1,0 +1,17 @@
+<?php if(count($collection = $items->getCollection())): ?>
+    <div class="table-icon">
+    <?php foreach($collection as $item): ?>
+        <div class="item">
+            <div class="controls">
+                <a href="javascript:" class="btn btn-default" data-id="<?php echo e($item->id); ?>"><i class="icon delete"></i></a>
+            </div>
+            <img src="<?php echo e(asset($item->path)); ?>" alt="Image">
+        </div>
+    <?php endforeach; ?>
+    </div>
+<?php else: ?>
+    <?php echo e(trans('admin.no_data')); ?>
+
+<?php endif; ?>
+
+<?php echo $__env->make("Admin.Layouts.partials.pagination", array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

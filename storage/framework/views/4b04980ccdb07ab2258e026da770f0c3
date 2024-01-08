@@ -1,0 +1,29 @@
+<div class="tab-pane-header">
+    <div class="form">
+        <div class="input-group">
+            <div class="form-group search">
+                <?php echo Form::text('search', null, ['class' => 'form-control', 'id' => 'events_search_field', 'placeholder' => trans('front.search'), 'autocomplete' => 'off']); ?>
+
+            </div>
+            <span class="input-group-btn">
+                <button class="btn btn-default" type="button" data-url="<?php echo route('events.do_destroy'); ?>" data-modal="events_do_destroy">
+                    <i class="icon remove-all"></i>
+                </button>
+            </span>
+        </div>
+    </div>
+</div>
+
+<div class="tab-pane-body">
+    <table class="table table-list">
+        <thead>
+            <tr>
+                <th><?php echo e(trans('front.time')); ?></th>
+                <th><?php echo e(trans('front.object')); ?></th>
+                <th><?php echo e(trans('front.event')); ?></th>
+            </tr>
+        </thead>
+
+        <tbody id="ajax-events"></tbody>
+    </table>
+</div>

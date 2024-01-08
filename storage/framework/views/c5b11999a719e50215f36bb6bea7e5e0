@@ -1,0 +1,102 @@
+<?php $unique_list = 'listfields-' . time(); ?>
+
+<div class="row">
+    <div class="col-sm-6">
+        <div class="form-group">
+            <?php echo Form::label('groupby', trans('front.groupby')); ?>
+
+            <?php echo Form::select('groupby', ['protocol' => trans('front.protocol'), 'group' => trans('validation.attributes.group_id') ], $settings['groupby'], ['class' => 'form-control']); ?>
+
+        </div>
+    </div>
+    <div class="col-sm-6">
+        <div class="form-group">
+            <label for="add-column"><?php echo e(trans('front.add_column')); ?></label>
+            <select class="form-control" onchange="addListField(this, '<?php echo e($unique_list); ?>');" id="add-column">
+                <?php foreach($fields as $key => $field): ?>
+                <option value="<?php echo e($key); ?>"><?php echo e($field['title']); ?></option>
+                <?php endforeach; ?>
+            </select>
+        </div>
+    </div>
+</div>
+
+<hr>
+
+<div class="panel-group" id="<?php echo e($unique_list); ?>" role="tablist" aria-multiselectable="true">
+    <?php $i = 0; $j = 0; ?>
+    <?php foreach($settings['columns'] as $key => $column): ?>
+    <div class="panel panel-default">
+        <div class="panel-heading" role="tab" id="listfield<?php echo e($i); ?>">
+            <div class="pull-right">
+                <?php if(!empty($column['type']) && in_array($column['type'], $numeric_sensors)): ?>
+                <a role="button" data-toggle="collapse" href="#fieldsettings<?php echo e($i); ?>" aria-expanded="false" >
+                    <i class="fa fa-cog fa-lg" aria-hidden="true"></i>
+                </a>
+                <?php endif; ?>
+                <a role="button" href="javascript:" onClick="removeListField(this, '.panel');">
+                    <i class="fa fa-times fa-lg" aria-hidden="true"></i>
+                </a>
+            </div>
+            <h4 class="panel-title"><?php echo e($column['title']); ?></h4>
+        </div>
+        <div id="fieldsettings<?php echo e($i); ?>" class="panel-collapse collapse" role="tabpanel" aria-labelledby="listfield<?php echo e($i); ?>">
+            <div class="panel-body">
+                <?php echo Form::hidden('columns['.$i.'][field]', $column['field']); ?>
+
+                <?php echo Form::hidden('columns['.$i.'][class]', $column['class']); ?>
+
+
+                <?php if(!empty($column['type'])): ?>
+                <?php echo Form::hidden('columns['.$i.'][type]', $column['type']); ?>
+
+                <?php endif; ?>
+
+                <table class="table">
+                    <tr>
+                        <th><?php echo e(trans('front.from')); ?></th>
+                        <th><?php echo e(trans('front.to')); ?></th>
+                        <th><?php echo e(trans('validation.attributes.color')); ?></th>
+                        <th>
+                            <a role="button" href="javascript:" onClick="addListColorField(this, <?php echo e($i); ?>);">
+                                <i class="fa fa-plus-square" aria-hidden="true"></i> <?php echo e(trans('global.add')); ?>
+
+                            </a>
+                        </th>
+                    </tr>
+                    <?php if ( ! (empty($column['color']))): ?>
+                        <?php foreach($column['color'] as $j => $color): ?>
+                        <tr>
+                            <td><?php echo Form::text('columns['.$i.'][color]['.$j.'][from]', $color['from'], ['class' => 'form-control']); ?></td>
+                            <td><?php echo Form::text('columns['.$i.'][color]['.$j.'][to]', $color['to'], ['class' => 'form-control']); ?></td>
+                            <td><?php echo Form::text('columns['.$i.'][color]['.$j.'][color]', $color['color'], ['class' => 'form-control colorpicker']); ?></td>
+                            <td>
+                                <a role="button" href="javascript:" onClick="removeListField(this, 'tr');">
+                                    <i class="fa fa-times fa-lg" aria-hidden="true"></i>
+                                </a>
+                            </td>
+                        </tr>
+                        <?php $j++; ?>
+                        <?php endforeach; ?>
+                    <?php endif; ?>
+                </table>
+            </div>
+        </div>
+    </div>
+    <?php $i++; ?>
+    <?php endforeach; ?>
+</div>
+
+<script>
+  var i_listview  = <?php echo e($i); ?>;
+  var j_listview = <?php echo e($j); ?>;
+  var numeric_sensors = JSON.parse('<?php echo json_encode($numeric_sensors); ?>');
+  var fields = JSON.parse('<?php echo json_encode($fields); ?>');
+
+  $( function() {
+    $( "#<?php echo e($unique_list); ?>" ).collapse().sortable({
+        handle: '.panel-heading'
+    });
+    $('.colorpicker').colorpicker();
+  } );
+</script>

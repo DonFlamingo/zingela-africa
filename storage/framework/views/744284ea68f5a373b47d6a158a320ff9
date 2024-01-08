@@ -1,0 +1,22 @@
+<?php $__env->startSection('content'); ?>
+    <?php if(Session::has('errors')): ?>
+        <div class="alert alert-danger">
+            <ul>
+                <?php foreach(Session::get('errors')->all() as $error): ?>
+                    <li><?php echo e($error); ?></li>
+                <?php endforeach; ?>
+            </ul>
+        </div>
+        <div class="clearfix"></div>
+    <?php endif; ?>
+
+    <div class="row">
+        <?php foreach($tools as $tool): ?>
+            <div class="col-sm-6">
+                <?php echo $tool; ?>
+
+            </div>
+        <?php endforeach; ?>
+    </div>
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('Admin.Layouts.default', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

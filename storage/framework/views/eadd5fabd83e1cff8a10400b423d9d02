@@ -1,0 +1,58 @@
+<div class="table-responsive scrollbox">
+    <table class="table table-list" id="history-table-content-table" data-toggle="multiCheckbox">
+        <thead>
+        <tr>
+            <?php if(Auth::User()->perm('history', 'remove')): ?>
+            <?php echo tableHeaderCheckall(['delete_url' => trans('admin.delete_selected')]); ?>
+
+            <?php endif; ?>
+            <th id="table-th-span-time" class="sorting <?php echo (isset($sorting) && $sorting == 'desc') ? 'sorting_desc' : 'sorting_asc'; ?>"><?php echo trans('front.time'); ?></th>
+            <th>Address</th>
+            <th><?php echo trans('front.altitude'); ?></th>
+            <th><?php echo trans('front.speed'); ?></th>
+            <?php foreach($sensors as $sensor): ?>
+                <?php if($sensor['add_to_history']): ?>
+                    <th><?php echo e($sensor['name']); ?></th>
+                <?php endif; ?>
+            <?php endforeach; ?>
+            <th style="display: none"></th>
+        </tr>
+        </thead>
+        <tbody>
+        <?php if(!empty($messages)): ?>
+            <?php foreach($messages as $message): ?>
+                <tr data-position_id="<?php echo $message['id']; ?>" data-lat="<?php echo $message['latitude']; ?>" data-lng="<?php echo $message['longitude']; ?>" data-speed="<?php echo $message['speed']; ?>" data-altitude="<?php echo $message['altitude']; ?>" data-time="<?php echo $message['time']; ?>">
+                    <?php if(Auth::User()->perm('history', 'remove')): ?>
+                    <td>
+                        <div class="checkbox">
+                            <?php echo Form::checkbox( 'history_message[]', $message['id'].'-'.$message['sensor_id'], null); ?>
+
+                            <?php echo Form::label( null ); ?>
+
+                        </div>
+                    </td>
+                    <?php endif; ?>
+                    <td><?php echo $message['time']; ?></td>
+                    <?php $address = new \Tobuli\Helpers\GeoAddressHelper(); ?>
+                    <td><?php echo $address->getGeoAddress($message['latitude'], $message['longitude']); ?></td>
+                    <td><?php echo $message['altitude']; ?></td>
+                    <td><?php echo $message['speed']; ?></td>
+                    <?php foreach($sensors as $key => $sensor): ?>
+                        <?php if($sensor['add_to_history']): ?>
+                            <td><?php echo e(isset($message['sensors_value'][$sensor['id']]) ? $message['sensors_value'][$sensor['id']] : '-'); ?></td>
+                        <?php endif; ?>
+                    <?php endforeach; ?>
+                    <td style="display: none">
+                        <span class="message_other"><?php echo json_encode($message['other_arr']); ?></span>
+                        <span class="message_sensors"><?php echo json_encode($message['popup_sensors']); ?></span>
+                    </td>
+                </tr>
+            <?php endforeach; ?>
+        <?php endif; ?>
+        </tbody>
+    </table>
+</div>
+<div class="nav-pagination">
+    <?php echo $messages->setPath(route('history.history'))->render(); ?>
+
+</div>

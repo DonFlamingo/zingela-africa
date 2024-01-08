@@ -1,0 +1,17 @@
+<?php $__env->startSection('modal_class', 'modal-sm'); ?>
+
+<?php $__env->startSection('title'); ?>
+    <?php echo e(trans('front.login_as')); ?>
+
+<?php $__env->stopSection(); ?>
+
+<?php $__env->startSection('body'); ?>
+    <?php echo e(strtr(trans('front.do_login_as'), [':email' => $item->email])); ?>
+
+<?php $__env->stopSection(); ?>
+
+<?php $__env->startSection('buttons'); ?>
+    <a href="<?php echo e(route('admin.clients.login_as_agree', $item->id)); ?>" class="btn btn-action"><?php echo e(trans('global.yes')); ?></a>
+    <button type="button" class="btn btn-default" data-dismiss="modal"><?php echo e(trans('global.no')); ?></button>
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('Frontend.Layouts.modal', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

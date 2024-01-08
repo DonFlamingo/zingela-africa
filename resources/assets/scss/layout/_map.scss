@@ -1,0 +1,59 @@
+#mapWrap {
+  position: relative;
+  width: auto;
+  height: 100%;
+  overflow: hidden;
+}
+#map {
+  overflow: hidden;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+
+  &.hidden-device-name {
+    .leaf-device-marker {
+      .name {
+        display: none;
+      }
+    }
+  }
+}
+#map-controls {
+  position: absolute;
+  top: 10%;
+  right: 0;
+  text-align: right;
+  z-index: $leaflet-control-z-index;
+
+  .btn-group-vertical {
+    margin-bottom: 10px;
+  }
+  .btn {
+    + .btn {
+      border-top: 1px solid $color-border-100;
+    }
+
+    padding: 0;
+    width: 33px;
+    height: 33px;
+    line-height: 33px;
+    font-size: 15px;
+    text-align: center;
+
+    background: $map-controls-btn-bg;
+    color: $map-controls-btn-color;
+
+    &:hover {
+      background: $map-controls-btn-hover-bg;
+      color: $map-controls-btn-hover-color;
+    }
+
+    &.active {
+      background: $map-controls-btn-active-bg;
+      color: $map-controls-btn-active-color;
+    }
+  }
+}
+

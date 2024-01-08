@@ -1,0 +1,44 @@
+<?php if(!empty($routes) && !empty($items = $routes->toArray())): ?>
+    <ul class="group-list">
+        <?php foreach($items as $key => $item): ?>
+            <?php $items[$key]['coordinates'] = json_decode($item['coordinates']); unset($items[$key]['polyline']);?>
+            <li data-route-id="<?php echo e($item['id']); ?>">
+                <div class="checkbox">
+                    <input type="checkbox" name="route[<?php echo e($item['id']); ?>]" value="<?php echo e($item['id']); ?>" <?php echo e(!empty($item['active']) ? 'checked="checked"' : ''); ?> onChange="app.routes.active('<?php echo e($item['id']); ?>', this.checked);"/>
+                    <label></label>
+                </div>
+                <div class="name">
+                    <span data-mapicon="name"><?php echo e($item['name']); ?></span>
+                </div>
+                <div class="details">
+                    <?php if(Auth::User()->perm('routes', 'edit') || Auth::User()->perm('routes', 'remove')): ?>
+                        <div class="btn-group dropleft droparrow"  data-position="fixed">
+                            <i class="btn icon options" data-toggle="dropdown" data-position="fixed" aria-haspopup="true" aria-expanded="false"></i>
+                            <ul class="dropdown-menu" >
+                                <?php if( Auth::User()->perm('routes', 'edit') ): ?>
+                                    <li>
+                                        <a href='javascript:;' onclick="app.routes.edit(<?php echo e($item['id']); ?>);">
+                                            <span class="icon edit"></span>
+                                            <span class="text"><?php echo e(trans('global.edit')); ?></span>
+                                        </a>
+                                    </li>
+                                <?php endif; ?>
+                                <?php if(Auth::User()->perm('routes', 'remove')): ?>
+                                    <li>
+                                        <a href='#' data-target='#deleteRoute' onclick="app.routes.delete(<?php echo e($item['id']); ?>);" data-id='<?php echo e($item['id']); ?>' data-toggle='modal'>
+                                            <span class="icon delete"></span>
+                                            <span class="text"><?php echo e(trans('global.delete')); ?></span>
+                                        </a>
+                                    </li>
+                                <?php endif; ?>
+                            </ul>
+                        </div>
+                    <?php endif; ?>
+                </div>
+            </li>
+        <?php endforeach; ?>
+    </ul>
+    <script>app.routes.addMulti(jQuery.parseJSON('<?php echo json_encode($items); ?>'));</script>
+<?php else: ?>
+    <p class="no-results"><?php echo trans('front.no_routes'); ?></p>
+<?php endif; ?>

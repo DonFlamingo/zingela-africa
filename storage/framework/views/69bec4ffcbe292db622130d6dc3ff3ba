@@ -1,0 +1,156 @@
+<?php $__env->startSection('content'); ?>
+    <div class="panel panel-default">
+
+        <div class="panel-heading">
+            <div class="panel-title"><i class="icon email"></i> <?php echo e(trans('validation.attributes.email')); ?></div>
+        </div>
+
+        <div class="panel-body">
+            <?php if(Session::has('errors')): ?>
+                <div class="alert alert-danger">
+                    <ul>
+                        <?php foreach(Session::get('errors')->all() as $error): ?>
+                            <li><?php echo e($error); ?></li>
+                        <?php endforeach; ?>
+                    </ul>
+                </div>
+            <?php endif; ?>
+
+            <?php echo Form::open(array('route' => 'admin.email_settings.save', 'method' => 'POST', 'class' => 'form form-horizontal', 'id' => 'email_settings_form')); ?>
+
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <?php echo Form::label('from_name', trans('validation.attributes.from_name'), ['class' => 'col-xs-12 col-sm-4 control-label"']); ?>
+
+                        <div class="col-xs-12 col-sm-8">
+                        <?php echo Form::text('from_name', isset($settings['from_name']) ? $settings['from_name'] : null, ['class' => 'form-control']); ?>
+
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <?php echo Form::label('noreply_email', trans('validation.attributes.noreply_email'), ['class' => 'col-xs-12 col-sm-4 control-label"']); ?>
+
+                        <div class="col-xs-12 col-sm-8">
+                        <?php echo Form::text('noreply_email', isset($settings['noreply_email']) ? $settings['noreply_email'] : null, ['class' => 'form-control']); ?>
+
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <?php echo Form::label('signature', trans('validation.attributes.signature'), ['class' => 'col-xs-12 col-sm-4 control-label"']); ?>
+
+                        <div class="col-xs-12 col-sm-8">
+                        <?php echo Form::text('signature', isset($settings['signature']) ? $settings['signature'] : null, ['class' => 'form-control']); ?>
+
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <?php echo Form::label('provider', trans('validation.attributes.provider'), ['class' => 'col-xs-12 col-sm-4 control-label"']); ?>
+
+                        <div class="col-xs-12 col-sm-8">
+                        <?php echo Form::select('provider', $providers, isset($settings['provider']) ? $settings['provider'] : null, ['class' => 'form-control']); ?>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group provider-sendgrid provider-postmark provider-mailgun">
+                        <?php echo Form::label('api_key', trans('validation.attributes.api_key'), ['class' => 'col-xs-12 col-sm-4 control-label"']); ?>
+
+                        <div class="col-xs-12 col-sm-8">
+                        <?php echo Form::text('api_key', isset($settings['api_key']) ? $settings['api_key'] : null, ['class' => 'form-control']); ?>
+
+                        </div>
+                    </div>
+
+                    <div class="form-group provider-mailgun">
+                        <?php echo Form::label('domain', trans('validation.attributes.domain'), ['class' => 'col-xs-12 col-sm-4 control-label"']); ?>
+
+                        <div class="col-xs-12 col-sm-8">
+                            <?php echo Form::text('domain', isset($settings['domain']) ? $settings['domain'] : null, ['class' => 'form-control']); ?>
+
+                        </div>
+                    </div>
+                    <div class="form-group provider-smtp">
+                        <?php echo Form::label('use_smtp_server', trans('validation.attributes.use_smtp_server'), ['class' => 'col-xs-12 col-sm-4 control-label"']); ?>
+
+                        <div class="col-xs-12 col-sm-8">
+                        <?php echo Form::select('use_smtp_server', ['0' => trans('global.no'), '1' => trans('global.yes')], isset($settings['use_smtp_server']) ? $settings['use_smtp_server'] : null, ['class' => 'form-control']); ?>
+
+                        </div>
+                    </div>
+                    <div class="form-group  provider-smtp">
+                        <?php echo Form::label('smtp_server_host', trans('validation.attributes.smtp_server_host'), ['class' => 'col-xs-12 col-sm-4 control-label"']); ?>
+
+                        <div class="col-xs-12 col-sm-8">
+                        <?php echo Form::text('smtp_server_host', isset($settings['smtp_server_host']) ? $settings['smtp_server_host'] : null, ['class' => 'form-control']); ?>
+
+                        </div>
+                    </div>
+                    <div class="form-group provider-smtp">
+                        <?php echo Form::label('smtp_server_port', trans('validation.attributes.smtp_server_port'), ['class' => 'col-xs-12 col-sm-4 control-label"']); ?>
+
+                        <div class="col-xs-12 col-sm-8">
+                        <?php echo Form::text('smtp_server_port', isset($settings['smtp_server_port']) ? $settings['smtp_server_port'] : null, ['class' => 'form-control']); ?>
+
+                        </div>
+                    </div>
+                    <div class="form-group provider-smtp">
+                        <?php echo Form::label('smtp_security', trans('validation.attributes.smtp_security'), ['class' => 'col-xs-12 col-sm-4 control-label"']); ?>
+
+                        <div class="col-xs-12 col-sm-8">
+                        <?php echo Form::select('smtp_security', ['0' => trans('global.no'), 'tls' => 'TLS', 'ssl' => 'SSL'], isset($settings['smtp_security']) ? $settings['smtp_security'] : null, ['class' => 'form-control']); ?>
+
+                        </div>
+                    </div>
+                    <div class="form-group provider-smtp">
+                        <?php echo Form::label('smtp_username', trans('validation.attributes.smtp_username'), ['class' => 'col-xs-12 col-sm-4 control-label"']); ?>
+
+                        <div class="col-xs-12 col-sm-8">
+                        <?php echo Form::text('smtp_username', isset($settings['smtp_username']) ? $settings['smtp_username'] : null, ['class' => 'form-control']); ?>
+
+                        </div>
+                    </div>
+                    <div class="form-group provider-smtp">
+                        <?php echo Form::label('smtp_password', trans('validation.attributes.smtp_password'), ['class' => 'col-xs-12 col-sm-4 control-label"']); ?>
+
+                        <div class="col-xs-12 col-sm-8">
+                        <?php echo Form::password('smtp_password', ['class' => 'form-control']); ?>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <?php echo Form::close(); ?>
+
+        </div>
+
+        <div class="panel-footer">
+            <button type="submit" class="btn btn-action" form="email_settings_form"><?php echo e(trans('global.save')); ?></button>
+            <button type="button" class="btn btn-default" data-modal="test_email" data-url="<?php echo e(route('admin.email_settings.test_email')); ?>"><?php echo e(trans('front.test_email')); ?></button>
+        </div>
+    </div>
+<?php $__env->stopSection(); ?>
+
+<?php $__env->startSection('javascript'); ?>
+    <script>
+        $(document).ready(function() {
+            $('select[name="use_smtp_server"]').on('change', function() {
+                var val = $(this).val();
+                if (val == 0)
+                    $('input[name^="smtp_"], select[name^="smtp_"]').attr('disabled', 'disabled');
+                else
+                    $('input[name^="smtp_"], select[name^="smtp_"]').removeAttr('disabled', 'disabled');
+            });
+            $('select[name="use_smtp_server"]').trigger('change');
+
+
+            $('select[name="provider"]').on('change', function() {
+                $('div[class*="provider-"]').hide();
+                $('.provider-' + $(this).val()).show();
+            });
+            $('select[name="provider"]').trigger('change');
+        });
+    </script>
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('Admin.Layouts.default', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

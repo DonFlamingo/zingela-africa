@@ -1,0 +1,759 @@
+//colors
+$color_alto_approx: #ddd;
+$color_deep_cerulean_approx: #0078a8;
+$web_orange:  orange;
+$color_dodger_blue_approx: #38f;
+$white_50: rgba(255,255,255,0.5);
+$black_65: rgba(0,0,0,0.65);
+$white: #fff;
+$color_celeste_approx: #ccc;
+$black: black;
+$wild_sand: #f4f4f4;
+$color_pink_swan_approx: #bbb;
+$black_40: rgba(0,0,0,0.4);
+$color_mine_shaft_approx: #333;
+$white_70: rgba(255, 255, 255, 0.7);
+$color_tapa_approx: #777;
+$black_20: rgba(0,0,0,0.2);
+$color_pale_slate_approx: #c3c3c3;
+$color_mountain_mist_approx: #999;
+$color_storm_dust_approx: #666;
+$color_log_cabin_approx: #222;
+
+$extend_2-z-index: 900;
+$leaflet-pane-z-index: 400;
+$leaflet-zoom-box-z-index: 800;
+$leaflet-overlay-pane-z-index: 400;
+$leaflet-tile-pane-z-index: 200;
+$leaflet-shadow-pane-z-index: 500;
+$leaflet-marker-pane-z-index: 600;
+$leaflet-tooltip-pane-z-index: 650;
+$leaflet-popup-pane-z-index: 700;
+$leaflet-control-z-index: 800;
+
+$leaflet-map-pane-canvas-z-index: 100;
+$leaflet-map-pane-svg-z-index: 200;
+
+//fonts
+$font_0: Lucida Console;
+$font_1: Monaco;
+$font_2: monospace;
+$font_3: Tahoma;
+$font_4: Verdana;
+$font_5: sans-serif;
+
+//urls
+$url_0: url(#default#VML);
+$url_1: url(../img/layers.png);
+$url_2: url(../img/layers-2x.png);
+$url_3: url(../img/marker-icon.png);
+
+//@extend-elements
+//original selectors
+//.leaflet-pane, .leaflet-tile, .leaflet-marker-icon, .leaflet-marker-shadow, .leaflet-tile-container, .leaflet-pane >svg, .leaflet-pane >canvas, .leaflet-zoom-box, .leaflet-image-layer, .leaflet-layer
+%extend_1 {
+	position: absolute;
+	left: 0;
+	top: 0;
+}
+
+//original selectors
+//.leaflet-top, .leaflet-bottom
+%extend_2 {
+	position: absolute;
+	z-index: $extend_2-z-index;
+	pointer-events: none;
+}
+
+//original selectors
+//.leaflet-bar a, .leaflet-bar a:hover
+%extend_3 {
+	background-color: $white;
+	border-bottom: 1px solid $color_celeste_approx;
+	width: 26px;
+	height: 26px;
+	line-height: 26px;
+	display: block;
+	text-align: center;
+	text-decoration: none;
+	color: $black;
+}
+
+//original selectors
+//.leaflet-bar a, .leaflet-control-layers-toggle
+%extend_4 {
+	background-position: 50% 50%;
+	background-repeat: no-repeat;
+	display: block;
+}
+
+//original selectors
+//.leaflet-popup-content-wrapper, .leaflet-popup-tip
+%extend_5 {
+	background: $white;
+	color: $color_mine_shaft_approx;
+	//Instead of the line below you could use @include box-shadow($shadow-1, $shadow-2, $shadow-3, $shadow-4, $shadow-5, $shadow-6, $shadow-7, $shadow-8, $shadow-9, $shadow-10)
+	box-shadow: 0 3px 14px $black_40;
+}
+
+//original selectors
+//.leaflet-tooltip-top:before, .leaflet-tooltip-bottom:before, .leaflet-tooltip-left:before, .leaflet-tooltip-right:before
+%extend_6 {
+	position: absolute;
+	pointer-events: none;
+	border: 6px solid transparent;
+	background: transparent;
+	content: "";
+}
+
+
+.leaflet-pane {
+	@extend %extend_1;
+	z-index: $leaflet-pane-z-index;
+	> svg {
+		@extend %extend_1;
+		path {
+			pointer-events: none;
+			&.leaflet-interactive {
+				pointer-events: visiblePainted;
+				pointer-events: auto;
+			}
+		}
+	}
+	> canvas {
+		@extend %extend_1;
+	}
+}
+.leaflet-tile {
+	@extend %extend_1;
+	//Instead of the line below you could use @include user-select($select)
+	user-select: none;
+	filter: inherit;
+	visibility: hidden;
+}
+.leaflet-marker-icon {
+	@extend %extend_1;
+	//Instead of the line below you could use @include user-select($select)
+	user-select: none;
+	display: block;
+	pointer-events: none;
+	&.leaflet-interactive {
+		pointer-events: visiblePainted;
+		pointer-events: auto;
+	}
+}
+.leaflet-marker-shadow {
+	@extend %extend_1;
+	//Instead of the line below you could use @include user-select($select)
+	user-select: none;
+	display: block;
+	pointer-events: none;
+}
+.leaflet-tile-container {
+	@extend %extend_1;
+	pointer-events: none;
+}
+.leaflet-zoom-box {
+	@extend %extend_1;
+	width: 0;
+	height: 0;
+	//Instead of the line below you could use @include box-sizing($bs)
+	box-sizing: border-box;
+	z-index: $leaflet-zoom-box-z-index;
+	border: 2px dotted $color_dodger_blue_approx;
+	background: $white_50;
+}
+.leaflet-image-layer {
+	@extend %extend_1;
+	pointer-events: none;
+	&.leaflet-interactive {
+		pointer-events: visiblePainted;
+		pointer-events: auto;
+	}
+}
+.leaflet-layer {
+	@extend %extend_1;
+}
+.leaflet-container {
+	overflow: hidden;
+	background: $color_alto_approx;
+	outline: 0;
+	font: 12px/1.5 "Helvetica Neue", Arial, Helvetica, sans-serif;
+	&.leaflet-touch-zoom {
+		touch-action: pan-x pan-y;
+	}
+	a {
+		color: $color_deep_cerulean_approx;
+		&.leaflet-active {
+			outline: 2px solid $web_orange;
+		}
+      /*
+		&.leaflet-popup-close-button {
+			position: absolute;
+			top: 0;
+			right: 0;
+			padding: 4px 4px 0 0;
+			border: none;
+			text-align: center;
+			width: 18px;
+			height: 14px;
+			font: 16px/14px $font_3, $font_4, $font_5;
+			color: $color_pale_slate_approx;
+			text-decoration: none;
+			font-weight: bold;
+			background: transparent;
+			&:hover {
+				color: $color_mountain_mist_approx;
+			}
+		}
+	  */
+	}
+	.leaflet-control-attribution {
+		background: $white;
+		background: $white_70;
+		margin: 0;
+		font-size: 11px;
+	}
+	.leaflet-control-scale {
+		font-size: 11px;
+	}
+	.leaflet-overlay-pane svg {
+		max-width: none !important;
+	}
+	.leaflet-marker-pane img {
+		max-width: none !important;
+	}
+	.leaflet-shadow-pane img {
+		max-width: none !important;
+	}
+	.leaflet-tile-pane img {
+		max-width: none !important;
+	}
+	img.leaflet-image-layer {
+		max-width: none !important;
+	}
+	&.leaflet-touch-drag.leaflet-touch-zoom {
+		touch-action: none;
+	}
+}
+.leaflet-safari {
+	.leaflet-tile {
+	}
+	.leaflet-tile-container {
+		width: 1600px;
+		height: 1600px;
+	}
+}
+.leaflet-tile-loaded {
+	visibility: inherit;
+}
+.leaflet-overlay-pane {
+	z-index: $leaflet-overlay-pane-z-index;
+	svg {
+	}
+}
+.leaflet-tile-pane {
+	z-index: $leaflet-tile-pane-z-index;
+}
+.leaflet-shadow-pane {
+	z-index: $leaflet-shadow-pane-z-index;
+}
+.leaflet-marker-pane {
+	z-index: $leaflet-marker-pane-z-index;
+}
+.leaflet-tooltip-pane {
+	z-index: $leaflet-tooltip-pane-z-index;
+}
+.leaflet-popup-pane {
+	z-index: $leaflet-popup-pane-z-index;
+	cursor: auto;
+}
+.leaflet-map-pane {
+	canvas {
+		z-index: $leaflet-map-pane-canvas-z-index;
+	}
+	svg {
+		z-index: $leaflet-map-pane-svg-z-index;
+	}
+}
+.leaflet-vml-shape {
+	width: 1px;
+	height: 1px;
+}
+.lvml {
+	behavior: $url_0;
+	display: inline-block;
+	position: absolute;
+}
+.leaflet-control {
+	position: relative;
+	z-index: $leaflet-control-z-index;
+	pointer-events: visiblePainted;
+	pointer-events: auto;
+	float: left;
+	clear: both;
+	cursor: auto;
+}
+.leaflet-top {
+	@extend %extend_2;
+	top: 0;
+	.leaflet-control {
+		margin-top: 10px;
+	}
+}
+.leaflet-bottom {
+	@extend %extend_2;
+	bottom: 0;
+	.leaflet-control {
+		margin-bottom: 10px;
+	}
+	.leaflet-control-scale {
+		margin-bottom: 5px;
+	}
+}
+.leaflet-right {
+	right: 0;
+	.leaflet-control {
+		//float: right;
+		margin-right: 10px;
+	}
+}
+.leaflet-left {
+	left: 0;
+	.leaflet-control {
+		margin-left: 10px;
+	}
+	.leaflet-control-scale {
+		margin-left: 5px;
+	}
+}
+.leaflet-fade-anim {
+	.leaflet-tile {
+		will-change: opacity;
+	}
+	.leaflet-popup {
+		opacity: 0;
+		//Instead of the line below you could use @include transition($transition-1, $transition-2, $transition-3, $transition-4, $transition-5, $transition-6, $transition-7, $transition-8, $transition-9, $transition-10)
+		transition: opacity 0.2s linear;
+	}
+	.leaflet-map-pane .leaflet-popup {
+		opacity: 1;
+	}
+}
+.leaflet-zoom-animated {
+	//Instead of the line below you could use @include transform-origin($origin-x, $origin-y, $origin-z, $only3d)
+	transform-origin: 0 0;
+}
+.leaflet-zoom-anim {
+	.leaflet-zoom-animated {
+		will-change: transform;
+		//Instead of the line below you could use @include transition($transition-1, $transition-2, $transition-3, $transition-4, $transition-5, $transition-6, $transition-7, $transition-8, $transition-9, $transition-10)
+		transition: transform 0.25s cubic-bezier(0,0,0.25,1);
+	}
+	.leaflet-tile {
+		//Instead of the line below you could use @include transition($transition-1, $transition-2, $transition-3, $transition-4, $transition-5, $transition-6, $transition-7, $transition-8, $transition-9, $transition-10)
+		transition: none;
+	}
+	.leaflet-zoom-hide {
+		visibility: hidden;
+	}
+}
+.leaflet-interactive {
+	cursor: pointer;
+}
+.leaflet-grab {
+}
+.leaflet-crosshair {
+	cursor: crosshair;
+	.leaflet-interactive {
+		cursor: crosshair;
+	}
+}
+.leaflet-dragging {
+	.leaflet-grab {
+		cursor: move;
+		.leaflet-interactive {
+			cursor: move;
+		}
+	}
+	.leaflet-marker-draggable {
+		cursor: move;
+	}
+}
+.leaflet-bar {
+	//Instead of the line below you could use @include box-shadow($shadow-1, $shadow-2, $shadow-3, $shadow-4, $shadow-5, $shadow-6, $shadow-7, $shadow-8, $shadow-9, $shadow-10)
+	box-shadow: 0 1px 5px $black_65;
+	//Instead of the line below you could use @include border-radius($radius, $vertical-radius)
+	border-radius: 4px;
+	a {
+		@extend %extend_3;
+		@extend %extend_4;
+		&:hover {
+			@extend %extend_3;
+			background-color: $wild_sand;
+		}
+		&:first-child {
+			//Instead of the line below you could use @include border-top-left-radius($radius)
+			border-top-left-radius: 4px;
+			//Instead of the line below you could use @include border-top-right-radius($radius)
+			border-top-right-radius: 4px;
+		}
+		&:last-child {
+			//Instead of the line below you could use @include border-bottom-left-radius($radius)
+			border-bottom-left-radius: 4px;
+			//Instead of the line below you could use @include border-bottom-right-radius($radius)
+			border-bottom-right-radius: 4px;
+			border-bottom: none;
+		}
+		&.leaflet-disabled {
+			cursor: default;
+			background-color: $wild_sand;
+			color: $color_pink_swan_approx;
+		}
+	}
+}
+.leaflet-control-layers-toggle {
+	display: none;
+}
+.leaflet-touch {
+	.leaflet-bar {
+		//Instead of the line below you could use @include box-shadow($shadow-1, $shadow-2, $shadow-3, $shadow-4, $shadow-5, $shadow-6, $shadow-7, $shadow-8, $shadow-9, $shadow-10)
+		box-shadow: none;
+		border: 2px solid $black_20;
+		//Instead of the line below you could use @include background-clip($clip)
+		background-clip: padding-box;
+		a {
+			width: 30px;
+			height: 30px;
+			line-height: 30px;
+		}
+	}
+	.leaflet-control-zoom-in {
+		font-size: 22px;
+	}
+	.leaflet-control-zoom-out {
+		font-size: 24px;
+	}
+	.leaflet-control-layers-toggle {
+		//width: 44px;
+		//height: 44px;
+	}
+	.leaflet-control-attribution {
+		//Instead of the line below you could use @include box-shadow($shadow-1, $shadow-2, $shadow-3, $shadow-4, $shadow-5, $shadow-6, $shadow-7, $shadow-8, $shadow-9, $shadow-10)
+		box-shadow: none;
+	}
+	.leaflet-control-layers {
+		//Instead of the line below you could use @include box-shadow($shadow-1, $shadow-2, $shadow-3, $shadow-4, $shadow-5, $shadow-6, $shadow-7, $shadow-8, $shadow-9, $shadow-10)
+		box-shadow: none;
+		border: 2px solid $black_20;
+		//Instead of the line below you could use @include background-clip($clip)
+		background-clip: padding-box;
+	}
+}
+.leaflet-control-zoom-in {
+	font: bold 18px $font_0, $font_1, $font_2;
+	text-indent: 1px;
+}
+.leaflet-control-zoom-out {
+	font: bold 18px $font_0, $font_1, $font_2;
+	text-indent: 1px;
+	font-size: 20px;
+}
+.leaflet-control-layers {
+	@extend .droparrow;
+	@extend .dropright;
+	position: relative;
+
+	.leaflet-control-layers-list {
+		display: none;
+		@extend .dropdown-menu;
+	}
+	label {
+		display: block;
+		margin: 0;
+
+		@include checkbox('div', 'span');
+		@include checkbox-variant('div', $brand-primary, 'span');
+
+		div {
+			padding: $dropdown-padding-vertical $dropdown-padding-horizontal;
+		}
+	}
+}
+.leaflet-control-layers-expanded {
+	.leaflet-control-layers-list {
+		display: block;
+	}
+}
+.leaflet-control-layers-scrollbar {
+	overflow-y: scroll;
+	padding-right: 5px;
+}
+.leaflet-control-layers-selector {
+	margin-top: 2px;
+	position: relative;
+	top: 1px;
+}
+.leaflet-control-layers-separator {
+	height: 0;
+	border-top: 1px solid $color_alto_approx;
+	margin: 5px -10px 5px -6px;
+}
+.leaflet-default-icon-path {
+	background-image: $url_3;
+}
+.leaflet-control-attribution {
+	padding: 0 5px;
+	color: $color_mine_shaft_approx;
+	a {
+		text-decoration: none;
+		&:hover {
+			text-decoration: underline;
+		}
+	}
+}
+.leaflet-control-scale-line {
+	padding: 0 5px;
+	color: $color_mine_shaft_approx;
+	border: 2px solid $color_tapa_approx;
+	border-top: none;
+	line-height: 1.1;
+	padding: 2px 5px 1px;
+	font-size: 11px;
+	white-space: nowrap;
+	overflow: hidden;
+	//Instead of the line below you could use @include box-sizing($bs)
+	box-sizing: border-box;
+	background: $white;
+	background: $white_50;
+	&:not(:first-child) {
+		border-top: 2px solid $color_tapa_approx;
+		border-bottom: none;
+		margin-top: -2px;
+		&:not(:last-child) {
+			border-bottom: 2px solid $color_tapa_approx;
+		}
+	}
+}
+.leaflet-popup {
+	position: absolute;
+	text-align: center;
+	margin-bottom: 20px;
+}
+.leaflet-popup-content-wrapper {
+	//padding: 1px;
+	text-align: left;
+	//Instead of the line below you could use @include border-radius($radius, $vertical-radius)
+	border-radius: 5px;
+	//@extend %extend_5;
+}
+.leaflet-popup-content {
+  //width: 300px;
+}
+.leaflet-popup-tip-container {
+	width: 40px;
+	height: 20px;
+	position: absolute;
+	left: 50%;
+	margin-left: -20px;
+	overflow: hidden;
+	pointer-events: none;
+}
+.leaflet-popup-tip {
+	width: 17px;
+	height: 17px;
+	padding: 1px;
+	margin: -10px auto 0;
+	//Instead of the line below you could use @include transform($scale, $rotate, $transx, $transy, $skewx, $skewy, $originx, $originy)
+	transform: rotate(45deg);
+	@extend %extend_5;
+}
+.leaflet-popup-scrolled {
+	overflow: auto;
+	border-bottom: 1px solid $color_alto_approx;
+	border-top: 1px solid $color_alto_approx;
+}
+.leaflet-oldie {
+	.leaflet-popup-content-wrapper {
+		zoom: 1;
+		border: 1px solid $color_mountain_mist_approx;
+	}
+	.leaflet-popup-tip {
+		width: 24px;
+		margin: 0 auto;
+		filter: progid:DXImageTransform.Microsoft.Matrix(M11=0.70710678, M12=0.70710678, M21=-0.70710678, M22=0.70710678);
+		border: 1px solid $color_mountain_mist_approx;
+	}
+	.leaflet-popup-tip-container {
+		margin-top: -1px;
+	}
+	.leaflet-control-zoom {
+		border: 1px solid $color_mountain_mist_approx;
+	}
+	.leaflet-control-layers {
+		border: 1px solid $color_mountain_mist_approx;
+	}
+}
+.leaflet-div-icon {
+	background: $white;
+	border: 1px solid $color_storm_dust_approx;
+}
+.leaflet-tooltip {
+	position: absolute;
+	padding: 6px;
+	background-color: $white;
+	border: 1px solid $white;
+	//Instead of the line below you could use @include border-radius($radius, $vertical-radius)
+	border-radius: 3px;
+	color: $color_log_cabin_approx;
+	white-space: nowrap;
+	//Instead of the line below you could use @include user-select($select)
+	user-select: none;
+	pointer-events: none;
+	//Instead of the line below you could use @include box-shadow($shadow-1, $shadow-2, $shadow-3, $shadow-4, $shadow-5, $shadow-6, $shadow-7, $shadow-8, $shadow-9, $shadow-10)
+	box-shadow: 0 1px 3px $black_40;
+	&.leaflet-clickable {
+		cursor: pointer;
+		pointer-events: auto;
+	}
+}
+.leaflet-tooltip-top {
+	margin-top: -6px;
+	&:before {
+		@extend %extend_6;
+		left: 50%;
+		margin-left: -6px;
+		bottom: 0;
+		margin-bottom: -12px;
+		border-top-color: $white;
+	}
+}
+.leaflet-tooltip-bottom {
+	margin-top: 6px;
+	&:before {
+		@extend %extend_6;
+		left: 50%;
+		margin-left: -6px;
+		top: 0;
+		margin-top: -12px;
+		margin-left: -6px;
+		border-bottom-color: $white;
+	}
+}
+.leaflet-tooltip-left {
+	margin-left: -6px;
+	&:before {
+		@extend %extend_6;
+		top: 50%;
+		margin-top: -6px;
+		right: 0;
+		margin-right: -12px;
+		border-left-color: $white;
+	}
+}
+.leaflet-tooltip-right {
+	margin-left: 6px;
+	&:before {
+		@extend %extend_6;
+		top: 50%;
+		margin-top: -6px;
+		left: 0;
+		margin-left: -12px;
+		border-right-color: $white;
+	}
+}
+.leaflet-pan-anim .leaflet-tile {
+	//Instead of the line below you could use @include transition($transition-1, $transition-2, $transition-3, $transition-4, $transition-5, $transition-6, $transition-7, $transition-8, $transition-9, $transition-10)
+	transition: none;
+}
+.leaflet-retina .leaflet-control-layers-toggle {
+	//background-image: $url_2;
+	//background-size: 26px 26px;
+}
+
+
+$device-marker-arrow-size: 10px;
+$device-marker-arrow-border-size: 1px;
+$device-marker-arrow-size-inner: $device-marker-arrow-size;
+$device-marker-arrow-size-outter: ($device-marker-arrow-size + $device-marker-arrow-border-size);
+
+.leaf-device-marker {
+	.ico {
+		display: block;
+	}
+	.name {
+
+		display: block;
+		position: absolute;
+		bottom: 100%;
+		margin-bottom: $device-marker-arrow-size / 2;
+		-webkit-transform: translateX(-40%);
+		transform: translateX(-40%);
+
+		&:before,
+		&:after {
+			content: '';
+			display: inline-block;
+			position: absolute;
+		}
+		&:before {
+			border: $device-marker-arrow-size-outter solid transparent;
+
+			left: calc( 50% - #{$device-marker-arrow-size-outter} );
+			bottom: -($device-marker-arrow-size-outter - $device-marker-arrow-border-size);
+			border-bottom: 0;
+			border-top-color: $color-border-100;
+		}
+		&:after {
+			border: $device-marker-arrow-size-inner solid transparent;
+			left: calc( 50% - #{$device-marker-arrow-size-inner} );
+			bottom: -($device-marker-arrow-size-inner - $device-marker-arrow-border-size);
+			border-bottom: 0;
+			border-top-color: $color-bg-000;
+		}
+
+		i {
+			font-style: normal;
+			display: inline-block;
+			white-space: nowrap;
+			background: $color-bg-000;
+			padding: 4px 8px;
+			border: 1px solid $color-border-100;
+			//opacity: 0.8;
+			border-radius: 4px;
+		}
+	}
+}
+
+.leaflet-popup-geofence {
+	.name {
+		display: block;
+		white-space: nowrap;
+		color: #ffffff;
+		padding: 4px;
+		border: 1px solid $color-border-100;
+		opacity: 0.8;
+	}
+	.leaflet-popup-tip-container {
+		display: none;
+	}
+}
+
+.leaflet-popup-route {
+	.name {
+		display: block;
+		white-space: nowrap;
+		color: #ffffff;
+		padding: 4px;
+		border: 1px solid $color-border-100;
+		opacity: 0.8;
+	}
+	.leaflet-popup-tip-container {
+		display: none;
+	}
+}
+
+.leaflet-popup-event,
+.leaflet-popup-history {
+	min-width: 270px;
+}

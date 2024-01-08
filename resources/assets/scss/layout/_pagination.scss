@@ -1,0 +1,12 @@
+.nav-pagination {
+  @include clearfix();
+
+  border-top: 1px solid $color-border-100;
+
+  .pagination {
+    @extend .pull-right;
+
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+}

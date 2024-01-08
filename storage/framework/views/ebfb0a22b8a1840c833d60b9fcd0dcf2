@@ -1,0 +1,64 @@
+<?php $__env->startSection('title'); ?>
+    <i class="icon edit"></i> <?php echo e(trans('global.edit')); ?> "<?php echo e($item->name); ?>" <?php echo e(strtolower(trans('validation.attributes.port'))); ?>
+
+<?php $__env->stopSection(); ?>
+
+<?php $__env->startSection('body'); ?>
+    <?php echo Form::open(array('url' => route('admin.ports.update', $item->name), 'method' => 'PUT')); ?>
+
+    <div class="form-group">
+        <div class="checkbox">
+            <?php echo Form::checkbox('active', 1, $item->active); ?>
+
+            <?php echo Form::label('active', trans('validation.attributes.active')); ?>
+
+        </div>
+    </div>
+    <div class="form-group">
+        <?php echo Form::label('name', trans('validation.attributes.name').':'); ?>
+
+        <?php echo Form::text('name', $item->name, ['class' => 'form-control', 'disabled' => 'disabled']); ?>
+
+    </div>
+    <div class="form-group">
+        <?php echo Form::label('port', trans('validation.attributes.port').':'); ?>
+
+        <?php echo Form::text('port', $item->port, ['class' => 'form-control']); ?>
+
+    </div>
+    <div class="form-group">
+        <?php echo Form::label('name', trans('validation.attributes.extra').':'); ?>
+
+        <?php foreach(json_decode($item->extra, TRUE) as $name => $value): ?>
+            <div class="row row-padding" style="padding-bottom:10px">
+                <div class="col-xs-6">
+                    <?php echo Form::text("extra[{$name}][name]", $name, ['class' => 'form-control']); ?>
+
+                </div>
+                <div class="col-xs-6">
+                    <div class="input-group">
+                        <?php echo Form::text("extra[{$name}][value]", $value, ['class' => 'form-control']); ?>
+
+                        <span class="input-group-addon"><a href="javascript:" class="delete-extra-item remove-icon"><span aria-hidden="true">×</span></a></span>
+                    </div>
+                </div>
+            </div>
+        <?php endforeach; ?>
+        <div class="row row-padding extra-empty" style="padding-bottom:10px">
+            <div class="col-xs-6">
+                <?php echo Form::text("extra[empty][name]", null, ['class' => 'form-control']); ?>
+
+            </div>
+            <div class="col-xs-6">
+                <div class="input-group">
+                    <?php echo Form::text("extra[empty][value]", null, ['class' => 'form-control']); ?>
+
+                    <span class="input-group-addon"><a href="javascript:" class="delete-extra-item remove-icon"><span aria-hidden="true">×</span></a></span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <?php echo Form::close(); ?>
+
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('Frontend.Layouts.modal', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

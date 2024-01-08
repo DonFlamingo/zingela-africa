@@ -1,0 +1,102 @@
+<?php $__env->startSection('content'); ?>
+
+    <div class="panel panel-default" id="table_<?php echo e($section); ?>">
+
+        <input type="hidden" name="sorting[sort_by]" value="<?php echo e($items->sorting['sort_by']); ?>" data-filter>
+        <input type="hidden" name="sorting[sort]" value="<?php echo e($items->sorting['sort']); ?>" data-filter>
+
+        <div class="panel-heading">
+            <ul class="nav nav-tabs nav-icons pull-right">
+                <li role="presentation" class="">
+                    <a href="javascript:" type="button" class="" data-modal="<?php echo e($section); ?>_create" data-url="<?php echo e(route("admin.{$section}.create")); ?>">
+                        <i class="icon user-add" title="<?php echo e(trans('admin.add_new_user')); ?>"></i>
+                    </a>
+                </li>
+                <?php if( Auth::User()->perm('devices', 'edit') ): ?>
+                <li role="presentation" class="">
+                    <a href="javascript:" type="button" class="" data-modal="devices_create" data-url="<?php echo e(route("devices.create")); ?>">
+                        <i class="icon device-add" title="<?php echo e(trans('admin.add_new_device')); ?>"></i>
+                    </a>
+                </li>
+                <?php endif; ?>
+                <?php if( Auth::User()->perm('geofences', 'view') ): ?>
+                <li role="presentation" class="">
+                    <a href="javascript:" type="button" class="" data-modal="<?php echo e($section); ?>_import" data-url="<?php echo e(route("admin.clients.import_geofences")); ?>">
+                        <i class="icon geofence-import" title="<?php echo e(trans('front.import_geofences')); ?>"></i>
+                    </a>
+                </li>
+                <?php endif; ?>
+                <?php if( Auth::User()->perm('poi', 'view') ): ?>
+                <li role="presentation" class="">
+                    <a href="javascript:" type="button" class="" data-modal="<?php echo e($section); ?>_import" data-url="<?php echo e(route("admin.clients.import_map_icon")); ?>">
+                        <i class="icon poi-import" title="<?php echo e(trans('front.import_map_icon')); ?>"></i>
+                    </a>
+                </li>
+                <?php endif; ?>
+            </ul>
+
+            <div class="panel-title"><i class="icon user"></i> <?php echo trans('admin.users'); ?></div>
+
+            <div class="panel-form">
+                <div class="form-group search">
+                    <?php echo Form::text('search_phrase', null, ['class' => 'form-control', 'placeholder' => trans('admin.search_it'), 'data-filter' => true]); ?>
+
+                </div>
+                <div class="form-group search">
+                    <?php echo Form::text('search_device', null, ['class' => 'form-control', 'placeholder' => trans('admin.search_device_imei'), 'data-filter' => true]); ?>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="panel-body" data-table>
+            <?php echo $__env->make('Admin.'.ucfirst($section).'.table', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+        </div>
+    </div>
+<?php $__env->stopSection(); ?>
+
+<?php $__env->startSection('javascript'); ?>
+<script>
+    $(document).ready(function() {
+        $(document).on('change', 'select[name="group_id"]', showHideClientFields);
+
+        $(document).on('change', 'input[name="enable_devices_limit"]', function() {
+            if ($(this).prop('checked'))
+                $('input[name="devices_limit"]').removeAttr('disabled');
+            else
+                $('input[name="devices_limit"]').attr('disabled', 'disabled');
+        });
+
+        $(document).on('change', 'input[name="enable_expiration_date"]', function() {
+            if ($(this).prop('checked'))
+                $('input[name="expiration_date"]').removeAttr('disabled');
+            else
+                $('input[name="expiration_date"]').attr('disabled', 'disabled');
+        });
+    });
+
+    function showHideClientFields() {
+        var group_id = $('select[name="group_id"]').val();
+        if (group_id == 2) {
+            $('.field_manager_id').show();
+        }
+        else {
+            $('.field_manager_id').hide();
+        }
+    }
+
+    tables.set_config('table_<?php echo e($section); ?>', {
+        url:'<?php echo e(route("admin.{$section}.index")); ?>',
+        delete_url:'<?php echo e(route("admin.{$section}.destroy")); ?>'
+    });
+
+    function <?php echo e($section); ?>_edit_modal_callback() {
+        tables.get('table_<?php echo e($section); ?>');
+    }
+
+    function <?php echo e($section); ?>_create_modal_callback() {
+        tables.get('table_<?php echo e($section); ?>');
+    }
+</script>
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('Admin.Layouts.default', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

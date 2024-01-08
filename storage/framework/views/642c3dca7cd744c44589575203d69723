@@ -1,0 +1,22 @@
+<?php $__env->startSection('content'); ?>
+    <div class="panel panel-default" id="table_unregistered_devices_log">
+
+        <div class="panel-heading">
+            <div class="panel-title"><i class="icon logs"></i> <?php echo e(trans('admin.unregistered_devices_log')); ?></div>
+        </div>
+
+        <div class="panel-body" data-table>
+            <?php echo $__env->make('Admin.UnregisteredDevicesLog.table', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+        </div>
+    </div>
+<?php $__env->stopSection(); ?>
+
+<?php $__env->startSection('javascript'); ?>
+    <script>
+        tables.set_config('table_unregistered_devices_log', {
+            url:'<?php echo e(route("admin.unregistered_devices_log.index")); ?>',
+            delete_url:'<?php echo e(route("admin.unregistered_devices_log.destroy")); ?>'
+        });
+    </script>
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('Admin.Layouts.default', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

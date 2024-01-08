@@ -1,0 +1,46 @@
+<div class="table-responsive">
+    <table class="table table-list">
+        <thead>
+        <?php echo tableHeader('validation.attributes.name'); ?>
+
+        <?php echo tableHeader('validation.attributes.device_id'); ?>
+
+        <?php echo tableHeader('validation.attributes.rfid'); ?>
+
+        <?php echo tableHeader('validation.attributes.phone'); ?>
+
+        <?php echo tableHeader('validation.attributes.email'); ?>
+
+        <?php echo tableHeader('validation.attributes.description'); ?>
+
+        <th></th>
+        </thead>
+        <tbody>
+        <?php if(count($drivers)): ?>
+            <?php foreach($drivers as $driver): ?>
+                <tr>
+                    <td><?php echo e($driver->name); ?></td>
+                    <td><?php echo e(empty($driver->device) ? '' : $driver->device->name); ?></td>
+                    <td><?php echo e($driver->rfid); ?></td>
+                    <td><?php echo e($driver->phone); ?></td>
+                    <td><?php echo e($driver->email); ?></td>
+                    <td><?php echo e($driver->description); ?></td>
+                    <td class="actions">
+                        <a href="javascript:" class="btn icon edit" data-url="<?php echo route('user_drivers.edit', $driver->id); ?>" data-modal="user_drivers_edit"></a>
+                        <a href="javascript:" class="btn icon delete" data-url="<?php echo route('user_drivers.do_destroy', $driver->id); ?>" data-modal="user_drivers_destroy"></a>
+                    </td>
+                </tr>
+            <?php endforeach; ?>
+        <?php else: ?>
+            <tr>
+                <td class="no-data" colspan="8"><?php echo trans('front.no_drivers'); ?></td>
+            </tr>
+        <?php endif; ?>
+        </tbody>
+    </table>
+</div>
+
+<div class="nav-pagination">
+    <?php echo $drivers->setPath(route('user_drivers.index'))->render(); ?>
+
+</div>

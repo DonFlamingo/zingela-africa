@@ -1,0 +1,35 @@
+<div class="table-responsive">
+    <table class="table table-list">
+        <thead>
+            <tr>
+                <?php echo tableHeader('validation.attributes.title'); ?>
+
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+        <?php if(count($user_sms_templates)): ?>
+            <?php foreach($user_sms_templates as $user_sms_template): ?>
+                <tr>
+                    <td>
+                        <?php echo e($user_sms_template->title); ?>
+
+                    </td>
+                    <td class="actions">
+                        <a href="javascript:" class="btn icon edit" data-url="<?php echo route('user_sms_templates.edit', $user_sms_template->id); ?>" data-modal="user_sms_templates_edit"></a>
+                        <a href="javascript:" class="btn icon delete" data-url="<?php echo route('user_sms_templates.do_destroy', $user_sms_template->id); ?>" data-modal="user_sms_templates_destroy"></a>
+                    </td>
+                </tr>
+            <?php endforeach; ?>
+        <?php else: ?>
+            <tr>
+                <td class="no-data"  colspan="2"><?php echo trans('front.no_templates'); ?></td>
+            </tr>
+        <?php endif; ?>
+        </tbody>
+    </table>
+</div>
+<div class="nav-pagination">
+    <?php echo $user_sms_templates->setPath(route('user_sms_templates.index'))->render(); ?>
+
+</div>

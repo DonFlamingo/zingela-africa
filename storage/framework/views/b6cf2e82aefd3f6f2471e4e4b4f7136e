@@ -1,0 +1,42 @@
+<div class="table-responsive">
+    <table class="table table-list">
+        <thead>
+            <tr>
+                <?php echo tableHeader('validation.attributes.sensor_name'); ?>
+
+                <?php echo tableHeader('validation.attributes.sensor_template'); ?>
+
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+        <?php if(count($sensors)): ?>
+            <?php foreach($sensors as $sensor): ?>
+                <tr>
+                    <td>
+                        <?php echo e($sensor->name); ?>
+
+                    </td>
+                    <td>
+                        <?php echo e($sensor->type_title); ?>
+
+                    </td>
+                    <td class="actions">
+                        <a href="javascript:" class="btn icon edit" data-url="<?php echo route('sensors.edit', $sensor->id); ?>" data-modal="sensors_edit"></a>
+                        <a href="javascript:" class="btn icon delete" data-url="<?php echo route('sensors.do_destroy', $sensor->id); ?>" data-modal="sensors_destroy"></a>
+                    </td>
+                </tr>
+            <?php endforeach; ?>
+        <?php else: ?>
+            <tr>
+                <td class="no-data" colspan="3"><?php echo trans('front.no_sensors'); ?></td>
+            </tr>
+        <?php endif; ?>
+        </tbody>
+    </table>
+</div>
+
+<div class="nav-pagination">
+    <?php echo $sensors->setPath(route('sensors.index', $device_id))->render(); ?>
+
+</div>

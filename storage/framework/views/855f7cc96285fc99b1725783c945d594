@@ -1,0 +1,33 @@
+<table class="table table-list">
+    <thead>
+    <tr>
+        <?php foreach($columns as $column): ?>
+        <th><?php echo e($column['title']); ?></th>
+        <?php endforeach; ?>
+    </tr>
+    </thead>
+    <tbody>
+    <?php foreach($grouped as $key => $devices): ?>
+        <?php foreach($devices as $device): ?>
+        <tr>
+            <?php foreach($columns as $column): ?>
+            <td>
+                <?php if($column['field'] == 'status'): ?>
+                <span class="device-status" style="background-color: <?php echo e($device['status_color']); ?>;" title="<?php echo e(trans('global.'.$device['status'])); ?>"></span>
+                <?php elseif($column['field'] == 'position'): ?>
+                    <?php if($device['lat'] && $device['lng']): ?>
+                    <a href="http://maps.google.com/maps?q=<?php echo e($device['lat']); ?>,<?php echo e($device['lng']); ?>&t=m" target="_blank">
+                    <?php echo e($device['lat']); ?>&deg;, <?php echo e($device['lng']); ?>&deg;
+                    </a>
+                    <?php endif; ?>
+                <?php else: ?>
+                    <?php $color = !empty($device['color'][$column['field']]) ? $device['color'][$column['field']] : 'inherit'; ?>
+                    <span style="color: <?php echo e($color); ?>;"><?php echo e(isset($device[$column['field']]) ? $device[$column['field']] : '-'); ?></span>
+                <?php endif; ?>
+            </td>
+            <?php endforeach; ?>
+        </tr>
+        <?php endforeach; ?>
+    <?php endforeach; ?>
+    </tbody>
+</table>

@@ -1,0 +1,279 @@
+$color-bg-000: #ffffff;
+$color-bg-100: #f9f9f9;
+$color-bg-200: #eeeeee;
+$color-bg-300: #dddddd;
+
+$color-text-000: #ffffff;
+$color-text-100: #202020; //darkest
+$color-text-200: #555555; //darker
+$color-text-300: #595959; //dark
+$color-text-400: #666666; //normal
+$color-text-500: #777777; //ligth
+$color-text-600: #999999; //ligther
+$color-text-700: #aaaaaa; //
+$color-text-800: #cccccc;
+$color-text-900: #dddddd;
+
+$color-border-100: #d9d9d9;
+$color-shadow: #cccccc;
+
+/*
+$base-bg:                #ffffff !default;
+$base-bg-darker:         #eeeeee !default;
+$base-bg-dark:           #f9f9f9 !default;
+$base-border:            #d9d9d9 !default;
+$base-color:             #202020 !default;
+*/
+
+$gray-base:              #202020;
+$gray-darker:            #555555;
+$gray-dark:              #777777;
+$gray:                   #dddddd;
+$gray-light:             #eeeeee;
+$gray-lighter:           #f9f9f9;
+
+$zindex-navbar:            1000 !default;
+$zindex-dropdown:          1000 !default;
+$zindex-popover:           1060 !default;
+$zindex-tooltip:           1070 !default;
+$zindex-navbar-fixed:      1030 !default;
+$zindex-modal-background:  1040 !default;
+$zindex-modal:             1050 !default;
+
+
+
+@import url('https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i&subset=cyrillic,cyrillic-ext,latin-ext');
+$font-family-sans-serif: "Open Sans", sans-serif !default;
+
+$font-size-base:                              12px !default;
+$font-size-smaller:                           $font-size-base - 2 !default;
+$font-size-small:                             $font-size-base - 1 !default;
+$font-size-large:                             $font-size-base + 1 !default;
+$font-size-larger:                            $font-size-base + 2 !default;
+
+$body-bg:                                     $color-bg-300 !default;
+$text-color:                                  $color-text-100 !default;
+
+$component-active-color:                      $color-text-000 !default;
+$component-active-bg:                         $brand-primary !default;
+$color-status-on:                             green !default;
+
+//** headings
+$heading-height:                              38px !default;
+$heading-color:                               $color-text-500 !default;
+$heading-bg:                                  $color-bg-100 !default;
+
+//** icon
+$icon-color:                                  $color-text-900 !default;
+
+//** borders
+$border-radius-base:                          0 !default;
+$border-radius-large:                         0 !default;
+$border-radius-small:                         2 !default;
+
+//** navbars
+$navbar-height:                               42px !default;
+$navbar-margin-bottom:                        0 !default;
+$navbar-border-radius:                        0 !default;
+
+$navbar-default-size:                         $font-size-large !default;
+$navbar-default-bg:                           $color-bg-000 !default;
+$navbar-default-border:                       $color-border-100 !default;
+$navbar-default-brand-color:                  $color-text-100 !default;
+$navbar-default-brand-hover-color:            $brand-primary !default;
+$navbar-default-brand-hover-bg:               $navbar-default-bg !default;
+$navbar-default-color:                        $color-text-100 !default;
+$navbar-default-link-color:                   $color-text-100 !default;
+$navbar-default-link-hover-color:             $brand-primary !default;
+$navbar-default-link-hover-bg:                $color-bg-100 !default;
+$navbar-default-link-active-color:            $brand-primary !default;
+$navbar-default-link-active-bg:               $navbar-default-link-hover-bg !default;
+$navbar-default-toggle-border-color:          $color-border-100 !default;
+$navbar-default-toggle-hover-bg:              $navbar-default-link-hover-bg !default;
+$navbar-default-toggle-icon-bar-bg:           $brand-primary !default;
+
+
+//** navs
+$nav-link-padding:                            10px 15px !default;
+$nav-link-bg:                                 $color-bg-200 !default;
+$nav-link-hover-bg:                           $color-bg-000 !default;
+$nav-link-color:                              $color-text-500 !default;
+
+$nav-disabled-link-color:                     $color-text-700 !default;
+$nav-disabled-link-hover-color:               $color-text-700 !default;
+
+//== Tabs
+$nav-tabs-bg:                                 $color-bg-100 !default;
+$nav-tabs-border-color:                       transparent !default;
+$nav-tabs-link-hover-border-color:            $nav-link-hover-bg !default;
+
+$nav-tabs-active-link-hover-bg:               $color-bg-000 !default;
+$nav-tabs-active-link-hover-color:            $color-text-100 !default;
+$nav-tabs-active-link-hover-border-color:     $nav-tabs-active-link-hover-bg !default;
+
+$nav-tabs-justified-link-border-color:        $color-border-100 !default;
+$nav-tabs-justified-active-link-border-color: $nav-tabs-active-link-hover-bg !default;
+
+//== Panels
+$panel-bg:                                    $color-bg-000 !default;
+$panel-body-padding:                          15px !default;
+$panel-heading-padding:                       9px 15px !default;
+$panel-footer-padding:                        $panel-heading-padding !default;
+$panel-border-radius:                         $border-radius-base !default;
+
+//== Forms
+$form-group-margin-bottom:                    10px !default;
+$input-bg:                                    $color-bg-100 !default;
+$input-bg-disabled:                           $color-bg-200 !default;
+$input-color:                                 $color-text-200 !default;
+$input-color-focus:                           $color-text-100 !default;
+$input-border:                                transparent !default;
+$input-border-focus:                          $color-border-100 !default;
+$input-bg-focus:                              $color-bg-000 !default;
+$input-color-placeholder:                     $color-text-800 !default;
+$input-group-addon-bg:                        $input-bg !default;
+$input-group-addon-border-color:              $input-border !default;
+$cursor-disabled:                             not-allowed !default;
+
+//== Tables
+$table-cell-padding:                          12px !default;
+$table-condensed-cell-padding:                3px !default;
+$table-bg:                                    transparent !default;
+$table-bg-accent:                             $color-bg-200 !default;
+$table-bg-hover:                              $color-bg-100 !default;
+$table-bg-active:                             $table-bg-hover !default;
+$table-border-color:                          $color-border-100 !default;
+
+$table-list-head-color:                       $color-text-500 !default;
+$table-list-head-bg:                          $color-bg-200 !default;
+
+//== Dropdowns
+//** Background for the dropdown menu.
+$dropdown-bg:                                 $color-bg-000 !default;
+$dropdown-border:                             $color-border-100 !default;
+$dropdown-fallback-border:                    $color-border-100 !default;
+$dropdown-divider-bg:                         $color-border-100 !default;
+$dropdown-link-color:                         $color-text-500 !default;
+$dropdown-link-hover-color:                   $color-text-500 !default;
+$dropdown-link-hover-bg:                      $color-bg-100 !default;
+$dropdown-link-active-color:                  $dropdown-link-hover-color !default;
+$dropdown-link-active-bg:                     $dropdown-link-hover-bg !default;
+$dropdown-link-disabled-color:                $color-text-700 !default;
+$dropdown-header-color:                       $dropdown-link-color !default;
+
+$dropdown-icon-color:                         $color-text-900 !default;
+$dropdown-icon-hover-color:                   $brand-primary !default;
+$dropdown-icon-font-size:                     inherit !default;
+
+$dropdown-padding-horizontal:                 13px !default;
+$dropdown-padding-vertical:                   6px !default;
+$dropdown-font-size:                          $font-size-small !default;
+
+//== Pagination
+$pagination-color:                            $color-text-100 !default;
+$pagination-bg:                               $color-text-000 !default;
+$pagination-border:                           transparent !default;
+
+$pagination-hover-color:                      $pagination-color !default;
+$pagination-hover-bg:                         $color-bg-100 !default;
+$pagination-hover-border:                     $pagination-border !default;
+
+$pagination-active-color:                     $brand-primary !default;
+$pagination-active-bg:                        $color-bg-100 !default;
+$pagination-active-border:                    $pagination-border !default;
+
+$pagination-disabled-color:                   $color-text-700 !default;
+$pagination-disabled-bg:                      $pagination-bg !default;
+$pagination-disabled-border:                  $pagination-border !default;
+
+//** Thumbnails
+$thumbnail-padding:                           3px !default;
+$thumbnail-bg:                                $color-bg-100 !default;
+$thumbnail-border:                            $color-border-100 !default;
+$thumbnail-border-radius:                     $border-radius-small !default;
+
+//** Buttons
+$btn-default-color:                           $color-text-500 !default;
+$btn-default-bg:                              $color-bg-200 !default;
+$btn-default-border:                          $btn-default-bg !default;
+
+//** Panels
+$panel-title-size:                            $font-size-larger !default;
+$panel-title-icon-size:                       inherit !default;
+$panel-title-icon-color:                      $brand-primary !default;
+
+//** Groups
+$group-padding-horizontal:                    8px !default;
+$group-heading-padding-vertical:              7px !default;
+$group-heading-padding-horizontal:            $group-padding-horizontal !default;
+$group-item-padding-vertical:                 5px !default;
+$group-item-padding-horizontal:               $group-padding-horizontal !default;
+
+$group-heading-font-size:                     $font-size-large !default;
+$group-heading-bg:                            $color-bg-100 !default;
+$group-heading-hover-bg:                      $color-bg-200 !default;
+$group-heading-color:                         $color-text-100 !default;
+$group-heading-hover-color:                   $color-text-100 !default;
+$group-heading-collapse-color:                $color-text-500 !default;
+$group-heading-collapse-hover-color:          $color-text-500 !default;
+
+$group-cell-padding-left:                     5px !default;
+$group-cell-padding-right:                    0px !default;
+
+$group-list-font-size:                        inherit !default;
+$group-list-bg:                               inherit !default;
+$group-list-hover-bg:                         $color-bg-100 !default;
+$group-list-color:                            inherit !default;
+$group-list-hover-color:                      inherit !default;
+
+$group-collapse-status-color:                 $color-text-800 !default;
+$group-collapse-status-hover-color:           $color-text-800 !default;
+$group-collapse-status-collapse-color:        $brand-primary !default;
+$group-collapse-status-collapse-hover-color:  $brand-primary !default;
+
+//** Map Controls
+$map-controls-btn-bg:                         $color-bg-000 !default;
+$map-controls-btn-color:                      $color-text-200 !default;
+$map-controls-btn-hover-bg:                   $map-controls-btn-bg !default;
+$map-controls-btn-hover-color:                $map-controls-btn-color !default;
+$map-controls-btn-active-bg:                  $component-active-bg !default;
+$map-controls-btn-active-color:               $component-active-color !default;
+
+//** Modals
+$modal-header-bg:                             $color-bg-100 !default;
+$modal-footer-bg:                             $color-bg-100 !default;
+$modal-header-border-color:                   transparent !default;
+
+//** Popups
+$popup-header-bg:                             $color-bg-100 !default;
+$popup-body-bg:                               $color-bg-000 !default;
+$popup-header-border-color:                   transparent !default;
+$popup-inner-padding:                         8px;
+$popup-header-padding:                        10px;
+$popup-title-color:                           $color-text-100 !default;
+$popup-title-font-size:                       $font-size-large;
+$popup-body-color:                            $color-text-300 !default;
+$popup-body-font-size:                        $font-size-small;
+
+//** Scrollbar
+$scrollbar-size:                              10px !default;
+$scrollbar-track-bg:                          $color-bg-100 !default;
+$scrollbar-track-border:                      $color-bg-000 !default;
+$scrollbar-thumb-bg:                          $color-bg-300 !default;
+$scrollbar-thumb-border:                      $color-bg-000 !default;
+
+
+$sidebar-bg:                                  $color-bg-000 !default;
+$sidebar-padding-horizontal:                  10px !default;
+$sidebar-padding-vertical:                    8px !default;
+$sidebar-padding:                             $sidebar-padding-vertical $sidebar-padding-horizontal !default;
+$sidebar-tab-header-padding:                  $sidebar-padding !default;
+$sidebar-tab-footer-padding:                  $sidebar-padding !default;
+
+//** Checkbox
+$checkbox-font-family:                        'icomoon' !default;
+$checkbox-check-icon:                         '\e90b' !default;
+$checkbox-border-color:                       $color-border-100 !default;
+$checkbox-size:                               18px !default;
+$checkbox-font-size:                          10px !default;
+$checkbox-padding:                            ($checkbox-size - $checkbox-font-size - 2) / 2;

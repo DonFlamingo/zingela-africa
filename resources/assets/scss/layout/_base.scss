@@ -1,0 +1,171 @@
+$sticky-footer-height: 30px;
+
+html {
+  height: 100%;
+  //min-height: 100%;
+  position: relative;
+}
+
+body{
+  height: 100%;
+  //background: #ccc;
+ // margin-bottom: $sticky-footer-height;
+}
+
+#footer {
+  //position: absolute;
+  bottom: 0;
+  width: 100%;
+  border-top: 1px solid #999999;
+  padding-top: 10px;
+  height: $sticky-footer-height;
+  //background-color: #f5f5f5;
+}
+
+.content {
+  margin-top: 10px;
+}
+
+.header + .content {
+  padding: 80px 0;
+}
+
+/*
+.date {
+  font-size: 0.65em;
+}
+.time {
+  font-size: 0.85em;
+}
+*/
+
+
+.on {
+  color: $color-status-on !important;
+}
+
+[data-device="status"],
+.device-status {
+  display: inline-block;
+  vertical-align: middle;
+  width: 10px; height: 10px;
+  border-radius: 50%;
+  background: #dddddd;
+  border: 1px solid #dddddd;
+
+  text-indent: 999999px;
+  overflow: hidden;
+}
+
+[data-device="engine"],
+[data-device="detect_engine"]{
+  font-size: 1.3em;
+  line-height: 1;
+}
+
+#sidebar [data-device="speed"] {
+  @extend .rubberBand;
+  @extend .animated;
+
+  color: $color-text-600;
+  font-size: 0.9em;
+}
+
+
+.action-icon {
+  position: relative;
+  display: inline-block;
+  border-radius: 50%;
+  line-height: 17px;
+  width: 19px;
+  height: 19px;
+  text-align: center;
+  font-size: 9px;
+  font-weight: bold;
+
+  background: #fff;
+  border: 1px solid #cccccc;
+  color: #000;
+
+  .event-action & {
+    background: #ea4f4f;
+    color: #fff;
+    border-color: #ea4f4f;
+  }
+  .park-action & {
+    background: #848484;
+    color: #fff;
+    border-color: #848484;
+  }
+  .drive-action & {
+    background: #1b99bd;
+    color: #fff;
+    border-color: #1b99bd;
+  }
+}
+
+.datetime {
+  .date,
+  .time {
+    white-space: nowrap;
+  }
+}
+
+.center-vertical {
+  width: 100%;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.scrollbox {
+  @extend .scrollbar;
+  overflow: auto;
+  max-height: 250px;
+}
+.icon-list {
+  .radio,
+  .radio-inline,
+  .checkbox,
+  .checkbox-inline {
+    margin: 0;
+
+    > label {
+      padding: 5px;
+      &:before,
+      &:after {
+        display: none;
+      }
+    }
+    input:checked + label {
+      background: $brand-primary;
+    }
+  }
+}
+
+.action-block {
+  @extend .text-right;
+
+  margin-bottom: 10px;
+
+  .btn {
+    @extend .btn-sm;
+  }
+}
+
+.ui-sortable-handle {
+  cursor:move;
+}
+
+.lang-list {
+  @extend .clearfix;
+
+  .lang-item {
+    @extend .col-xs-6;
+    @extend .col-sm-4;
+
+    .btn {
+      text-align: left;
+    }
+  }
+}

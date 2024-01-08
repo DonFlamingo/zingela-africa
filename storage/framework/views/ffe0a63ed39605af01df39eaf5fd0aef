@@ -1,0 +1,64 @@
+<?php if(!empty($grouped)): ?>
+    <?php foreach($grouped as $id => $items): ?>
+        <div class="group" data-toggle="multiCheckbox">
+            <div class="group-heading">
+
+                <div class="checkbox">
+                    <input type="checkbox" data-toggle="checkbox">
+                    <label></label>
+                </div>
+
+                <div class="group-title <?php echo e(isset($geofence_groups_opened[$id]) ? '' : 'collapsed'); ?>" data-toggle="collapse" data-target="#geofence-group-<?php echo e($id); ?>" data-parent="#geofences_tab" aria-expanded="false" aria-controls="geofence-group-<?php echo e($id); ?>">
+                    <?php echo e($geofence_groups[$id]); ?> <span class="count"><?php echo e(count($items)); ?></span>
+                </div>
+            </div>
+
+            <div id="geofence-group-<?php echo e($id); ?>" class="group-collapse collapse <?php echo e(!isset($geofence_groups_opened[$id]) ? '' : 'in'); ?>" data-id="<?php echo e($id); ?>" role="tabpanel">
+                <div class="group-body">
+                    <ul class="group-list">
+                        <?php foreach($items as $key => $item): ?>
+                            <?php $items[$key]['coordinates'] = json_decode($item['coordinates']); unset($items[$key]['polygon']);?>
+                            <li data-geofence-id="<?php echo e($item['id']); ?>">
+                                <div class="checkbox">
+                                    <input type="checkbox" name="items[<?php echo e($item['id']); ?>]" value="<?php echo e($item['id']); ?>" <?php echo e(!empty($item['active']) ? 'checked="checked"' : ''); ?> onChange="app.geofences.active('<?php echo e($item['id']); ?>', this.checked);"/>
+                                    <label></label>
+                                </div>
+                                <div class="name">
+                                    <span data-geofence="name"><?php echo e($item['name']); ?></span>
+                                </div>
+                                <div class="details">
+                                    <?php if(Auth::User()->perm('geofences', 'edit') || Auth::User()->perm('geofences', 'remove')): ?>
+                                        <div class="btn-group dropleft droparrow"  data-position="fixed">
+                                            <i class="btn icon options" data-toggle="dropdown" data-position="fixed" aria-haspopup="true" aria-expanded="false"></i>
+                                            <ul class="dropdown-menu" >
+                                                <?php if( Auth::User()->perm('geofences', 'edit') ): ?>
+                                                    <li>
+                                                        <a href='javascript:;' onclick="app.geofences.edit(<?php echo e($item['id']); ?>);">
+                                                            <span class="icon edit"></span>
+                                                            <span class="text"><?php echo e(trans('global.edit')); ?></span>
+                                                        </a>
+                                                    </li>
+                                                <?php endif; ?>
+                                                <?php if(Auth::User()->perm('geofences', 'remove')): ?>
+                                                    <li>
+                                                        <a href='#' data-target='#deleteGeofence' data-toggle='modal' onclick="app.geofences.delete(<?php echo e($item['id']); ?>);">
+                                                            <span class="icon delete"></span>
+                                                            <span class="text"><?php echo e(trans('global.delete')); ?></span>
+                                                        </a>
+                                                    </li>
+                                                <?php endif; ?>
+                                            </ul>
+                                        </div>
+                                    <?php endif; ?>
+                                </div>
+                            </li>
+                        <?php endforeach; ?>
+                    </ul>
+                    <script>app.geofences.addMulti(<?php echo json_encode($items); ?>);</script>
+                </div>
+            </div>
+        </div>
+    <?php endforeach; ?>
+<?php else: ?>
+    <p class="no-results"><?php echo trans('front.no_geofences'); ?></p>
+<?php endif; ?>

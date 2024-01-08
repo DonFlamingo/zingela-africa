@@ -1,0 +1,83 @@
+<?php $__env->startSection('title', trans('front.add_service')); ?>
+
+<?php $__env->startSection('body'); ?>
+    <?php echo Form::open(['route' => 'services.store', 'method' => 'POST']); ?>
+
+        <?php echo Form::hidden('id'); ?>
+
+        <?php echo Form::hidden('device_id', $device_id); ?>
+
+        <div class="form-group">
+            <?php echo Form::label('name', trans('validation.attributes.name').':'); ?>
+
+            <?php echo Form::text('name', null, ['class' => 'form-control']); ?>
+
+        </div>
+        <div class="form-group">
+            <?php echo Form::label('expiration_by', trans('validation.attributes.expiration_by').':'); ?>
+
+            <?php echo Form::select('expiration_by', $expiration_by, 1, ['class' => 'form-control']); ?>
+
+        </div>
+        <div class="form-group">
+            <?php echo Form::label('interval', trans('validation.attributes.interval').':'); ?>
+
+            <?php echo Form::text('interval', null, ['class' => 'form-control']); ?>
+
+        </div>
+        <div class="form-group">
+            <?php echo Form::label('last_service', trans('validation.attributes.last_service').':'); ?>
+
+            <?php echo Form::text('last_service', null, ['class' => 'form-control service-datepicker']); ?>
+
+        </div>
+        <div class="form-group">
+            <?php echo Form::label('trigger_event_left', trans('validation.attributes.trigger_event_left').':'); ?>
+
+            <?php echo Form::text('trigger_event_left', null, ['class' => 'form-control']); ?>
+
+        </div>
+        <div class="form-group">
+            <div class="checkbox">
+                <?php echo Form::checkbox('renew_after_expiration', 1, null); ?>
+
+                <?php echo Form::label('renew_after_expiration', trans('validation.attributes.renew_after_expiration')); ?>
+
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6 col-sm-6 col-xs-6">
+                <div class="form-group">
+                    <?php echo Form::label('current_odometer', trans('validation.attributes.current_odometer').':'); ?>
+
+                    <?php echo Form::text('current_odometer', $odometer_value, ['class' => 'form-control', 'disabled' => 'disabled']); ?>
+
+                </div>
+            </div>
+            <div class="col-md-6 col-sm-6 col-xs-6">
+                <div class="form-group">
+                    <?php echo Form::label('current_engine_hours', trans('validation.attributes.current_engine_hours').':'); ?>
+
+                    <?php echo Form::text('current_engine_hours', $engine_hours_value, ['class' => 'form-control', 'disabled' => 'disabled']); ?>
+
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <?php echo Form::label('email', trans('validation.attributes.email').':'); ?>
+
+            <?php echo Form::text('email', null, ['class' => 'form-control']); ?>
+
+        </div>
+        <?php if(Auth::User()->sms_gateway): ?>
+            <div class="form-group">
+                <?php echo Form::label('mobile_phone', trans('validation.attributes.mobile_phone').':'); ?>
+
+                <?php echo Form::text('mobile_phone', null, ['class' => 'form-control']); ?>
+
+            </div>
+        <?php endif; ?>
+    <?php echo Form::close(); ?>
+
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('Frontend.Layouts.modal', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

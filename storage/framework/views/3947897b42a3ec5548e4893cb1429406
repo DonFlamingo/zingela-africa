@@ -1,0 +1,71 @@
+<div class="table_error"></div>
+<div class="table-responsive">
+    <table class="table table-list" data-toggle="multiCheckbox">
+        <thead>
+        <tr>
+            <?php echo tableHeaderCheckall(['delete_url' => trans('admin.delete_selected')]); ?>
+
+            <?php echo tableHeader('validation.attributes.imei'); ?>
+
+            <?php echo tableHeader('validation.attributes.port'); ?>
+
+            <th>IP</th>
+            <?php echo tableHeader('global.date'); ?>
+
+            <?php echo tableHeader('admin.tried_to_connect'); ?>
+
+            <?php echo tableHeader('admin.actions', 'style="text-align: right;"'); ?>
+
+        </tr>
+        </thead>
+        <tbody>
+        <?php if(count($items)): ?>
+            <?php foreach($items as $date => $item): ?>
+                <tr>
+                    <td>
+                        <div class="checkbox">
+                            <input type="checkbox" value="<?php echo $item->imei; ?>">
+                            <label></label>
+                        </div>
+                    </td>
+                    <td>
+                        <?php echo e($item->imei); ?>
+
+                    </td>
+                    <td>
+                        <?php echo e($item->port); ?>
+
+                    </td>
+                    <td>
+                        <?php echo e($item->ip); ?>
+
+                    </td>
+                    <td>
+                        <?php echo e(datetime($item->date)); ?>
+
+                    </td>
+                    <td>
+                        <?php echo e($item->times); ?>
+
+                    </td>
+                    <td class="actions">
+                        <div class="btn-group dropdown droparrow" data-position="fixed">
+                            <i class="btn icon edit" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"></i>
+                            <ul class="dropdown-menu">
+                                <li><a href="<?php echo e(route('admin.unregistered_devices_log.destroy')); ?>" class="js-confirm-link" data-confirm="<?php echo e(trans('admin.do_delete')); ?>" data-id="<?php echo e($item->date); ?>" data-method="DELETE"><?php echo e(trans('global.delete')); ?></a></li>
+                            </ul>
+                        </div>
+                    </td>
+                </tr>
+            <?php endforeach; ?>
+        <?php else: ?>
+            <tr>
+                <td colspan="7">
+                    <?php echo e(trans('admin.no_data')); ?>
+
+                </td>
+            </tr>
+        <?php endif; ?>
+        </tbody>
+    </table>
+</div>

@@ -1,0 +1,155 @@
+.btn.icon {
+  padding: 1px 3px;
+
+  &:hover {
+    background: $color-bg-200;
+    color: $color-text-500;
+  }
+}
+
+.btn-action {
+  @extend .btn-primary;
+}
+
+.btn-collapse {
+  display: block;
+  position: absolute;
+  color: $color-text-700;
+  background: $color-bg-100;
+  text-align: center;
+  text-decoration: none;
+  font-size: 10px;
+  cursor: pointer;
+
+  &.collapsed {
+    &.collapse-left i {
+      @extend .ico-arrow-right;
+    }
+    &.collapse-right i {
+      @extend .ico-arrow-left;
+    }
+    &.collapse-top i {
+      @extend .ico-arrow-up;
+    }
+    &.collapse-bottom i {
+      @extend .ico-arrow-down;
+    }
+  }
+
+  i {
+    @extend .ico;
+  }
+
+  &:hover {
+    text-decoration: none;
+  }
+
+  &:before,
+  &:after {
+    content: " ";
+    display: inline-block;
+    position: absolute;
+    width: 0;
+    height: 0;
+  }
+
+  &.collapse-left {
+     width: 20px;
+     height: 40px;
+     line-height: 40px;
+     left: 100%;
+     top: 30%;
+
+     i {
+       @extend .ico-arrow-left;
+     }
+
+     &:before {
+       left: 0;
+       bottom: 100%;
+       border-bottom: 20px solid $color-bg-100;
+       border-right: 20px solid transparent;
+     }
+     &:after {
+       left: 0;
+       top: 100%;
+       border-top: 20px solid $color-bg-100;
+       border-right: 20px solid transparent;
+     }
+  }
+
+  &.collapse-right {
+    width: 20px;
+    height: 40px;
+    line-height: 40px;
+    right: 100%;
+    top: 30%;
+
+    i {
+      @extend .ico-arrow-right;
+    }
+
+    &:before {
+      right: 0;
+      bottom: 100%;
+      border-bottom: 20px solid $color-bg-100;
+      border-left: 20px solid transparent;
+    }
+    &:after {
+      right: 0;
+      top: 100%;
+      border-top: 20px solid $color-bg-100;
+      border-left: 20px solid transparent;
+    }
+  }
+
+  &.collapse-top {
+    width: 40px;
+    height: 20px;
+    line-height: 20px;
+    bottom: 100%;
+    left: 50%;
+
+    i {
+      @extend .ico-arrow-down;
+    }
+
+    &:before {
+      top: 0;
+      right: 100%;
+      border-bottom: 20px solid $color-bg-100;
+      border-left: 20px solid transparent;
+    }
+    &:after {
+      top: 0;
+      left: 100%;
+      border-bottom: 20px solid $color-bg-100;
+      border-right: 20px solid transparent;
+    }
+  }
+
+  &.collapse-bottom {
+    width: 40px;
+    height: 20px;
+    line-height: 20px;
+    bottom: 100%;
+    left: 50%;
+
+    i {
+      @extend .ico-arrow-up;
+    }
+
+    &:before {
+      bottom: 0;
+      right: 100%;
+      border-top: 20px solid $color-bg-100;
+      border-left: 20px solid transparent;
+    }
+    &:after {
+      bottom: 0;
+      left: 100%;
+      border-top: 20px solid $color-bg-100;
+      border-right: 20px solid transparent;
+    }
+  }
+}

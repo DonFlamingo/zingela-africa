@@ -1,0 +1,31 @@
+<?php $__env->startSection('header-menu-items'); ?>
+    <?php if( Auth::User()->perm('devices', 'edit') ): ?>
+        <li>
+            <a href="javascript:" role="button" data-url="<?php echo route('objects.listview_settings.edit'); ?>" data-modal="listview_settings_create">
+                <span class="icon settings"></span>
+                <span class="text"><?php echo trans('global.settings'); ?></span>
+            </a>
+        </li>
+    <?php endif; ?>
+<?php $__env->stopSection(); ?>
+
+<?php $__env->startSection('content'); ?>
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <div id="listview"></div>
+        </div>
+    </div>
+<?php $__env->stopSection(); ?>
+
+<?php $__env->startSection('scripts'); ?>
+    <?php echo $__env->make('Frontend.Layouts.partials.app', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+
+    <script type="text/javascript">
+        $(window).on("load", function() {
+            app.listView.init();
+            app.listView.list();
+        });
+    </script>
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('Frontend.Layouts.default', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

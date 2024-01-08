@@ -1,0 +1,42 @@
+<div class="table-responsive">
+    <table class="table table-list">
+        <thead>
+            <tr>
+                <?php echo tableHeader('validation.attributes.name'); ?>
+
+                <?php echo tableHeader('validation.attributes.expiration_date'); ?>
+
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+        <?php if(count($services)): ?>
+            <?php foreach($services as $service): ?>
+                <tr>
+                    <td>
+                        <?php echo e($service->name); ?>
+
+                    </td>
+                    <td>
+                        <?php echo e($service->expires); ?>
+
+                    </td>
+                    <td class="actions">
+                        <a href="javascript:" class="btn icon edit" data-url="<?php echo route('services.edit', $service->id); ?>" data-modal="services_edit"></a>
+                        <a href="javascript:" class="btn icon delete" data-url="<?php echo route('services.do_destroy', $service->id); ?>" data-modal="services_destroy"></a>
+                    </td>
+                </tr>
+            <?php endforeach; ?>
+        <?php else: ?>
+            <tr>
+                <td colspan="3"><?php echo trans('front.no_services'); ?></td>
+            </tr>
+        <?php endif; ?>
+        </tbody>
+    </table>
+</div>
+
+<div class="nav-pagination">
+    <?php echo $services->setPath(route('services.index', $device_id))->render(); ?>
+
+</div>

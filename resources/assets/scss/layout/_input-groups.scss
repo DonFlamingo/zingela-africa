@@ -1,0 +1,20 @@
+.input-group {
+  width: 100%;
+}
+
+.input-group > .input-group-btn {
+  > .btn,
+  > .btn-group,
+  > .form-control.timeselect {
+    margin-left: 4px;
+  }
+
+  > .form-control.timeselect {
+    width: 70px;
+
+    &.open {
+      z-index: 3;
+    }
+  }
+}
+

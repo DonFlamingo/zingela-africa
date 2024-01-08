@@ -1,0 +1,44 @@
+<?php if(!empty($mapIcons) && !empty($items = $mapIcons->toArray())): ?>
+<ul class="group-list">
+    <?php foreach($items as $key => $item): ?>
+        <?php $items[$key]['coordinates'] = json_decode($item['coordinates']) ;?>
+        <li data-mapicon-id="<?php echo e($item['id']); ?>">
+            <div class="checkbox">
+                <input type="checkbox" name="mapIcon[<?php echo e($item['id']); ?>]" value="<?php echo e($item['id']); ?>" <?php echo e(!empty($item['active']) ? 'checked="checked"' : ''); ?> onChange="app.mapIcons.active('<?php echo e($item['id']); ?>', this.checked);"/>
+                <label></label>
+            </div>
+            <div class="name">
+                <span data-mapicon="name"><?php echo e($item['name']); ?></span>
+            </div>
+            <div class="details">
+                <?php if(Auth::User()->perm('poi', 'edit') || Auth::User()->perm('poi', 'remove')): ?>
+                    <div class="btn-group dropleft droparrow"  data-position="fixed">
+                        <i class="btn icon options" data-toggle="dropdown" data-position="fixed" aria-haspopup="true" aria-expanded="false"></i>
+                        <ul class="dropdown-menu" >
+                            <?php if( Auth::User()->perm('poi', 'edit') ): ?>
+                                <li>
+                                    <a href='javascript:;' onclick="app.mapIcons.edit(<?php echo e($item['id']); ?>);">
+                                        <span class="icon edit"></span>
+                                        <span class="text"><?php echo e(trans('global.edit')); ?></span>
+                                    </a>
+                                </li>
+                            <?php endif; ?>
+                            <?php if(Auth::User()->perm('poi', 'remove')): ?>
+                                <li>
+                                    <a href='#' data-target='#deleteMapIcon' onclick="app.mapIcons.delete(<?php echo e($item['id']); ?>);" data-id='<?php echo e($item['id']); ?>' data-toggle='modal'>
+                                        <span class="icon delete"></span>
+                                        <span class="text"><?php echo e(trans('global.delete')); ?></span>
+                                    </a>
+                                </li>
+                            <?php endif; ?>
+                        </ul>
+                    </div>
+                <?php endif; ?>
+            </div>
+        </li>
+    <?php endforeach; ?>
+    <script>app.mapIcons.addMulti(<?php echo json_encode($items); ?>);</script>
+</ul>
+<?php else: ?>
+    <p class="no-results"><?php echo trans('front.no_map_icons'); ?></p>
+<?php endif; ?>

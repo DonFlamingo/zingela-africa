@@ -1,0 +1,51 @@
+<script>
+
+    window.objects_url = '<?php echo e(route('objects.items')); ?>';
+    window.objects_stop_time = '<?php echo route('objects.stop_time'); ?>';
+    window.check_objects_url = '<?php echo e(route('objects.items_json')); ?>';
+    window.delete_objects_url = '<?php echo e(route('objects.destroy')); ?>';
+    window.device_change_active = '<?php echo e(route('devices.change_active')); ?>';
+    window.device_group_status_change_url = '<?php echo e(route('objects.change_group_status')); ?>';
+
+    window.listview_url = '<?php echo e(route('objects.listview')); ?>';
+    window.listview_items_url = '<?php echo e(route('objects.listview.items')); ?>';
+
+    window.geofences_url = '<?php echo e(route('geofences.index')); ?>';
+    window.geofence_change_active = '<?php echo e(route('geofences.change_active')); ?>';
+    window.geofence_delete_url = '<?php echo e(route('geofences.destroy')); ?>';
+
+    window.routes_url = '<?php echo e(route('routes.index')); ?>';
+    window.route_change_active = '<?php echo e(route('routes.change_active')); ?>';
+    window.route_delete_url = '<?php echo e(route('routes.destroy')); ?>';
+
+    window.alerts_url = '<?php echo e(route('alerts.index')); ?>';
+    window.alert_change_active = '<?php echo e(route('alerts.change_active')); ?>';
+    window.alert_delete_url = '<?php echo e(route('alerts.destroy')); ?>';
+    window.alert_get_events = '<?php echo e(route('custom_events.get_events')); ?>';
+    window.alert_get_protocols = '<?php echo e(route('custom_events.get_protocols')); ?>';
+
+    window.history_url = '<?php echo e(route('history.index')); ?>';
+    window.history_positions_url = '<?php echo e(route('history.positions')); ?>';
+    window.history_positions_delete_url = '<?php echo e(route('history.delete_positions')); ?>';
+    window.history_export_url = '<?php echo e(route('history.export')); ?>';
+
+    window.events_url = '<?php echo e(route('events.index')); ?>';
+
+    window.assets_url = '<?php echo e(asset('')); ?>'
+
+    window.map_icons_url = '<?php echo e(route('map_icons.index')); ?>';
+    window.map_icons_change_active = '<?php echo e(route('map_icons.change_active')); ?>';
+    window.map_icons_delete_url = '<?php echo e(route('map_icons.destroy')); ?>';
+    window.map_icons_list = '<?php echo e(route('map_icons.list')); ?>';
+
+    window.change_map_url = '<?php echo e(route('my_account.change_map')); ?>';
+    window.change_map_settings_url = '<?php echo route('my_account_settings.change_map_settings'); ?>';
+
+    window.geo_address_url = '<?php echo e(route('api.geo_address')); ?>';
+
+    window.geofence_group_status_change_url = '<?php echo e(route('geofences_groups.change_status')); ?>';
+    window.geofences_export_type_url = '<?php echo e(route('geofences.export_type')); ?>';
+    window.geofences_import_url = '<?php echo e(route('geofences.import')); ?>';
+    window.change_toolbar_top_status_url = '<?php echo route('my_account_settings.change_top_toolbar'); ?>';
+    window.change_map_settings_url = '<?php echo route('my_account_settings.change_map_settings'); ?>';
+</script>

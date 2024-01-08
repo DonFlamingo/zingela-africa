@@ -1,0 +1,131 @@
+<div class="table_error"></div>
+<div class="table-responsive">
+    <table class="table table-list" data-toggle="multiCheckbox">
+        <thead>
+        <tr>
+            <?php echo tableHeaderCheckall(['delete_url' => trans('admin.delete_selected')]); ?>
+
+            <?php echo tableHeaderSort($items->sorting, 'active', NULL); ?>
+
+            <?php echo tableHeaderSort($items->sorting, 'first_name'); ?>
+
+            <?php echo tableHeaderSort($items->sorting, 'last_name'); ?>
+
+            <?php echo tableHeaderSort($items->sorting, 'email'); ?>
+
+            <?php if(Auth::User()->group_id == 1): ?>
+                <?php echo tableHeaderSort($items->sorting, 'group_id'); ?>
+
+                <?php echo tableHeaderSort($items->sorting, 'manager_email', trans('validation.attributes.manager_id')); ?>
+
+            <?php endif; ?>
+            <?php echo tableHeader('front.devices'); ?>
+
+            <?php if(Auth::User()->group_id == 1): ?>
+                <?php echo tableHeader('admin.subusers'); ?>
+
+            <?php endif; ?>
+            <?php echo tableHeaderSort($items->sorting, 'devices_limit'); ?>
+
+            <?php echo tableHeaderSort($items->sorting, 'subscription_expiration', trans('validation.attributes.expiration_date')); ?>
+
+            <?php echo tableHeaderSort($items->sorting, 'loged_at'); ?>
+
+            <?php echo tableHeader('admin.actions', 'style="text-align: right;"'); ?>
+
+        </tr>
+        </thead>
+
+        <tbody>
+        <?php if(count($collection = $items->getCollection())): ?>
+            <?php foreach($collection as $item): ?>
+                <tr>
+                    <td>
+                        <div class="checkbox">
+                            <input type="checkbox" value="<?php echo $item->id; ?>">
+                            <label></label>
+                        </div>
+                    </td>
+                    <td>
+                        <span class="label label-sm label-<?php echo $item->active ? 'success' : 'danger'; ?>">
+                            <?php echo trans('validation.attributes.active'); ?>
+
+                        </span>
+                    </td>
+                    <td>
+                        <?php echo $item->first_name; ?>
+
+                    </td>
+                    <td>
+                        <?php echo $item->last_name; ?>
+
+                    </td>
+                    <td>
+                        <?php echo $item->email; ?>
+
+                    </td>
+                    <?php if(Auth::User()->group_id == 1): ?>
+                        <td>
+                            <?php echo trans('admin.group_'.$item->group_id); ?>
+
+                        </td>
+                        <td>
+                            <?php echo isset($item->manager_email) ? $item->manager_email : ''; ?>
+
+                        </td>
+                    <?php endif; ?>
+                    <td>
+                        <?php echo e($item->devices); ?>
+
+                    </td>
+                    <?php if(Auth::User()->group_id == 1): ?>
+                        <td>
+                            <?php echo e($item->subusers); ?>
+
+                        </td>
+                    <?php endif; ?>
+                    <td>
+                        <?php echo is_null($item->devices_limit) ? trans('front.unlimited') : $item->devices_limit; ?> <?php echo e(!empty($item->billing_plan) ? "({$item->billing_plan})" : ''); ?>
+
+                    </td>
+                    <td>
+                        <?php echo $item->subscription_expiration == '0000-00-00 00:00:00' ? trans('front.unlimited') : $item->subscription_expiration; ?>
+
+                    </td>
+                    <td>
+                        <?php echo datetime($item->loged_at); ?>
+
+                    </td>
+                    <td class="actions">
+                        <div class="btn-group dropdown droparrow" data-position="fixed">
+                            <i class="btn icon edit" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"></i>
+                            <ul class="dropdown-menu">
+                                <li><a href="javascript:" data-modal="<?php echo $section; ?>_edit" data-url="<?php echo route("admin.{$section}.edit", $item->id); ?>"><?php echo trans('global.edit'); ?></a></li>
+                                <li><a href="javascript:" data-modal="<?php echo $section; ?>_login_as" data-url="<?php echo route("admin.{$section}.login_as", $item->id); ?>"><?php echo trans('front.login_as'); ?></a></li>
+                            </ul>
+                        </div>
+                        <i class="btn icon ico-arrow-down"
+                           type="button"
+                           data-url="<?php echo e(route('admin.clients.get_devices', $item->id)); ?>"
+                           data-toggle="collapse"
+                           data-target="#user-devices-<?php echo e($item->id); ?>">
+                        </i>
+                    </td>
+                </tr>
+                <tr class="row-table-inner" style="text-align: center;">
+                    <td colspan="13" id="user-devices-<?php echo e($item->id); ?>" aria-expanded="false" class="collapse"></td>
+                </tr>
+            <?php endforeach; ?>
+        <?php else: ?>
+            <tr class="">
+                <td class="no-data" colspan="13">
+                    <?php echo trans('admin.no_data'); ?>
+
+                </td>
+            </tr>
+        <?php endif; ?>
+        </tbody>
+    </table>
+</div>
+
+<?php echo $__env->make("Admin.Layouts.partials.pagination", array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

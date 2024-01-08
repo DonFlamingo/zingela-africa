@@ -1,0 +1,35 @@
+<?php $__env->startSection('title'); ?>
+    <?php echo trans('front.choose_language'); ?>
+
+<?php $__env->stopSection(); ?>
+
+<?php $__env->startSection('body'); ?>
+<div class="lang-list">
+    <?php foreach($languages as $key => $lg): ?>
+    <div class="lang-item">
+        <a href="<?php echo e(route('my_account_settings.change_lang', $key)); ?>" class="btn btn-default btn-block">
+            <img src="<?php echo e(asset("assets/img/flag/$key.png")); ?>" /> <?php echo e($lg); ?>
+
+        </a>
+    </div>
+    <?php endforeach; ?>
+</div>
+
+<p>Coming soon</p>
+
+<div class="lang-list">
+    <?php foreach($soon as $key => $lg): ?>
+    <div class="lang-item">
+        <a href="javascript" class="btn btn-default btn-block disabled">
+            <img src="<?php echo e(asset("assets/img/flag/$key.png")); ?>" /> <?php echo e($lg); ?>
+
+        </a>
+    </div>
+    <?php endforeach; ?>
+</div>
+<?php $__env->stopSection(); ?>
+
+<?php $__env->startSection('buttons'); ?>
+    <button type="button" class="btn btn-default" data-dismiss="modal"><?php echo trans('global.close'); ?></button>
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('Frontend.Layouts.modal', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

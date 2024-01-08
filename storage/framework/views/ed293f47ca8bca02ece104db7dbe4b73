@@ -1,0 +1,59 @@
+<?php $__env->startSection('content'); ?>
+    <h1 class="sign-in-text text-center"><?php echo e(trans('front.not_a_member')); ?></h1>
+
+    <div class="panel">
+        <div class="panel-body">
+
+            <?php if( has_asset_logo('logo-main') ): ?>
+            <a href="<?php echo e(route('home')); ?>">
+                <img class="img-responsive center-block" src="<?php echo e(asset_logo('logo-main')); ?>" alt="Logo">
+            </a>
+            <?php endif; ?>
+
+            <hr>
+
+            <?php if(Session::has('success')): ?>
+                <div class="alert alert-success alert-dismissible">
+                    <?php echo Session::get('success'); ?>
+
+                </div>
+            <?php endif; ?>
+
+            <?php if(Session::has('message')): ?>
+                <div class="alert alert-danger alert-dismissible">
+                    <?php echo Session::get('message'); ?>
+
+                </div>
+            <?php endif; ?>
+
+            <?php echo Form::open(array('route' => 'registration.store', 'class' => 'form', 'id' => 'registration-form')); ?>
+
+            <?php echo error_for('id', $errors); ?>
+
+            <div class="form-group">
+                <?php echo Form::email('email', null, ['class' => 'form-control', 'placeholder' => trans('validation.attributes.email'), 'id' => 'sign-in-form-email']); ?>
+
+                <?php echo error_for('email', $errors); ?>
+
+            </div>
+
+            <button type="submit" class="btn btn-lg btn-primary btn-block"><?php echo e(trans('front.register')); ?></button>
+
+            <hr>
+
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-xs-12 col-sm-6">
+                        <a href="<?php echo e(route('password_reminder.create')); ?>" class="btn btn-block btn-lg btn-default"><?php echo trans('front.cant_sign_in'); ?></a>
+                    </div>
+                    <div class="col-xs-12 col-sm-6">
+                        <a href="<?php echo e(route('authentication.create')); ?>" class="btn btn-block btn-lg btn-default"><?php echo trans('front.sign_in'); ?></a>
+                    </div>
+                </div>
+            </div>
+            <?php echo Form::close(); ?>
+
+        </div>
+    </div>
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('Frontend.Layouts.frontend', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

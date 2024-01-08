@@ -1,0 +1,57 @@
+<?php $__env->startSection('styles'); ?>
+    <link href="<?php echo e(asset('assets/plugins/dropzone/css/dropzone.css')); ?>" rel="stylesheet"/>
+<?php $__env->stopSection(); ?>
+
+<?php $__env->startSection('content'); ?>
+    <div class="panel panel-default" id="table_<?php echo e($section); ?>">
+
+        <input type="hidden" name="sorting[sort_by]" value="<?php echo e($items->sorting['sort_by']); ?>" data-filter>
+        <input type="hidden" name="sorting[sort]" value="<?php echo e($items->sorting['sort']); ?>" data-filter>
+
+        <div class="panel-heading">
+            <div class="panel-title"><i class="icon user"></i> <?php echo e(trans('admin.'.$section)); ?></div>
+        </div>
+
+        <div class="panel-body">
+            <form action="<?php echo e(route("admin.{$section}.store")); ?>" class="dropzone" id="my-dropzone" style="min-height: 150px;"></form>
+
+            <div data-table>
+                <?php echo $__env->make('Admin.'.ucfirst($section).'.table', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+            </div>
+        </div>
+    </div>
+<?php $__env->stopSection(); ?>
+
+<?php $__env->startSection('javascript'); ?>
+    <script src="<?php echo e(asset('assets/plugins/dropzone/dropzone.min.js')); ?>"></script>
+    <script>
+        tables.set_config('table_<?php echo e($section); ?>', {
+            url: '<?php echo e(route("admin.{$section}.index")); ?>',
+            delete_url:'<?php echo e(route("admin.{$section}.destroy")); ?>'
+        });
+        $(document).ready(function() {
+            Dropzone.options.myDropzone = {
+                init: function() {
+                    this.on("queuecomplete", function() {
+                        tables.get('table_<?php echo e($section); ?>');
+                    });
+                }
+            };
+
+            $(document).on('click', '.table-icon .controls a', function () {
+                $.ajax({
+                    type: 'POST',
+                    url: '<?php echo e(route("admin.{$section}.destroy")); ?>',
+                    data: {
+                        _method: 'DELETE',
+                        id: {0:$(this).data('id')}
+                    },
+                    success: function () {
+                        tables.get('table_<?php echo e($section); ?>');
+                    }
+                });
+            });
+        });
+    </script>
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('Admin.Layouts.default', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

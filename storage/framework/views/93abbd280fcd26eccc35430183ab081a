@@ -1,0 +1,52 @@
+<?php if(Session::has('message')): ?>
+    <div class="alert alert-success">
+        <?php echo e(Session::get('message')); ?>
+
+    </div>
+<?php endif; ?>
+<?php if(Session::has('error')): ?>
+    <div class="alert alert-danger">
+        <?php echo e(Session::get('error')); ?>
+
+    </div>
+<?php endif; ?>
+
+<div class="table-responsive">
+    <table class="table table-list" data-toggle="multiCheckbox">
+        <thead>
+        <tr>
+            <?php echo tableHeader('validation.attributes.ip'); ?>
+
+            <?php echo tableHeader('admin.actions', 'style="text-align: right;"'); ?>
+
+        </tr>
+        </thead>
+        <tbody>
+            <?php foreach($files as $file): ?>
+                <tr>
+                    <td>
+                        <?php echo e($file); ?>
+
+                    </td>
+                    <td class="actions">
+                        <div class="btn-group dropdown droparrow" data-position="fixed">
+                            <i class="btn icon edit" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"></i>
+                            <ul class="dropdown-menu">
+                                <li><a href="javascript:" data-modal="blocked_ips_destroy" data-url="<?php echo e(route('admin.blocked_ips.do_destroy', [$file])); ?>"><?php echo trans('global.delete'); ?></a></li>
+                            </ul>
+                        </div>
+                    </td>
+                </tr>
+            <?php endforeach; ?>
+
+            <?php if(empty($files)): ?>
+                <tr>
+                    <td colspan="2">
+                        <?php echo e(trans('admin.no_data')); ?>
+
+                    </td>
+                </tr>
+            <?php endif; ?>
+        </tbody>
+    </table>
+</div>

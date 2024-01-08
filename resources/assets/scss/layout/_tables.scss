@@ -1,0 +1,171 @@
+.table .table {
+  background-color: $color-bg-000;
+}
+.table {
+    &.table-list {
+      @extend .table-hover;
+      @extend .table-condensed;
+
+      > thead,
+      > tbody,
+      > tfoot {
+        > tr {
+          > th,
+          > td {
+            vertical-align: middle;
+            border-top: 1px solid transparent;
+
+            &.no-data {
+              text-align: center;
+            }
+
+            .icon {
+              color: $color-text-700;
+              &:hover {
+                color: $brand-primary;
+              }
+            }
+          }
+
+          &.row-table-inner {
+            > td {
+              padding: 20px;
+
+              > .loading .middle {
+                vertical-align: top;
+              }
+            }
+          }
+        }
+      }
+      > thead > tr {
+        color: $table-list-head-color;
+        background-color: $table-list-head-bg;
+
+        > th {
+          border-bottom: 2px solid transparent;
+        }
+      }
+
+      //Cols
+      .table-checkbox {
+        width: 1%;
+        white-space: nowrap;
+
+        &:hover {
+          .icon {
+            color: $brand-primary;
+          }
+        }
+      }
+
+      .user-list {
+        @include text-overflow();
+        max-width: 300px;
+      }
+
+      .actions {
+        text-align: right;
+      }
+
+      .sorting,
+      .sorting_desc,
+      .sorting_asc {
+        position: relative;
+        cursor: pointer;
+        padding-right: 15px;
+
+        &:before,
+        &:after {
+          @extend .ico;
+          color: $color-text-800;
+          position: absolute;
+          font-size: 8px;
+          right: 5px;
+        }
+        &:before {
+          top: 2px;
+          @extend .ico-arrow-up:before;
+        }
+        &:after {
+          bottom: 2px;
+          @extend .ico-arrow-down:before;
+        }
+      }
+      .sorting_asc:before { color: $brand-primary; }
+      .sorting_desc:after { color: $brand-primary; }
+    }
+
+    > thead {
+      th {
+        font-weight: normal;
+      }
+    }
+
+    > tbody:first-child {
+      > tr:first-child {
+        > th,
+        > td {
+          border-top: 0;
+        }
+      }
+    }
+
+    .checkbox {
+      @extend .checkbox-inline;
+    }
+
+  tr {
+    &.collapse.in {
+      display: table-row;
+    }
+  }
+
+  th,
+  td {
+    &.collapse.in {
+      display: table-cell;
+    }
+  }
+}
+
+.table-icon {
+  @include clearfix();
+
+  .item {
+    @extend .col-xs-3;
+    @extend .col-sm-2;
+    @extend .col-md-1;
+
+    float: none;
+    display: inline-block;
+    padding: 10px;
+    margin: -2px;
+    border: 1px solid transparent;
+    text-align: center;
+
+
+    &:hover {
+      border-color:$color-border-100;
+
+      .controls {
+        display: block;
+      }
+    }
+
+    .controls {
+      display: none;
+      position: absolute;
+      top: 0;
+      right: 0;
+      z-index: 1;
+    }
+
+    img {
+      margin: auto;
+      max-width: 100%;
+    }
+  }
+
+
+}

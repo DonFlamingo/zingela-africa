@@ -1,0 +1,47 @@
+<div class="table-responsive">
+    <table class="table table-list" data-toggle="multiCheckbox">
+        <thead>
+            <tr>
+                <?php echo tableHeaderCheckall(['delete_url' => trans('admin.delete_selected')]); ?>
+
+                <?php echo tableHeader('validation.attributes.sensor_name'); ?>
+
+                <?php echo tableHeader('validation.attributes.sensor_template'); ?>
+
+                <?php echo tableHeader('admin.actions', 'style="text-align: right;"'); ?>
+
+            </tr>
+        </thead>
+        <tbody>
+        <?php if(count($items)): ?>
+            <?php foreach($items as $item): ?>
+                <tr>
+                    <td>
+                        <div class="checkbox">
+                            <input type="checkbox" class="checkboxes" value="<?php echo $item->id; ?>">
+                            <label></label>
+                        </div>
+                    </td>
+                    <td><?php echo e($item->name); ?></td>
+                    <td><?php echo e($item->type_title); ?></td>
+                    <td class="actions">
+                        <div class="btn-group dropdown droparrow" data-position="fixed">
+                            <i class="btn icon edit" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"></i>
+                            <ul class="dropdown-menu">
+                                <li><a href="javascript:" data-modal="sensors_edit" data-url="<?php echo e(route('admin.sensor_group_sensors.edit', $item->id)); ?>"><?php echo trans('global.edit'); ?></a></li>
+                            </ul>
+                        </div>
+                    </td>
+                </tr>
+            <?php endforeach; ?>
+        <?php else: ?>
+            <tr>
+                <td class="no-data" colspan="4">
+                    <?php echo trans('admin.no_data'); ?>
+
+                </td>
+            </tr>
+        <?php endif; ?>
+        </tbody>
+    </table>
+</div>

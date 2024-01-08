@@ -1,0 +1,177 @@
+label {
+  font-weight: normal;
+}
+
+textarea.form-control {
+  resize: none;
+}
+
+.form-horizontal {
+  .control-label {
+    text-align: left;
+  }
+
+  .radio,
+  .checkbox {
+    min-height: 0;
+    padding-top: 0;
+  }
+
+  .checkboxes {
+    .checkbox,
+    .radio {
+      margin-bottom: 10px;
+    }
+  }
+}
+
+.has-feedback .form-control-feedback + input {
+  padding: $padding-base-vertical $padding-base-horizontal;
+  padding-left: 30px;
+}
+
+.has-feedback {
+  > .form-control-feedback {
+    left: 0;
+    right: auto;
+    z-index: 3;
+
+    + .form-control {
+      padding: $padding-base-vertical $padding-base-horizontal;
+      padding-left: 30px;
+    }
+  }
+  .datepicker.form-control {
+      padding: $padding-base-vertical $padding-base-horizontal;
+      padding-left: 30px;
+  }
+
+  > .form-control {
+    + .form-control-feedback {
+      left: auto;
+      right: 0;
+      z-index: 2;
+    }
+  }
+}
+
+.form-group.search,
+.bs-searchbox {
+  & {
+    @extend .has-feedback;
+  }
+  &:after {
+    @extend .form-control-feedback;
+    @extend .fa;
+    @extend .fa-search:before;
+
+    line-height: $input-height-base;
+  }
+}
+
+.bootstrap-select {
+  $color-rgba: rgba(red($input-border-focus), green($input-border-focus), blue($input-border-focus), .6);
+
+  > .dropdown-toggle {
+    color: $input-color;
+    background-color: $input-bg;
+    border: 1px solid $input-border;
+    border-radius: $input-border-radius;
+    box-shadow: none;
+    @include transition(border-color ease-in-out .15s);
+
+    &:focus,
+    &.focus,
+      //&:hover,
+    &:active,
+    &.active
+    {
+      color: $input-color-focus;
+      background-color: $input-bg-focus;
+      border-color: $input-border-focus;
+      outline: 0;
+      @include box-shadow(inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px $color-rgba);
+    }
+  }
+  &.open {
+    > .dropdown-toggle {
+      &,
+      &:focus,
+      &.focus,
+      &:hover,
+      &:active,
+      &.active,
+      &:active:hover,
+      &:active:focus,
+      &:active.focus
+      {
+        color: $input-color-focus;
+        background-color: $input-bg-focus;
+        border-color: $input-border-focus;
+        outline: 0;
+        @include box-shadow(inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px $color-rgba);
+      }
+    }
+  }
+}
+
+.panel .panel-form .form-control {
+  $color-rgba: rgba(red($input-border-focus), green($input-border-focus), blue($input-border-focus), .6);
+
+  color: $input-color-focus;
+  background-color: $input-bg-focus;
+  //border-color: $input-border;
+  outline: 0;
+  //@include box-shadow(inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px $color-rgba);
+}
+.checkboxes {
+  @extend .row;
+
+  .checkbox {
+    @extend .col-sm-6;
+    @extend .col-xs-6;
+
+    margin-top: 0;
+  }
+
+  .checkbox + .checkbox {
+    margin-top: inherit;
+  }
+}
+
+.form-image {
+  position: relative;
+  min-height: 200px;
+  text-align: center;
+  border: 1px solid $color-border-100;
+
+  .form-image-controls {
+    position: absolute;
+    top: 0;
+    right: 0;
+    z-index: 1;
+  }
+
+  img {
+    position: absolute;
+    margin: auto;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+
+    max-height: 100%;
+  }
+
+  img + .no-image {
+    display: none;
+  }
+}
+
+.help-block {
+  @extend .alert;
+
+  &.error {
+    @extend .alert-danger;
+  }
+}

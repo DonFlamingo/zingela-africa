@@ -1,0 +1,365 @@
+<?php $__env->startSection('modal_class', 'modal-lg'); ?>
+
+<?php $__env->startSection('title'); ?>
+    <i class="icon sensor"></i> <?php echo e(trans('front.add_sensor')); ?>
+
+<?php $__env->stopSection(); ?>
+
+<?php $__env->startSection('body'); ?>
+    <?php echo Form::open(['route' => $route, 'method' => 'POST']); ?>
+
+        <?php echo Form::hidden('id', isset($id) ? $id : null); ?>
+
+        <?php echo Form::hidden('device_id', $device_id); ?>
+
+    <div class="row">
+        <div class="col-md-6 sen-data-fields">
+            <div class="form-group">
+                <?php echo Form::label('sensor_name', trans('validation.attributes.sensor_name').':'); ?>
+
+                <?php echo Form::text('sensor_name', null, ['class' => 'form-control']); ?>
+
+            </div>
+
+            <div class="form-group">
+                <?php echo Form::label('sensor_type', trans('validation.attributes.sensor_template').':'); ?>
+
+                <?php echo Form::select('sensor_type', $sensors, null, ['class' => 'form-control', 'id' => 'sensor_type']); ?>
+
+            </div>
+
+            <div class="form-group tag_name">
+                <?php if(is_array($parameters)): ?>
+                    <?php echo Form::label('tag_name', trans('validation.attributes.tag_name').':'); ?>
+
+                    <?php echo Form::select('tag_name', $parameters, null, ['class' => 'form-control']); ?>
+
+                <?php else: ?>
+                    <?php echo Form::label('tag_name', trans('validation.attributes.tag_name').':'); ?>
+
+                    <?php echo Form::text('tag_name', null, ['class' => 'form-control']); ?>
+
+                <?php endif; ?>
+            </div>
+
+            <div class="form-group unit_of_measurement">
+                <?php echo Form::label('unit_of_measurement', trans('validation.attributes.unit_of_measurement').':'); ?>
+
+                <?php echo Form::text('unit_of_measurement', null, ['class' => 'form-control']); ?>
+
+            </div>
+
+            <div class="sensors_form_inputs acc harsh_acceleration harsh_breaking ignition door engine">
+                <div class="form-group">
+                    <div class="checkbox">
+                        <?php echo Form::checkbox('setflag', 1, 0); ?>
+
+                        <?php echo Form::label('setflag', trans('front.setflag')); ?>
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="sensors_form_inputs fuel_tank fuel_tank_calibration">
+                <div class="form-group">
+                    <?php echo Form::label('fuel_tank_name', trans('validation.attributes.fuel_tank_name').':'); ?>
+
+                    <?php echo Form::text('fuel_tank_name', null, ['class' => 'form-control']); ?>
+
+                </div>
+            </div>
+
+            <div class="sensors_form_inputs fuel_tank">
+                <div class="form-group">
+                    <?php echo Form::label('parameters', trans('validation.attributes.parameters').':'); ?>
+
+                    <div class="row">
+                        <div class="col-md-6 col-sm-6">
+                            <?php echo Form::text('full_tank', null, ['class' => 'form-control', 'placeholder' => trans('validation.attributes.full_tank')]); ?>
+
+                        </div>
+                        <div class="col-md-6 col-sm-6">
+                            <?php echo Form::text('full_tank_value', null, ['class' => 'form-control', 'placeholder' => trans('validation.attributes.tag_value')]); ?>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="sensors_form_inputs odometer">
+                <div class="form-group">
+                    <?php echo Form::label('odometer_value_by', trans('validation.attributes.odometer_value_by').':'); ?>
+
+                    <?php echo Form::select('odometer_value_by', ['connected_odometer' => trans('front.connected_odometer'), 'virtual_odometer' => trans('front.virtual_odometer')], null, ['class' => 'form-control']); ?>
+
+                </div>
+            </div>
+
+            <div class="sensors_form_inputs odometer_value_by virtual_odometer">
+                <div class="form-group">
+                    <?php echo Form::label('odometer_value', trans('validation.attributes.odometer_value').':'); ?>
+
+                    <div class="row">
+                        <div class="col-xs-6">
+                            <?php echo Form::text('odometer_value', null, ['class' => 'form-control']); ?>
+
+                        </div>
+                        <div class="col-xs-6">
+                            <?php echo Form::select('odometer_value_unit', ['km' => trans('front.km'), 'mi' => trans('front.mi')], 'km', ['class' => 'form-control']); ?>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="sensors_form_inputs harsh_acceleration harsh_breaking notsetflag">
+                <div class="form-group">
+                    <?php echo Form::label('parameter_value', trans('validation.attributes.parameter_value').':'); ?>
+
+                    <?php echo Form::text('parameter_value', null, ['class' => 'form-control']); ?>
+
+                </div>
+            </div>
+
+            <div class="sensors_form_inputs harsh_acceleration harsh_breaking setflag">
+                <div class="form-group">
+                    <?php echo Form::label('parameter_value', trans('validation.attributes.parameter_value').':'); ?>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <?php echo Form::text('value_setflag_1', null, ['class' => 'form-control', 'placeholder' => trans('validation.attributes.on_setflag_1')]); ?>
+
+                        </div>
+                        <div class="col-md-6">
+                            <?php echo Form::text('value_setflag_2', null, ['class' => 'form-control', 'placeholder' => trans('validation.attributes.on_setflag_2')]); ?>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="sensors_form_inputs battery">
+                <div class="form-group">
+                    <?php echo Form::label('shown_value_by', trans('validation.attributes.shown_value_by').':'); ?>
+
+                    <?php echo Form::select('shown_value_by', ['tag_value' => trans('validation.attributes.tag_value'), 'min_max_values' => trans('front.min_max_values'), 'formula' => trans('validation.attributes.formula')], null, ['class' => 'form-control']); ?>
+
+                </div>
+            </div>
+
+            <div class="sensors_form_inputs battery_value_by formula temperature odometer_value_by connected_odometer tachometer">
+                <div class="form-group">
+                    <?php echo Form::label('formula', trans('validation.attributes.formula').':'); ?>
+
+                    <?php echo Form::text('formula', '[value]', ['class' => 'form-control']); ?>
+
+                    <span class="help-block"><?php echo e(trans('front.formula_example')); ?></span>
+                </div>
+            </div>
+
+            <div class="sensors_form_inputs gsm battery_value_by min_max_values">
+                <div class="form-group">
+                    <?php echo Form::label('min_value', trans('validation.attributes.min_value').':'); ?>
+
+                    <?php echo Form::text('min_value', null, ['class' => 'form-control']); ?>
+
+                </div>
+                <div class="form-group">
+                    <?php echo Form::label('max_value', trans('validation.attributes.max_value').':'); ?>
+
+                    <?php echo Form::text('max_value', null, ['class' => 'form-control']); ?>
+
+                </div>
+            </div>
+
+            <div class="sensors_form_inputs acc notsetflag">
+                <div class="form-group">
+                    <?php echo Form::label('on_value', trans('validation.attributes.on_value').':'); ?>
+
+                    <?php echo Form::text('on_value', null, ['class' => 'form-control']); ?>
+
+                </div>
+                <div class="form-group">
+                    <?php echo Form::label('off_value', trans('validation.attributes.off_value').':'); ?>
+
+                    <?php echo Form::text('off_value', null, ['class' => 'form-control']); ?>
+
+                </div>
+            </div>
+
+            <div class="sensors_form_inputs acc setflag">
+                <div class="form-group">
+                    <?php echo Form::label('on_value', trans('validation.attributes.on_value').':'); ?>
+
+                    <div class="row">
+                        <div class="col-md-4">
+                            <?php echo Form::text('on_setflag_1', null, ['class' => 'form-control', 'placeholder' => trans('validation.attributes.on_setflag_1')]); ?>
+
+                        </div>
+                        <div class="col-md-4">
+                            <?php echo Form::text('on_setflag_2', null, ['class' => 'form-control', 'placeholder' => trans('validation.attributes.on_setflag_2')]); ?>
+
+                        </div>
+                        <div class="col-md-4">
+                            <?php echo Form::text('on_setflag_3', null, ['class' => 'form-control', 'placeholder' => trans('validation.attributes.on_setflag_3')]); ?>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <?php echo Form::label('off_value', trans('validation.attributes.off_value').':'); ?>
+
+                    <div class="row">
+                        <div class="col-md-4">
+                            <?php echo Form::text('off_setflag_1', null, ['class' => 'form-control', 'placeholder' => trans('validation.attributes.on_setflag_1')]); ?>
+
+                        </div>
+                        <div class="col-md-4">
+                            <?php echo Form::text('off_setflag_2', null, ['class' => 'form-control', 'placeholder' => trans('validation.attributes.on_setflag_2')]); ?>
+
+                        </div>
+                        <div class="col-md-4">
+                            <?php echo Form::text('off_setflag_3', null, ['class' => 'form-control', 'placeholder' => trans('validation.attributes.on_setflag_3')]); ?>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="sensors_form_inputs ignition door engine notsetflag drive_business drive_private">
+                <div class="form-group">
+                    <?php echo Form::label('on_type', trans('validation.attributes.on_value').':'); ?>
+
+                    <div class="row">
+                        <div class="col-md-4 col-xs-4">
+                            <?php echo Form::select('on_type', ['1' => trans('front.event_type_1'), '2' => trans('front.event_type_2'), '3' => trans('front.event_type_3')], null, ['class' => 'form-control']); ?>
+
+                        </div>
+                        <div class="col-md-8 col-xs-4">
+                            <?php echo Form::text('on_tag_value', null, ['class' => 'form-control', 'placeholder' => trans('validation.attributes.tag_value')]); ?>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <?php echo Form::label('off_type', trans('validation.attributes.off_value').':'); ?>
+
+                    <div class="row">
+                        <div class="col-md-4 col-xs-4">
+                            <?php echo Form::select('off_type', ['1' => trans('front.event_type_1'), '2' => trans('front.event_type_2'), '3' => trans('front.event_type_3')], null, ['class' => 'form-control']); ?>
+
+                        </div>
+                        <div class="col-md-8 col-xs-4">
+                            <?php echo Form::text('off_tag_value', null, ['class' => 'form-control', 'placeholder' => trans('validation.attributes.tag_value')]); ?>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="sensors_form_inputs ignition door engine setflag">
+                <div class="form-group">
+                    <?php echo Form::label('on_value', trans('validation.attributes.on_value').':'); ?>
+
+                    <div class="row">
+                        <div class="col-md-3">
+                            <?php echo Form::select('on_type_setflag', ['1' => trans('front.event_type_1'), '2' => trans('front.event_type_2'), '3' => trans('front.event_type_3')], null, ['class' => 'form-control']); ?>
+
+                        </div>
+                        <div class="col-md-3">
+                            <?php echo Form::text('on_tag_setflag_1', null, ['class' => 'form-control', 'placeholder' => trans('validation.attributes.on_setflag_1')]); ?>
+
+                        </div>
+                        <div class="col-md-3">
+                            <?php echo Form::text('on_tag_setflag_2', null, ['class' => 'form-control', 'placeholder' => trans('validation.attributes.on_setflag_2')]); ?>
+
+                        </div>
+                        <div class="col-md-3">
+                            <?php echo Form::text('on_tag_setflag_3', null, ['class' => 'form-control', 'placeholder' => trans('validation.attributes.on_setflag_3')]); ?>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <?php echo Form::label('off_value', trans('validation.attributes.off_value').':'); ?>
+
+                    <div class="row">
+                        <div class="col-md-3">
+                            <?php echo Form::select('off_type_setflag', ['1' => trans('front.event_type_1'), '2' => trans('front.event_type_2'), '3' => trans('front.event_type_3')], null, ['class' => 'form-control']); ?>
+
+                        </div>
+                        <div class="col-md-3">
+                            <?php echo Form::text('off_tag_setflag_1', null, ['class' => 'form-control', 'placeholder' => trans('validation.attributes.on_setflag_1')]); ?>
+
+                        </div>
+                        <div class="col-md-3">
+                            <?php echo Form::text('off_tag_setflag_2', null, ['class' => 'form-control', 'placeholder' => trans('validation.attributes.on_setflag_2')]); ?>
+
+                        </div>
+                        <div class="col-md-3">
+                            <?php echo Form::text('off_tag_setflag_3', null, ['class' => 'form-control', 'placeholder' => trans('validation.attributes.on_setflag_3')]); ?>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="sensors_form_input">
+                <div class="form-group">
+                    <div class="checkbox">
+                        <?php echo Form::checkbox('add_to_history', 1, 0); ?>
+
+                        <?php echo Form::label('add_to_history', trans('front.add_to_history')); ?>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 sen-cal-fields">
+            <label class="report_label"><?php echo e(trans('front.calibration')); ?></label>
+            <?php echo Form::hidden('calibrations_fake'); ?>
+
+            <div style="display: block; height: 400px;overflow-y: scroll; border: 1px solid #dddddd; margin-bottom: 20px;">
+                <table class="table">
+                    <thead>
+                        <th style="font-weight: normal"><?php echo e(trans('validation.attributes.tag_value')); ?></th>
+                        <th style="font-weight: normal"><?php echo e(trans('front.liters_gallons')); ?></th>
+                        <th></th>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-xs-5">
+                        <?php echo Form::label('x',trans('validation.attributes.tag_value')); ?>
+
+                        <?php echo Form::text('x', null, ['class' => 'form-control', 'disabled' => 'disabled']); ?>
+
+                    </div>
+                    <div class="col-xs-5">
+                        <?php echo Form::label('y',trans('front.liters_gallons')); ?>
+
+                        <?php echo Form::text('y', null, ['class' => 'form-control', 'disabled' => 'disabled']); ?>
+
+                    </div>
+                    <div class="col-xs-2">
+                        <?php echo Form::label(null,'.'); ?>
+
+                        <a href="javascript:" class="btn btn-action btn-block add_calibration" type="button"><i class="icon add" title="<?php echo e(trans('global.add')); ?>"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <?php echo Form::close(); ?>
+
+    <script>
+        $(document).ready(function() {
+            app.sensors.inputs($('#sensors_create'));
+        });
+    </script>
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('Frontend.Layouts.modal', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

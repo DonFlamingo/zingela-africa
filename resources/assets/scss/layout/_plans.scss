@@ -1,0 +1,39 @@
+.plans {
+  @extend .row;
+}
+
+.plan-col {
+  @extend .col-xs-12;
+  @extend .col-sm-4;
+  @extend .col-md-3;
+}
+
+.plan {
+  @extend .panel;
+  @extend .panel-default;
+
+  .plan-heading {
+    @extend .panel-heading;
+  }
+  .plan-title {
+    @extend .panel-title;
+    @extend .text-center;
+  }
+  .plan-body {
+    @extend .panel-body;
+
+    .icon.check {
+      color: $brand-primary;
+      line-height: 1;
+      font-size: 1.6em;
+
+      &.disabled {
+        @include opacity(0.5);
+      }
+    }
+  }
+  .plan-footer {
+    @extend .panel-footer;
+    @extend .text-center;
+  }
+}

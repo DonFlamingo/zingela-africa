@@ -1,0 +1,32 @@
+<div class="modal fade" id="showAddress">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><span>×</span></button>
+                <h4 class="modal-title"><i class="icon address"></i> <?php echo e(trans('front.show_address')); ?></h4>
+            </div>
+            <div class="modal-body">
+                <div class="alert alert-danger error" role="alert" style="display: none;"></div>
+
+                <?php echo Form::open(['route' => 'objects.show_address', 'method' => 'POST']); ?>
+
+                <div class="form-group">
+                    <?php echo Form::label('address', trans('front.address').':'); ?>
+
+                    <?php echo Form::text('address', null, ['class' => 'form-control']); ?>
+
+                </div>
+                <?php echo Form::close(); ?>
+
+            </div>
+            <div class="modal-footer">
+                <div class="buttons">
+                    <?php $__env->startSection('buttons'); ?>
+                        <button type="button" class="btn btn-action" onclick="app.showAddress();"><?php echo trans('global.show'); ?></button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal"><?php echo trans('global.cancel'); ?></button>
+                    <?php echo $__env->yieldSection(); ?>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

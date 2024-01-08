@@ -1,0 +1,52 @@
+<?php $__env->startSection('content'); ?>
+    <div class="panel panel-default" id="table_sensor_groups">
+
+        <div class="panel-heading">
+            <ul class="nav nav-tabs nav-icons pull-right">
+                <li role="presentation" class="">
+                    <a href="javascript:" type="button" data-modal="sensor_groups_create" data-url="<?php echo e(route("admin.sensor_groups.create")); ?>">
+                        <i class="icon add" title="<?php echo e(trans('admin.add_new_group')); ?>"></i>
+                    </a>
+                </li>
+            </ul>
+
+            <div class="panel-title"><?php echo e(trans('admin.sensor_groups')); ?></div>
+        </div>
+
+        <div class="panel-body" data-table>
+            <?php echo $__env->make('Admin.SensorGroups.table', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+        </div>
+    </div>
+<?php $__env->stopSection(); ?>
+
+<?php $__env->startSection('javascript'); ?>
+<script>
+    tables.set_config('table_sensor_groups', {
+        url:'<?php echo e(route("admin.sensor_groups.index")); ?>',
+        delete_url:'<?php echo e(route("admin.sensor_groups.destroy")); ?>'
+    });
+
+    function sensor_groups_edit_modal_callback() {
+        tables.get('table_sensor_groups');
+    }
+
+    function sensor_groups_create_modal_callback() {
+        tables.get('table_sensor_groups');
+    }
+
+    function sensors_edit_modal_callback() {
+        tables.get('table_sensor_group_sensors');
+        tables.get('table_sensor_groups');
+    }
+
+    function sensors_create_modal_callback() {
+        tables.get('table_sensor_group_sensors');
+        tables.get('table_sensor_groups');
+    }
+
+    $(document).on('updateSensorGroupsTable', function () {
+        tables.get('table_sensor_groups');
+    });
+</script>
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('Admin.Layouts.default', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

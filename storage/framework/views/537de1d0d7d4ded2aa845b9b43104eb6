@@ -1,0 +1,43 @@
+<?php $__env->startSection('title'); ?>
+<?php echo e(trans('front.subscriptions')); ?>
+
+<?php $__env->stopSection(); ?>
+
+<?php $__env->startSection('body'); ?>
+    <div class="form-group">
+        First Name: <?php echo e(Auth::User()->first_name); ?>
+
+    </div>
+    <div class="form-group">
+        Last Name: <?php echo e(Auth::User()->last_name); ?>
+
+    </div>
+    <div class="form-group">
+        <?php echo e(trans('validation.attributes.email')); ?>: <?php echo e(Auth::User()->email); ?>
+
+    </div>
+
+    <?php if(!is_null(Auth::User()->billing_plan_id)): ?>
+        <div class="form-group">
+            <?php echo e(trans('front.plan')); ?>: <?php echo e(Auth::User()->billing_plan->title); ?>
+
+            <a href="<?php echo e(route('subscriptions.renew')); ?>" class="btn btn-action btn-xs " style="margin-bottom: 10px;"><?php echo e(trans('front.renew_upgrade')); ?></a>
+        </div>
+    <?php endif; ?>
+
+    <div class="form-group">
+        <?php echo e(trans('validation.attributes.devices_limit')); ?>: <?php echo e(is_null(Auth::User()->devices_limit) ? trans('front.unlimited') : Auth::User()->devices_limit); ?>
+
+    </div>
+
+    <?php if(Auth::User()->subscription_expiration != '0000-00-00 00:00:00'): ?>
+    <div class="form-group">
+        <?php echo e(trans('front.expiration_date')); ?>: <?php echo e(datetime(Auth::User()->subscription_expiration)); ?> (<?php echo e($days_left); ?> <?php echo e(trans('front.days_left')); ?>)
+    </div>
+    <?php endif; ?>
+<?php $__env->stopSection(); ?>
+
+<?php $__env->startSection('buttons'); ?>
+    <button type="button" class="btn btn-default" data-dismiss="modal"><?php echo e(trans('global.close')); ?></button>
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('Frontend.Layouts.modal', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

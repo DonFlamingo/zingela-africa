@@ -1,0 +1,48 @@
+<table class="table table-condensed">
+    <tr class="">
+        <?php echo tableHeader('validation.attributes.title'); ?>
+
+        <?php echo tableHeader('validation.attributes.imei'); ?>
+
+        <?php echo tableHeader('global.online', 'style="text-align:center"'); ?>
+
+        <?php echo tableHeader('validation.attributes.expiration_date'); ?>
+
+        <?php echo tableHeader('admin.actions'); ?>
+
+    </tr>
+    <tbody>
+<?php if(count($items)): ?>
+    <?php foreach($items as $device): ?>
+        <tr>
+            <td><?php echo e($device->name); ?></td>
+            <td><?php echo e($device->imei); ?></td>
+            <td style="text-align: center">
+                <?php $online = isDeviceOnline($device->traccar->server_time, $device->traccar->ack_time); ?>
+                <span class="device-status" style="background-color: <?php echo e($online == 'online' ? 'green' : ($online == 'offline' ? 'red' : 'yellow')); ?>"></span>
+            </td>
+            <td>
+                <?php echo e($device->expiration_date == '0000-00-00' ? trans('front.unlimited') : datetime($device->expiration_date)); ?>
+
+            </td>
+            <td>
+                <div class="btn-group dropdown" data-position="fixed">
+                    <i class="btn icon edit" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"></i>
+                    <ul class="dropdown-menu">
+                        <li><a href="javascript:" data-modal="clients_device_edit" data-url="<?php echo e(route("devices.edit", [$device->id, 1])); ?>"><?php echo e(trans('global.edit')); ?></a></li>
+                        <li><a href="<?php echo e(route('objects.destroy')); ?>" class="js-confirm-link" data-confirm="<?php echo trans('front.do_object_delete'); ?>" data-id="<?php echo e($device->id); ?>" data-method="DELETE"><?php echo e(trans('global.delete')); ?></a></li>
+                    </ul>
+                </div>
+            </td>
+        </tr>
+    <?php endforeach; ?>
+<?php else: ?>
+    <tr>
+        <td class="no-data" colspan="5">
+            <?php echo e(trans('admin.no_data')); ?>
+
+        </td>
+    </tr>
+<?php endif; ?>
+    </tbody>
+</table>

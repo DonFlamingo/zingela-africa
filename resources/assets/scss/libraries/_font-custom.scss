@@ -1,0 +1,314 @@
+@font-face {
+  font-family: 'icomoon';
+  src:  url('../fonts/icomoon.eot?g1g04e');
+  src:  url('../fonts/icomoon.eot?g1g04e#iefix') format('embedded-opentype'),
+  url('../fonts/icomoon.ttf?g1g04e') format('truetype'),
+  url('../fonts/icomoon.woff?g1g04e') format('woff'),
+  url('../fonts/icomoon.svg?g1g04e#icomoon') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
+.ico {
+  /* use !important to prevent issues with browser extensions that change fonts */
+  font-family: 'icomoon' !important;
+  speak: none;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: inherit;
+
+  /* Better Font Rendering =========== */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.ico-show-names:before {
+  content: "\e900";
+}
+.ico-object-arrow-border:before {
+  content: "\e93b";
+}
+.ico-object-arrow:before {
+  content: "\e93d";
+}
+.ico-arrow-left:before {
+  content: "\e926";
+}
+.ico-arrow-right:before {
+  content: "\e944";
+}
+.ico-arrow-up:before {
+  content: "\e954";
+}
+.ico-arrow-down:before {
+  content: "\e910";
+}
+.ico-arrow-up-down:before {
+  content: "\e955";
+}
+.ico-arrow-left-right:before {
+  content: "\e927";
+}
+.ico-arrow-arr-right-btn:before {
+  content: "\e902";
+}
+.ico-plus:before {
+  content: "\e901";
+}
+.ico-minus:before {
+  content: "\e92e";
+}
+.ico-zoom:before {
+  content: "\e92d";
+}
+.ico-check:before {
+  content: "\e90b";
+}
+.ico-x:before {
+  content: "\e95b";
+}
+.ico-download:before {
+  content: "\e911";
+}
+.ico-upload:before {
+  content: "\e956";
+}
+.ico-gear:before {
+  content: "\e912";
+}
+.ico-search:before {
+  content: "\e949";
+}
+.ico-watch:before {
+  content: "\e95a";
+}
+.ico-warning:before {
+  content: "\e959";
+}
+.ico-location:before {
+  content: "\e929";
+}
+.ico-camera:before {
+  content: "\e90a";
+}
+.ico-street:before {
+  content: "\e94f";
+}
+.ico-reports:before {
+  content: "\e943";
+}
+.ico-filter:before {
+  content: "\e914";
+}
+.ico-graph:before {
+  content: "\e921";
+}
+.ico-follow:before {
+  content: "\e915";
+}
+.ico-traffic:before {
+  content: "\e92c";
+}
+.ico-save:before {
+  content: "\e948";
+}
+.ico-tool:before {
+  content: "\e937";
+}
+.ico-ruler:before {
+  content: "\e946";
+}
+.ico-ruler-o:before {
+  content: "\e947";
+}
+.ico-gear-o:before {
+  content: "\e936";
+}
+.ico-sensor:before {
+  content: "\e930";
+}
+.ico-signal:before {
+  content: "\e918";
+}
+.ico-house:before {
+  content: "\e94b";
+}
+.ico-point:before {
+  content: "\e94d";
+}
+.ico-logs:before {
+  content: "\e932";
+}
+.ico-options-h:before {
+  content: "\e93a";
+}
+.ico-options-v:before {
+  content: "\e941";
+}
+.ico-stylize-1:before {
+  content: "\e950";
+}
+.ico-stylize-2:before {
+  content: "\e951";
+}
+.ico-details:before {
+  content: "\e90e";
+}
+.ico-account:before {
+  content: "\e939";
+}
+.ico-user:before {
+  content: "\e938";
+}
+.ico-user-add:before {
+  content: "\e957";
+}
+.ico-user-settings:before {
+  content: "\e958";
+}
+.ico-object-o:before {
+  content: "\e92a";
+}
+.ico-object:before {
+  content: "\e934";
+}
+.ico-object-add:before {
+  content: "\e93e";
+}
+.ico-show-names2:before {
+  content: "\e94c";
+}
+.ico-show-trail:before {
+  content: "\e903";
+}
+.ico-fitbounds:before {
+  content: "\e935";
+}
+.ico-grouping:before {
+  content: "\e93c";
+}
+.ico-poi:before {
+  content: "\e933";
+}
+.ico-poi-import:before {
+  content: "\e917";
+}
+.ico-add-event:before {
+  content: "\e904";
+}
+.ico-event:before {
+  content: "\e931";
+}
+.ico-event-add:before {
+  content: "\e905";
+}
+.ico-geofence:before {
+  content: "\e92b";
+}
+.ico-geofence-import:before {
+  content: "\e925";
+}
+.ico-parking:before {
+  content: "\e940";
+}
+.ico-time-today:before {
+  content: "\e91f";
+}
+.ico-time-hour:before {
+  content: "\e922";
+}
+.ico-time-yesterday:before {
+  content: "\e923";
+}
+.ico-gsm-0:before {
+  content: "\e919";
+}
+.ico-gsm-1:before {
+  content: "\e91a";
+}
+.ico-gsm-2:before {
+  content: "\e91b";
+}
+.ico-gsm-3:before {
+  content: "\e91c";
+}
+.ico-gsm-4:before {
+  content: "\e91d";
+}
+.ico-gsm-5:before {
+  content: "\e91e";
+}
+.ico-battery-0:before {
+  content: "\e906";
+}
+.ico-battery-1:before {
+  content: "\e907";
+}
+.ico-battery-2:before {
+  content: "\e908";
+}
+.ico-battery-3:before {
+  content: "\e909";
+}
+.ico-battery-4:before {
+  content: "\e90c";
+}
+.ico-battery-5:before {
+  content: "\e90d";
+}
+.ico-engine:before {
+  content: "\e913";
+}
+.ico-ignition:before {
+  content: "\e924";
+}
+.ico-fuel:before {
+  content: "\e916";
+}
+.ico-odometer:before {
+  content: "\e93f";
+}
+.ico-battery:before {
+  content: "\e90f";
+}
+.ico-rpm:before {
+  content: "\e945";
+}
+.ico-speed:before {
+  content: "\e94e";
+}
+.ico-tachometer:before {
+  content: "\e952";
+}
+.ico-temp:before {
+  content: "\e953";
+}
+.ico-doors:before {
+  content: "\e920";
+}
+.ico-cpu:before {
+  content: "\e928";
+}
+.ico-db:before {
+  content: "\e92f";
+}
+.ico-ram:before {
+  content: "\e942";
+}
+.ico-connected:before {
+  content: "\e94a";
+}
+.ico-disconnected:before {
+  content: "\e95c";
+}
+.ico-sos:before {
+  content: "\e95d";
+}
+.ico-zonein:before {
+  content: "\e95e";
+}
+.ico-zoneout:before {
+  content: "\e95f";
+}

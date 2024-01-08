@@ -1,0 +1,17 @@
+<?php
+$widgets = Auth::user()->getSettings('widgets');
+if ( empty($widgets) ) {
+    $widgets = settings('widgets');
+}
+?>
+<?php if( ! empty($widgets['status']) ): ?>
+<div id="widgets">
+    <a class="btn-collapse" onclick="app.changeSetting('toggleWidgets');"><i></i></a>
+
+    <div class="widgets-content">
+        <?php foreach( $widgets['list'] as $widget): ?>
+            <?php echo $__env->make('Frontend.Widgets.'.$widget, array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+        <?php endforeach; ?>
+    </div>
+</div>
+<?php endif; ?>

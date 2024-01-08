@@ -1,0 +1,70 @@
+<?php $__env->startSection('content'); ?>
+    <?php foreach($devices as $device): ?>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <?php echo e(rtl(trans('front.report_type'), $data)); ?>: <?php echo e(rtl($types[$data['type']], $data)); ?>
+
+            </div>
+            <div class="panel-body">
+                <table class="table" style="margin-bottom: 0px">
+                    <tbody>
+                    <tr>
+                        <th><?php echo rtl(trans('validation.attributes.device_id'), $data); ?>:</th>
+                        <td><?php echo e(rtl($device['name'], $data)); ?></td>
+                        <th>&nbsp;</th>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <th><?php echo rtl(trans('front.time_period'), $data); ?>:</th>
+                        <td><?php echo e($data['date_from']); ?> - <?php echo e($data['date_to']); ?></td>
+                        <th>&nbsp;</th>
+                        <td>&nbsp;</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="panel-body no-padding">
+                <table class="table table-striped table-speed" style="margin-bottom: 0px">
+                    <thead>
+                    <tr>
+                        <th><?php echo e(rtl(trans('validation.attributes.date'), $data)); ?></th>
+                        <th><?php echo e(rtl(trans('front.stop_duration'), $data)); ?></th>
+                        <th><?php echo e(rtl(trans('front.idle_duration'), $data)); ?></th>
+                        <th><?php echo e(rtl(trans('front.engine_hours'), $data)); ?></th>
+                        <th><?php echo e(rtl(trans('front.travel_time'), $data)); ?></th>
+                        <th><?php echo e(rtl(trans('front.overspeed'), $data)); ?></th>
+                        <th><?php echo e(rtl(trans('front.distance_travelled'), $data)); ?></th>
+                        <th><?php echo e(rtl(trans('front.travel_start_time'), $data)); ?></th>
+                        <th><?php echo e(rtl(trans('front.travel_end_time'), $data)); ?></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <?php if(!isset($items[$device['id']]) || empty($items[$device['id']])): ?>
+                        <tr>
+                            <td colspan="9"><?php echo e(rtl(trans('front.nothing_found_request'), $data)); ?></td>
+                        </tr>
+                    <?php else: ?>
+                        <?php
+                        $device_items = $items[$device['id']];
+                        ?>
+                        <?php foreach($device_items as $item): ?>
+                        <tr>
+                            <td><?php echo e($item['date']); ?></td>
+                            <td><?php echo e($item['stop_duration']); ?></td>
+                            <td><?php echo e($item['engine_idle']); ?></td>
+                            <td><?php echo e($item['engine_work']); ?></td>
+                            <td><?php echo e($item['move_duration']); ?></td>
+                            <td class="bg-danger text-l" style="color: white"><?php echo e($item['overspeed_count']); ?></td>
+                            <td><?php echo e($data['unit_of_distance'] == 'mi' ? kilometersToMiles($item['distance']) : $item['distance']); ?> <?php echo e(rtl(trans("front.{$data['unit_of_distance']}"), $data)); ?></td>
+                            <td><?php echo e($item['start']); ?></td>
+                            <td><?php echo e($item['end']); ?></td>
+                        </tr>
+                        <?php endforeach; ?>
+                    <?php endif; ?>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    <?php endforeach; ?>
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('Frontend.Reports.parse.layout', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

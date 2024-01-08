@@ -1,0 +1,181 @@
+#widgets {
+  @include clearfix();
+  float: right;
+  max-width: 100%;
+
+  .btn-collapse {
+    @extend .collapse-top;
+
+    left: auto;
+    right: 10%;
+  }
+
+  &.collapsed {
+    .widgets-content {
+      height: 0;
+      min-height: 0;
+      overflow: hidden;
+
+      -webkit-transition: all 0.5s ease;
+      -moz-transition: all 0.5s ease;
+      -o-transition: all 0.5s ease;
+      transition: all 0.5s ease;
+    }
+
+    .btn-collapse {
+      @extend .collapsed;
+    }
+  }
+
+  .widgets-content {
+    @extend .scrollbar;
+
+    overflow-x: auto;
+    overflow-y: hidden;
+    white-space:nowrap;
+
+    //height: 165px;
+    background: $color-bg-000;
+
+    color: $color-text-500;
+  }
+
+  .table {
+    @extend .table-condensed;
+
+    margin-bottom: 0;
+    float: left;
+
+    + .table {
+      margin-left: 5px;
+    }
+
+    tr > td {
+      width: 40%;
+      line-height: 22px;
+      vertical-align: middle;
+
+      @include text-overflow;
+      max-width: 1px;
+    
+    	
+
+      + td {
+        @include text-overflow;
+        width: 100%;
+        max-width: 1px;
+      }
+    
+    span {
+    	white-space: initial;
+    }
+    }
+
+    .icon {
+      font-size: 1.8em;
+      //line-height: 1;
+      vertical-align: middle;
+      color: $color-text-800;
+      margin-right: 5px;
+    }
+  }
+
+  .widget {
+    @extend .panel-default;
+
+    height: 100%;
+    border: 1px solid $color-border-100;
+    border-bottom: 0;
+    display: inline-block;
+    vertical-align: bottom;
+
+    + .widget {
+      margin-left: -4px;
+    }
+  }
+
+  .widget-heading {
+    @extend .panel-heading;
+    font-size: 1.1em;
+  }
+  .widget-title {
+    @extend .panel-title;
+    .icon {
+      color: $brand-primary;
+      margin-right: 5px;
+    }
+
+    [data-device="status"] {
+      width: 7px; height: 7px;
+    }
+    [data-device="status-text"] {
+      font-size: 0.8em;
+    }
+  }
+
+  .widget-body {
+    @extend .panel-body;
+    @extend .scrollbar;
+
+    padding-top: 5px;
+    padding-bottom: 0;
+
+    height: 126px;
+    //min-height: 125px;
+    //max-height: 126px;
+
+    font-size: $font-size-small;
+
+    overflow: auto;
+
+    .table:empty + .widget-empty {
+      display: block;
+    }
+
+    .widget-empty {
+      display: none;
+      height: 100%;
+      text-align: center;
+      background: url('../img/no-data.png') right bottom no-repeat;
+
+      .btn {
+        margin-top: 35px;
+      }
+    }
+  }
+
+  .widget-services,
+  .widget-device {
+    .table {
+      @extend .fadeIn;
+      @extend .animated;
+
+      width: 260px;
+    }
+  }
+  .widget-sensors {
+    .table {
+      @extend .fadeIn;
+      @extend .animated;
+
+      width: 200px;
+
+      tr > td {
+        width: 60%;
+      }
+    }
+  }
+  .widget-streetview {
+    .widget-body {
+      width: 290px;
+      padding: 0;
+
+      img {
+        @extend .fadeIn;
+        @extend .animated;
+
+        max-width: 100%;
+      }
+    }
+  }
+}

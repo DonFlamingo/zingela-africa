@@ -1,0 +1,83 @@
+<?php /* TODO confirm link */ ?>
+<div class="table_error"></div>
+<div class="table-responsive">
+    <table class="table table-list" data-toggle="multiCheckbox">
+        <thead>
+        <tr>
+            <?php echo tableHeaderCheckall(['delete_url' => trans('admin.delete_selected')]); ?>
+
+            <?php echo tableHeaderSort($items->sorting, 'devices.name', 'validation.attributes.name'); ?>
+
+            <?php echo tableHeaderSort($items->sorting, 'devices.imei', 'validation.attributes.imei'); ?>
+
+            <?php echo tableHeader('global.online', 'style="text-align:center;"'); ?>
+
+            <?php echo tableHeaderSort($items->sorting, 'traccar.time', 'admin.last_connection'); ?>
+
+            <?php echo tableHeaderSort($items->sorting, 'expiration_date', 'validation.attributes.expiration_date'); ?>
+
+            <?php echo tableHeader('validation.attributes.user'); ?>
+
+            <?php echo tableHeader('admin.actions', 'style="text-align: right;"'); ?>
+
+        </tr>
+        </thead>
+
+        <tbody>
+        <?php if(count($collection = $items->getCollection())): ?>
+            <?php foreach($collection as $item): ?>
+                <tr>
+                    <td>
+                        <div class="checkbox">
+                            <input type="checkbox" value="<?php echo $item->id; ?>">
+                            <label></label>
+                        </div>
+                    </td>
+                    <td>
+                        <?php echo e($item->name); ?>
+
+                    </td>
+                    <td>
+                        <?php echo e($item->imei); ?>
+
+                    </td>
+                    <td style="text-align: center">
+                        <?php $online = isDeviceOnline($item->traccar->server_time, $item->traccar->ack_time); ?>
+                        <span class="device-status" style="background-color: <?php echo e($online == 'online' ? 'green' : ($online == 'offline' ? 'red' : 'yellow')); ?>"></span>
+                    </td>
+                    <td>
+                        <?php echo e($item->time); ?>
+
+                    </td>
+                    <td>
+                        <?php echo e($item->expiration_date == '0000-00-00' ? trans('front.unlimited') : datetime($item->expiration_date)); ?>
+
+                    </td>
+                    <td class="user-list">
+                        <?php echo e(parseUsers($item->users->lists('email', 'id'))); ?>
+
+                    </td>
+                    <td class="actions">
+                        <div class="btn-group dropdown droparrow" data-position="fixed">
+                            <i class="btn icon edit" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"></i>
+                            <ul class="dropdown-menu">
+                                <li><a href="javascript:" data-modal="<?php echo e($section); ?>_edit" data-url="<?php echo e(route("devices.edit", [$item->id, 1])); ?>"><?php echo e(trans('global.edit')); ?></a></li>
+                                <li><a href="<?php echo e(route('objects.destroy')); ?>" class="js-confirm-link" data-confirm="<?php echo trans('front.do_object_delete'); ?>" data-id="<?php echo e($item->id); ?>" data-method="DELETE"><?php echo e(trans('global.delete')); ?></a></li>
+                            </ul>
+                        </div>
+                    </td>
+                </tr>
+            <?php endforeach; ?>
+        <?php else: ?>
+            <tr class="">
+                <td class="no-data" colspan="7">
+                    <?php echo trans('admin.no_data'); ?>
+
+                </td>
+            </tr>
+        <?php endif; ?>
+        </tbody>
+    </table>
+</div>
+
+<?php echo $__env->make("Admin.Layouts.partials.pagination", array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

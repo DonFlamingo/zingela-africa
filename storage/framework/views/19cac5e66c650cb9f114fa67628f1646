@@ -1,0 +1,99 @@
+<?php $__env->startSection('content'); ?>
+    <h1 class="sign-in-text text-center">
+        <?php if( settings('main_settings.welcome_text') ): ?>
+            <?php echo settings('main_settings.welcome_text'); ?>
+
+        <?php else: ?>
+            <?php echo trans('front.sign_in'); ?>
+
+        <?php endif; ?>
+    </h1>
+
+    <div class="panel">
+        <div class="panel-body">
+
+            <?php if( has_asset_logo('logo-main') ): ?>
+            <a href="<?php echo e(route('home')); ?>">
+                <img class="img-responsive center-block" src="<?php echo e(asset_logo('logo-main')); ?>" alt="Logo">
+            </a>
+            <?php endif; ?>
+
+            <hr>
+
+            <?php if(Session::has('success')): ?>
+                <div class="alert alert-success alert-dismissible">
+                    <?php echo Session::get('success'); ?>
+
+                </div>
+            <?php endif; ?>
+
+            <?php if(Session::has('message')): ?>
+                <div class="alert alert-danger alert-dismissible">
+                    <?php echo Session::get('message'); ?>
+
+                </div>
+            <?php endif; ?>
+
+            <?php echo Form::open(array('route' => 'authentication.store', 'class' => 'form')); ?>
+
+                <div class="form-group">
+                    <?php echo Form::text('user_name', null, ['class' => 'form-control', 'placeholder' => trans('validation.attributes.email'), 'id' => 'sign-in-form-email']); ?>
+
+                </div>
+                <div class="form-group">
+                    <?php echo Form::password('password', ['class' => 'form-control', 'placeholder' => trans('validation.attributes.password'), 'id' => 'sign-in-form-password']); ?>
+
+                </div>
+
+                <div class="form-group">
+                    <div class="checkbox">
+                        <?php echo Form::checkbox('remember_me', 1, ['id' => 'sign-in-form-remember']); ?>
+
+                        <label><?php echo trans('validation.attributes.remember_me'); ?></label>
+                    </div>
+                </div>
+
+                <button class="btn btn-lg btn-primary btn-block"  name="Submit" value="Login" type="Submit"><?php echo trans('front.sign_in'); ?></button>
+
+                <hr>
+
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-6">
+                            <a href="<?php echo route('password_reminder.create'); ?>" class="btn btn-block btn-lg btn-default"><?php echo trans('front.cant_sign_in'); ?></a>
+                        </div>
+                        <div class="col-xs-12 col-sm-6">
+                            <?php if(settings('main_settings.allow_users_registration')): ?>
+                                <a href="<?php echo route('registration.create'); ?>" class="btn btn-block btn-lg btn-default"><?php echo trans('front.not_a_member'); ?></a>
+                            <?php endif; ?>
+                        </div>
+                    </div>
+                </div>
+            <?php echo Form::close(); ?>
+
+        </div>
+    </div>
+
+    <?php if( settings('main_settings.google_play_link') || settings('main_settings.apple_store_link') ): ?>
+        <div class="app-links">
+            <?php if( settings('main_settings.google_play_link') ): ?>
+                <div class="col-xs-6">
+                    <a href="<?php echo e(settings('main_settings.google_play_link')); ?>" target="_blank"><img src="<?php echo e(asset('assets/img/google-play.png')); ?>" class="img-responsive" /></a>
+                </div>
+            <?php endif; ?>
+
+            <?php if( settings('main_settings.apple_store_link') ): ?>
+                <div class="col-xs-6">
+                    <a href="<?php echo e(settings('main_settings.apple_store_link')); ?>" target="_blank"><img src="<?php echo e(asset('assets/img/apple-store.png')); ?>" class="img-responsive" /></a>
+                </div>
+            <?php endif; ?>
+            <div class="clearfix"></div>
+        </div>
+
+    <?php endif; ?>
+
+    <?php if( settings('main_settings.bottom_text') ): ?>
+        <p class="sign-in-text"><?php echo settings('main_settings.bottom_text'); ?></p>
+    <?php endif; ?>
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('Frontend.Layouts.frontend', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

@@ -1,0 +1,93 @@
+<script type="text/javascript">
+    app.debug = <?php echo e(env('APP_DEBUG', false) ? 'true' : 'false'); ?>;
+    app.version = '<?php echo e(config('tobuli.version')); ?>';
+    app.offlineTimeout = <?php echo e(settings('main_settings.default_object_online_timeout') * 60); ?>;
+
+    app.show_object_info_after = <?php echo e(settings('plugins.show_object_info_after.status')); ?>;
+    app.object_listview = <?php echo e(settings('plugins.object_listview.status')); ?>;
+
+    app.urls = {
+        asset:                  '<?php echo e(asset('')); ?>',
+        check:                  '<?php echo e(route('objects.items_json')); ?>',
+        streetView:             '<?php echo e(asset('streetview')); ?>',
+        geoAddress:             '<?php echo e(route('api.geo_address')); ?>',
+
+        events:                 '<?php echo e(route('events.index')); ?>',
+
+        history:                '<?php echo e(route('history.index')); ?>',
+        historyGeofence:          '<?php echo e(route('history.geofence')); ?>',
+		historyExport:          '<?php echo e(route('history.export')); ?>',
+        historyPositions:       '<?php echo e(route('history.positions')); ?>',
+        historyHistory:       '<?php echo e(route('history.history')); ?>',
+        historyPositionsDelete: '<?php echo e(route('history.delete_positions')); ?>',
+
+        devices:                '<?php echo e(route('objects.items')); ?>',
+        deviceDelete:           '<?php echo e(route('objects.destroy')); ?>',
+        deviceChangeActive:     '<?php echo e(route('devices.change_active')); ?>',
+        deviceToggleGroup:      '<?php echo e(route('objects.change_group_status')); ?>',
+        deviceStopTime:         '<?php echo e(route('objects.stop_time')); ?>/',
+        deviceFollow:           '<?php echo e(route('devices.follow_map')); ?>/',
+        devicesSensorCreate:    '<?php echo e(route('sensors.create')); ?>/',
+        devicesServiceCreate:   '<?php echo e(route('services.create')); ?>/',
+
+        geofences:              '<?php echo e(route('geofences.index')); ?>',
+        geofenceChangeActive:   '<?php echo e(route('geofences.change_active')); ?>',
+        geofenceDelete:         '<?php echo e(route('geofences.destroy')); ?>',
+        geofencesExportType:    '<?php echo e(route('geofences.export_type')); ?>',
+        geofencesImport:        '<?php echo e(route('geofences.import')); ?>',
+        geofenceToggleGroup:    '<?php echo e(route('geofences_groups.change_status')); ?>',
+
+        routes:                 '<?php echo e(route('routes.index')); ?>',
+        routeChangeActive:      '<?php echo e(route('routes.change_active')); ?>',
+        routeDelete:            '<?php echo e(route('routes.destroy')); ?>',
+
+        alerts:                 '<?php echo e(route('alerts.index')); ?>',
+        alertChangeActive:      '<?php echo e(route('alerts.change_active')); ?>',
+        alertDelete:            '<?php echo e(route('alerts.destroy')); ?>',
+        alertGetEvents:         '<?php echo e(route('custom_events.get_events')); ?>',
+        alertGetProtocols:      '<?php echo e(route('custom_events.get_protocols')); ?>',
+
+        mapIcons:               '<?php echo e(route('map_icons.index')); ?>',
+        mapIconsDelete:         '<?php echo e(route('map_icons.destroy')); ?>',
+        mapIconsChangeActive:   '<?php echo e(route('map_icons.change_active')); ?>',
+        mapIconsList:           '<?php echo e(route('map_icons.list')); ?>',
+
+        changeMap:              '<?php echo e(route('my_account.change_map')); ?>',
+        changeMapSettings:      '<?php echo e(route('my_account_settings.change_map_settings')); ?>',
+
+        clearQueue:             '<?php echo e(route('sms_gateway.clear_queue')); ?>',
+
+        listView:               '<?php echo e(route('objects.listview')); ?>',
+        listViewItems:          '<?php echo e(route('objects.listview.items')); ?>'
+    };
+
+    window.distance_unit_hour = '<?php echo e(Auth::User()->distance_unit_hour); ?>';
+
+    app.settings.weekStart = '<?php echo e(Auth::User()->week_start_day); ?>';
+
+    app.settings.mapCenter = [parseFloat('<?php echo e(settings('main_settings.map_center_latitude')); ?>'), parseFloat('<?php echo e(settings('main_settings.map_center_longitude')); ?>')];
+    app.settings.mapZoom = <?php echo e(settings('main_settings.map_zoom_level')); ?>;
+    app.settings.user_id = '<?php echo e(Auth::User()->id); ?>';
+    app.settings.map_id = '<?php echo e(Auth::User()->map_id); ?>';
+    app.settings.availableMaps = <?php echo json_encode(Auth::User()->available_maps); ?>;
+
+    app.settings.toggleSidebar  = false;
+    app.settings.showDevice     = <?php echo e(Auth::User()->map_controls->m_objects ? 'true' : 'false'); ?>;
+    app.settings.showGeofences  = <?php echo e(Auth::User()->map_controls->m_geofences ? 'true' : 'false'); ?>;
+    app.settings.showRoutes     = <?php echo e(Auth::User()->map_controls->m_routes ? 'true' : 'false'); ?>;
+    app.settings.showPoi        = <?php echo e(Auth::User()->map_controls->m_poi ? 'true' : 'false'); ?>;
+    app.settings.showTail       = <?php echo e(Auth::User()->map_controls->m_show_tails ? 'true' : 'false'); ?>;
+    app.settings.showNames      = <?php echo e(Auth::User()->map_controls->m_show_names ? 'true' : 'false'); ?>;
+    app.settings.showTraffic    = false;
+
+    app.settings.showHistoryRoute = <?php echo e(Auth::User()->map_controls->history_control_route ? 'true' : 'false'); ?>;
+    app.settings.showHistoryArrow = <?php echo e(Auth::User()->map_controls->history_control_arrows ? 'true' : 'false'); ?>;
+    app.settings.showHistoryStop  = <?php echo e(Auth::User()->map_controls->history_control_stops ? 'true' : 'false'); ?>;
+    app.settings.showHistoryEvent = <?php echo e(Auth::User()->map_controls->history_control_events ? 'true' : 'false'); ?>;
+
+    app.settings.keys.google = '<?php echo e(env('google_api_key', 'AIzaSyDG5ZheVmnPJbn5t0hsEF8e8ZRG-k_X0Xc')); ?>';
+
+	app.notification = {
+    	logo: '<?php echo e(asset_logo('favicon')); ?>'
+    };
+</script>

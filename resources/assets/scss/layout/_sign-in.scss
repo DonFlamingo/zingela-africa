@@ -1,0 +1,23 @@
+body.sign-in-layout {
+  //background-color: $brand-primary;
+  //background-image: url('http://nortechquality.com/images/world%20map.png');
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-attachment: fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+
+  .sign-in-text {
+    color: #fff;
+  }
+
+  .panel {
+    @include box-shadow(0 0 15px rgba(0, 0, 0, 0.5));
+  }
+
+  .app-links {
+    margin: 20px 0;
+  }
+}

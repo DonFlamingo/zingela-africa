@@ -1,0 +1,33 @@
+.modal-scrollable {
+  position: relative;
+}
+
+.modal-header {
+  background: $modal-header-bg;
+
+  .close {
+    font-size: 25px;
+    margin-top: -3px;
+  }
+}
+.modal-title {
+  .icon {
+    vertical-align: top;
+    color: $brand-primary;
+  }
+}
+.modal-body {
+  > .nav {
+    margin: -($modal-inner-padding);
+    margin-bottom: $modal-inner-padding;
+  }
+}
+.modal-footer {
+  background: $modal-footer-bg;
+  text-align: left;
+}
+
+$modal-md: 760px;
+@media (min-width: $screen-sm-min) {
+  .modal-md { width: $modal-md; }
+}

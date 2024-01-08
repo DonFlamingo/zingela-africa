@@ -1,0 +1,50 @@
+<?php $__env->startSection('content'); ?>
+    <div class="panel panel-default" id="table_<?php echo e($section); ?>">
+
+        <input type="hidden" name="sorting[sort_by]" value="<?php echo e($items->sorting['sort_by']); ?>" data-filter>
+        <input type="hidden" name="sorting[sort]" value="<?php echo e($items->sorting['sort']); ?>" data-filter>
+
+        <div class="panel-heading">
+            <ul class="nav nav-tabs nav-icons pull-right">
+                <?php if( Auth::User()->perm('devices', 'edit') ): ?>
+                <li role="presentation" class="">
+                    <a href="javascript:" type="button" class="" data-modal="<?php echo e($section); ?>_create" data-url="<?php echo e(route("devices.create")); ?>">
+                        <i class="icon device-add" title="<?php echo e(trans('admin.add_new_device')); ?>"></i>
+                    </a>
+                </li>
+                <?php endif; ?>
+            </ul>
+
+            <div class="panel-title"><i class="icon device"></i> <?php echo e(trans('admin.'.$section)); ?></div>
+
+            <div class="panel-form">
+                <div class="form-group search">
+                    <?php echo Form::text('search_phrase', null, ['class' => 'form-control', 'placeholder' => trans('admin.search_it'), 'data-filter' => true]); ?>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="panel-body" data-table>
+            <?php echo $__env->make('Admin.'.ucfirst($section).'.table', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+        </div>
+    </div>
+<?php $__env->stopSection(); ?>
+
+<?php $__env->startSection('javascript'); ?>
+<script>
+    tables.set_config('table_<?php echo e($section); ?>', {
+        url:'<?php echo e(route("admin.{$section}.index")); ?>',
+        delete_url:'<?php echo e(route("admin.{$section}.destroy")); ?>'
+    });
+
+    function <?php echo e($section); ?>_edit_modal_callback() {
+        tables.get('table_<?php echo e($section); ?>');
+    }
+
+    function <?php echo e($section); ?>_create_modal_callback() {
+        tables.get('table_<?php echo e($section); ?>');
+    }
+</script>
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('Admin.Layouts.default', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

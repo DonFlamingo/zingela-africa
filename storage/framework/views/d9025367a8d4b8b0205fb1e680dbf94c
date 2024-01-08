@@ -1,0 +1,104 @@
+<?php $__env->startSection('items'); ?>
+<style>
+.btn-group > .btn:first-child:not(:last-child):not(.dropdown-toggle) {
+    color: #53514f;
+}
+.navbar-default .navbar-nav > li > a > .icon {
+    color: #515151 !important;
+}
+.dropdown-menu > li > a > .icon, .leaflet-control-layers .leaflet-control-layers-list > li > a > .icon {
+    color: #606060 !important;
+}
+</style>
+
+<div class="tab-content">
+    <div class="tab-pane active" id="objects_tab">
+        <?php echo $__env->make('Frontend.Objects.tabs.objects', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+    </div>
+    <div class="tab-pane" id="events_tab">
+        <?php echo $__env->make('Frontend.Objects.tabs.events', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+    </div>
+    <div class="tab-pane" id="history_tab">
+        <?php echo $__env->make('Frontend.Objects.tabs.history', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+    </div>
+    <div class="tab-pane" id="alerts_tab">
+        <?php echo $__env->make('Frontend.Objects.tabs.alerts', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+    </div>
+    <?php echo $__env->make('Frontend.Objects.tabs.geofencing', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+    <?php echo $__env->make('Frontend.Objects.tabs.routes', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+    <?php echo $__env->make('Frontend.Objects.tabs.mapIcons', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+</div>
+<?php echo $__env->make('Frontend.Objects.partials.checkObjectsFailed', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+<?php echo $__env->make('Frontend.Objects.partials.deleteObject', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+<?php echo $__env->make('Frontend.Objects.partials.deleteGeofence', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+<?php echo $__env->make('Frontend.Objects.partials.deleteRoute', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+<?php echo $__env->make('Frontend.Objects.partials.deleteAlert', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+<?php echo $__env->make('Frontend.Objects.partials.deleteMapIcon', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+<?php echo $__env->make('Frontend.Objects.partials.warning', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+<?php echo $__env->make('Frontend.Objects.tools.showPoint', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+<?php echo $__env->make('Frontend.Objects.tools.showAddress', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+<?php echo $__env->make('Frontend.Objects.tools.findAssets', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+<?php $__env->stopSection(); ?>
+
+<?php $__env->startSection('scripts'); ?>
+<?php echo $__env->make('Frontend.Objects.partials.urls', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+
+<script>
+    function my_account_settings_edit_modal_callback(res) {
+        if (res.status == 1)
+            window.location.reload();
+    }
+
+    function devices_create_modal_callback(res) {
+        if (res.status == 1) {
+            app.notice.success('<?php echo e(trans('front.successfully_added_device')); ?>');
+            app.devices.list();
+        }
+    }
+
+    function devices_edit_modal_callback(res) {
+        if (res.status == 1) {
+            app.notice.success('<?php echo e(trans('front.successfully_updated_device')); ?>');
+
+            if (typeof res.deleted != 'undefined') {
+                app.devices.remove(res.id);
+
+                $('.history-tab-form .devices_list option[value="' + res.id + '"]');
+            }
+
+            app.devices.list();
+        }
+    }
+
+    function email_confirmation_edit_modal_callback(res) {
+        if (res.status == 1) {
+            app.notice.success('<?php echo e(trans('front.successfully_confirmed_email')); ?>');
+            $('#email_confirmation').hide();
+        }
+    }
+
+    function my_account_edit_modal_callback(res) {
+    if (res.status == 1) {
+        app.notice.success('<?php echo e(trans('front.successfully_updated_profile')); ?>');
+            if (res.email_changed == 1) {
+                 $('#email_confirmation').show();
+                 $('#email_confirmation a').trigger('click');
+            }
+        }
+    }
+
+    function email_resend_code_modal_callback(res) {
+        if (res.status == 1) {
+            app.notice.success('<?php echo e(trans('front.activation_email_sent')); ?>');
+        }
+    }
+
+    function events_do_destroy_modal_callback(res) {
+        if (res.status == 1) {
+            app.events.list();
+        }
+    }
+</script>
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('Frontend.Layouts.loged', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

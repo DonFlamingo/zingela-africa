@@ -1,0 +1,55 @@
+#bottombar {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  z-index: 997;
+  width: 100%;
+  max-width: 100%;
+}
+
+#bottom-history {
+  display: none;
+  width: 100%;
+  max-height: calc(100% - 60px);
+  //overflow: hidden;
+
+  background: $color-bg-000;
+  z-index: 998;
+
+  .bottom-history-header {
+    @include clearfix();
+    background: $color-bg-100;
+  }
+
+  #graph {
+    position: relative;
+
+    #graph_sensors {
+      position: absolute;
+      bottom: 100%;
+      left: 0;
+      @extend .pull-left;
+    }
+  }
+
+  .graph-controls {
+    background: $color-bg-000;
+  }
+
+  #hoverdata-kmh,
+  #hoverdata-date {
+    margin: 10px;
+    color: $color-text-400;
+  }
+
+}
+
+.graph-1-wrap {
+  width: 100%;
+  height: 150px;
+  overflow-x: hidden;
+  overflow-y: hidden; }
+.graph-1-wrap .graph-1 {
+  width: 100%;
+  height: 150px;
+}

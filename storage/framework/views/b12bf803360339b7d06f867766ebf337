@@ -1,0 +1,55 @@
+<?php if(!empty($items)): ?>
+    <div class="history">
+        <table class="table">
+            <thead>
+            <tr>
+                <td><i class="fa fa-flag" title="<?php echo trans('front.action'); ?>"></i></td>
+                <td><i class="fa fa-calendar" title="<?php echo trans('validation.attributes.date'); ?>"></i></td>
+                <td><i class="fa fa-clock-o" title="<?php echo trans('front.duration'); ?>"></i></td>
+            </tr>
+            </thead>
+            <tbody>
+            <?php foreach($items as $key => $item): ?>
+                <?php $st = $item_class[$item['status']]; ?>
+                <tr data-history-id="<?php echo $key; ?>" class="<?php echo $st['tr']; ?>" onClick="app.history.select( <?php echo $key; ?> );">
+                    <td>
+                        <span class="<?php echo e($st['class']); ?>"><?php echo $st['sym']; ?></span>
+                    </td>
+                    <td class="datetime">
+                        <span class="time"><?php echo e(date(settings('main_settings.default_time_format'), strtotime($item['raw_time']))); ?></span>
+                        <span class="date"><?php echo e(date(settings('main_settings.default_date_format'), strtotime($item['raw_time']))); ?></span>
+                    </td>
+                    <td class="duration">
+                        <?php if($item['time'] != 0): ?>
+                            <?php echo e($item['time']); ?>
+
+                        <?php endif; ?>
+                    </td>
+                </tr>
+            <?php endforeach; ?>
+            </tbody>
+        </table>
+    </div>
+
+    <input type="hidden" id="history_distance_sum" value="<?php echo $distance_sum; ?>">
+    <input type="hidden" id="history_move_duration" value="<?php echo $move_duration; ?>">
+    <input type="hidden" id="history_stop_duration" value="<?php echo $stop_duration; ?>">
+    <input type="hidden" id="history_top_speed" value="<?php echo $top_speed; ?>">
+    <input type="hidden" id="history_fuel_consumption" value="<?php echo $fuel_consumption; ?>">
+    <script>
+        window.history_fuel_consumption_arr = <?php echo json_encode($fuel_consumption_arr); ?>;
+        window.history_cords = <?php echo json_encode($cords); ?>;
+        window.history_items = <?php echo json_encode($items); ?>;
+        window.history_sensors = <?php echo json_encode($sensors); ?>;
+        window.history_sensors_values = <?php echo json_encode($sensors_values); ?>;
+    </script>
+<?php else: ?>
+    <p class="no-results"><?php echo trans('front.no_history'); ?></p>
+
+    <script>
+        window.history_cords = null;
+        window.history_items = null;
+        window.history_sensors = null;
+        window.history_sensors_values = null;
+    </script>
+<?php endif; ?>

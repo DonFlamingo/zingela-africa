@@ -1,0 +1,61 @@
+@mixin panel-heading-vertical-align($element-height) {
+  margin-top: (($heading-height - $element-height) / 2);
+  margin-bottom: (($heading-height - $element-height) / 2);
+}
+
+.panel {
+  .panel-heading {
+    padding: 0;
+    @include clearfix;
+  }
+  .panel-title {
+    @include text-overflow;
+
+    padding: $panel-heading-padding;
+    font-size: $panel-title-size;
+
+    .icon {
+      font-size: $panel-title-icon-size;
+      color: $panel-title-icon-color;
+
+      vertical-align: middle;
+    }
+
+    @media (min-width: $grid-float-breakpoint) {
+      float: left;
+    }
+  }
+}
+
+.panel-form {
+  padding: 10px $navbar-padding-horizontal;
+  border-top: 1px solid transparent;
+  border-bottom: 1px solid transparent;
+
+  @include form-inline;
+
+  .form-group {
+    @media (max-width: $grid-float-breakpoint-max) {
+      margin-bottom: 5px;
+
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
+  }
+
+
+
+  // Undo 100% width for pull classes
+  @media (min-width: $grid-float-breakpoint) {
+    width: auto;
+    border: 0;
+    margin-left: 0;
+    margin-right: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+
+    @include panel-heading-vertical-align($input-height-base);
+    float: left;
+  }
+}

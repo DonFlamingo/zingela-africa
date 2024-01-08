@@ -1,0 +1,35 @@
+<?php
+function utf8ize($d)
+{ 
+    if (is_array($d) || is_object($d))
+        foreach ($d as &$v) $v = utf8ize($v);
+    else
+        return utf8_encode($d);
+
+    return $d;
+}
+?>
+
+<?php if(!empty($events)): ?>
+    <?php foreach($events as $item): ?>
+        <tr data-event-id="<?php echo $item->id; ?>" onClick="app.events.select(<?php echo $item->id; ?>);">
+            <td class="datetime">
+                <span class="time"><?php echo \Carbon\Carbon::parse($item->time)->format('H:i:s'); ?></span>
+                <span class="date"><?php echo \Carbon\Carbon::parse($item->time)->format('Y-m-d'); ?></span>
+            </td>
+            <td><?php echo e((isset($item->device->name) ? $item->device->name : '')); ?></td>
+            <td><?php echo $item->message; ?><?php if(isset($item->geofence)): ?> (<?php echo e($item->geofence->name); ?>) <?php endif; ?></td>
+  			<script>app.events.add(<?php echo json_encode(utf8ize($item->toArray())); ?>);</script>
+        </tr>
+    <?php endforeach; ?>
+    <div style="display: none;">
+        <?php if(method_exists($events, 'render')): ?>
+            <?php echo $events->render(); ?>
+
+        <?php endif; ?>
+    </div>
+<?php else: ?>
+    <tr>
+        <td class="no-data"><?php echo trans('front.no_events'); ?></td>
+    </tr>
+<?php endif; ?>

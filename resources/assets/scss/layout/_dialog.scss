@@ -1,0 +1,20 @@
+.ui-dialog {
+  position:absolute;
+}
+
+.ui-dialog-titlebar.ui-widget-header {
+  @extend .modal-header;
+  cursor: move;
+}
+.ui-dialog-title {
+  @extend .modal-title;
+}
+
+.ui-dialog.ui-widget.ui-widget-content {
+  z-index: 1046;
+  outline: none;
+}
+
+button.ui-dialog-titlebar-close {
+  @extend .close;
+}

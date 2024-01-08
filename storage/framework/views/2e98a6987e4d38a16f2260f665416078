@@ -1,0 +1,20 @@
+<?php $__env->startSection('title'); ?>
+    <?php echo e(trans('global.add_new')); ?>
+
+<?php $__env->stopSection(); ?>
+
+<?php $__env->startSection('body'); ?>
+    <?php echo Form::open(array('route' => 'admin.sensor_groups.store', 'method' => 'POST')); ?>
+
+    <?php echo Form::hidden('id'); ?>
+
+        <div class="form-group">
+            <?php echo Form::label('title', trans('validation.attributes.title').':'); ?>
+
+            <?php echo Form::text('title', null, ['class' => 'form-control']); ?>
+
+        </div>
+    <?php echo Form::close(); ?>
+
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('Admin.Layouts.modal', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title><?php echo e(settings('main_settings.server_name')); ?></title>
+
+    <base href="<?php echo e(url('/')); ?>">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="GPS Tracking System for Personal Use or Business">
+    <link rel="shortcut icon" href="<?php echo e(asset_logo('favicon')); ?>" type="image/x-icon">
+
+    <link rel="stylesheet" href="<?php echo e(asset('assets/css/'.settings('main_settings.template_color').'.css?v='.config('tobuli.version'))); ?>">
+
+    <?php echo $__env->yieldContent('styles'); ?>
+</head>
+<body>
+
+<div id="header" class="folded">
+    <nav class="navbar navbar-default">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <?php if( has_asset_logo('logo') ): ?>
+                    <a class="navbar-brand" href="/" title="<?php echo e(settings('main_settings.server_name')); ?>"><img src="<?php echo e(asset_logo('logo')); ?>"></a>
+                <?php endif; ?>
+            </div>
+
+            <ul class="nav navbar-nav navbar-right">
+
+                <?php echo $__env->yieldContent('header-menu-items'); ?>
+
+                <li class="language-selection">
+                    <a href="javascript:" data-url="<?php echo e(route('subscriptions.languages')); ?>" data-modal="language-selection">
+                        <img src="<?php echo asset('assets/img/flag/'.(Session::has('language') ? Session::get('language') : Auth::user()->lang).'.png'); ?>" alt="Language" class="img-thumbnail">
+                    </a>
+                </li>
+            </ul>
+
+
+        </div>
+    </nav>
+</div>
+
+<div class="content">
+    <div class="container-fluid">
+        <?php echo $__env->yieldContent('content'); ?>
+    </div>
+</div>
+
+
+<?php echo $__env->make('Frontend.Layouts.partials.trans', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+<?php echo $__env->make('Frontend.Objects.partials.urls', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+
+<script src="<?php echo e(asset('assets/js/core.js?v='.config('tobuli.version'))); ?>" type="text/javascript"></script>
+<script src="<?php echo e(asset('assets/js/app.js?v='.config('tobuli.version'))); ?>" type="text/javascript"></script>
+
+<?php echo $__env->yieldContent('scripts'); ?>
+
+</body>
+</html>
